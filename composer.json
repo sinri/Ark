@@ -1,0 +1,28 @@
+{
+  "name": "sinri/ark",
+  "description": "A fundamental toolkit for PHP.",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sinri Edogawa",
+      "email": "e.joshua.s.e@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": "~7.0",
+    "ralouphie/getallheaders": "^2.0",
+    "sinri/smallphpmailer": "^1.0.1",
+    "psr/log": "~1.0"
+  },
+  "require-dev": {
+    "cebe/markdown": "^1.1",
+    "predis/predis": "^1.1"
+  },
+  "autoload": {
+    "files": [
+      "autoload.php"
+    ]
+  }
+}
