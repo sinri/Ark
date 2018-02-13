@@ -179,7 +179,7 @@ class ArkMailer
      * @param $subject
      * @return ArkMailer
      */
-    public function addSubject($subject)
+    public function setSubject($subject)
     {
         $this->phpMailerInstance->Subject = $subject;
         return $this;
@@ -189,7 +189,7 @@ class ArkMailer
      * @param $text
      * @return ArkMailer
      */
-    public function addTextBody($text)
+    public function setTextBody($text)
     {
         $this->phpMailerInstance->Body = $text;
         return $this;
@@ -199,7 +199,7 @@ class ArkMailer
      * @param $htmlCode
      * @return ArkMailer
      */
-    public function addHTMLBody($htmlCode)
+    public function setHTMLBody($htmlCode)
     {
         $this->phpMailerInstance->isHTML(true);// Set email format to HTML
         $this->phpMailerInstance->Body = $htmlCode;
