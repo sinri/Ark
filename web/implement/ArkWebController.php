@@ -9,7 +9,7 @@
 namespace sinri\ark\web\implement;
 
 
-use sinri\ark\io\WebOutputHelper;
+use sinri\ark\io\ArkWebOutput;
 
 class ArkWebController
 {
@@ -29,18 +29,18 @@ class ArkWebController
     protected function _sayOK($data = "", $http_code = 200)
     {
         if ($this->shouldSendJsonHeader) {
-            Ark()->webOutput()->setContentTypeHeader(WebOutputHelper::CONTENT_TYPE_JSON);
+            Ark()->webOutput()->setContentTypeHeader(ArkWebOutput::CONTENT_TYPE_JSON);
         }
         http_response_code($http_code);
-        Ark()->webOutput()->jsonForAjax(WebOutputHelper::AJAX_JSON_CODE_OK, $data);
+        Ark()->webOutput()->jsonForAjax(ArkWebOutput::AJAX_JSON_CODE_OK, $data);
     }
 
     protected function _sayFail($error = "", $http_code = 200)
     {
         if ($this->shouldSendJsonHeader) {
-            Ark()->webOutput()->setContentTypeHeader(WebOutputHelper::CONTENT_TYPE_JSON);
+            Ark()->webOutput()->setContentTypeHeader(ArkWebOutput::CONTENT_TYPE_JSON);
         }
         http_response_code($http_code);
-        Ark()->webOutput()->jsonForAjax(WebOutputHelper::AJAX_JSON_CODE_FAIL, $error);
+        Ark()->webOutput()->jsonForAjax(ArkWebOutput::AJAX_JSON_CODE_FAIL, $error);
     }
 }

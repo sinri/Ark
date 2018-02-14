@@ -9,7 +9,9 @@
 namespace sinri\ark\database\model;
 
 
-class DataModelCondition
+use sinri\ark\database\ArkPDO;
+
+class ArkSQLCondition
 {
     const OP_EQ = "=";
     const OP_GT = ">";

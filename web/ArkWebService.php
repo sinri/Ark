@@ -247,6 +247,6 @@ class ArkWebService
 
     public function startSession($sessionDir)
     {
-        WebEmbeddedSessionHelper::sessionStart($sessionDir);
+        ArkWebSession::sessionStart($sessionDir);
     }
 }

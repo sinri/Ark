@@ -9,7 +9,7 @@
 namespace sinri\ark\web;
 
 
-class WebEmbeddedSessionHelper implements \SessionHandlerInterface
+class ArkWebSession implements \SessionHandlerInterface
 {
 
     private $session_id;
@@ -45,7 +45,7 @@ class WebEmbeddedSessionHelper implements \SessionHandlerInterface
             session_save_path($sessionDir);
         }
         //指定本类为会话处理代理
-        $handler = new WebEmbeddedSessionHelper();
+        $handler = new ArkWebSession();
         session_set_save_handler($handler, true);
         //启动新会话或者重用现有会话
         session_start();

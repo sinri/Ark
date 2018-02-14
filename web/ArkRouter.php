@@ -10,8 +10,8 @@ namespace sinri\ark\web;
 
 
 use sinri\ark\core\ArkLogger;
-use sinri\ark\io\WebInputHelper;
-use sinri\ark\io\WebOutputHelper;
+use sinri\ark\io\ArkWebInput;
+use sinri\ark\io\ArkWebOutput;
 
 class ArkRouter
 {
@@ -98,8 +98,8 @@ class ArkRouter
                 call_user_func_array($this->errorHandler, [$errorData]);
                 return;
             } else {
-                Ark()->webOutput()->setContentTypeHeader(WebOutputHelper::CONTENT_TYPE_JSON);
-                Ark()->webOutput()->jsonForAjax(WebOutputHelper::AJAX_JSON_CODE_FAIL, $errorData);
+                Ark()->webOutput()->setContentTypeHeader(ArkWebOutput::CONTENT_TYPE_JSON);
+                Ark()->webOutput()->jsonForAjax(ArkWebOutput::AJAX_JSON_CODE_FAIL, $errorData);
             }
         } catch (\Exception $exception) {
             echo $exception->getMessage() . PHP_EOL;
@@ -109,7 +109,7 @@ class ArkRouter
 
     public function get($path, $callback, $filters = null)
     {
-        $this->registerRoute(WebInputHelper::METHOD_GET, $path, $callback, $filters);
+        $this->registerRoute(ArkWebInput::METHOD_GET, $path, $callback, $filters);
     }
 
     /**
@@ -150,32 +150,32 @@ class ArkRouter
 
     public function post($path, $callback, $filters = null)
     {
-        $this->registerRoute(WebInputHelper::METHOD_POST, $path, $callback, $filters);
+        $this->registerRoute(ArkWebInput::METHOD_POST, $path, $callback, $filters);
     }
 
     public function put($path, $callback, $filters = null)
     {
-        $this->registerRoute(WebInputHelper::METHOD_PUT, $path, $callback, $filters);
+        $this->registerRoute(ArkWebInput::METHOD_PUT, $path, $callback, $filters);
     }
 
     public function patch($path, $callback, $filters = null)
     {
-        $this->registerRoute(WebInputHelper::METHOD_PATCH, $path, $callback, $filters);
+        $this->registerRoute(ArkWebInput::METHOD_PATCH, $path, $callback, $filters);
     }
 
     public function delete($path, $callback, $filters = null)
     {
-        $this->registerRoute(WebInputHelper::METHOD_DELETE, $path, $callback, $filters);
+        $this->registerRoute(ArkWebInput::METHOD_DELETE, $path, $callback, $filters);
     }
 
     public function option($path, $callback, $filters = null)
     {
-        $this->registerRoute(WebInputHelper::METHOD_OPTION, $path, $callback, $filters);
+        $this->registerRoute(ArkWebInput::METHOD_OPTION, $path, $callback, $filters);
     }
 
     public function head($path, $callback, $filters = null)
     {
-        $this->registerRoute(WebInputHelper::METHOD_HEAD, $path, $callback, $filters);
+        $this->registerRoute(ArkWebInput::METHOD_HEAD, $path, $callback, $filters);
     }
 
     /**

@@ -11,7 +11,7 @@ namespace sinri\ark\io;
 
 use sinri\ark\core\ArkHelper;
 
-class WebInputHelper
+class ArkWebInput
 {
     const METHOD_ANY = "ANY";//since v2.1.3 for TreeRouter
 
@@ -26,6 +26,7 @@ class WebInputHelper
 
     protected $headerHelper;
     protected $ipHelper;
+    protected $uploadFileHelper;
     protected $rawPostBody;
     protected $rawPostBodyParsedAsJson;
 
@@ -33,8 +34,17 @@ class WebInputHelper
     {
         $this->headerHelper = new WebInputHeaderHelper();
         $this->ipHelper = new WebInputIPHelper();
+        $this->uploadFileHelper = new WebInputFileUploadHelper();
         $this->rawPostBody = file_get_contents('php://input');
         $this->rawPostBodyParsedAsJson = @json_decode($this->rawPostBody, true);
+    }
+
+    /**
+     * @return WebInputFileUploadHelper
+     */
+    public function getUploadFileHelper(): WebInputFileUploadHelper
+    {
+        return $this->uploadFileHelper;
     }
 
     /**

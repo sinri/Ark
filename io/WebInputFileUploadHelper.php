@@ -13,8 +13,6 @@ use sinri\ark\core\ArkHelper;
 
 class WebInputFileUploadHelper
 {
-// upload process
-
     /**
      * @param string $name
      * @param callable $callback

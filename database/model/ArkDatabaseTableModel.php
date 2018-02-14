@@ -71,7 +71,7 @@ abstract class ArkDatabaseTableModel
         } elseif (is_array($conditions)) {
             $c = [];
             foreach ($conditions as $key => $value) {
-                if (is_a($value, DataModelCondition::class)) {
+                if (is_a($value, ArkSQLCondition::class)) {
                     try {
                         $c[] = $value->makeConditionSQL();
                     } catch (\Exception $e) {

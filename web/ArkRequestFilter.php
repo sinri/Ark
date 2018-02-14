@@ -19,11 +19,7 @@ abstract class ArkRequestFilter
     {
         if (!empty($class_name)) {
             try {
-                if (class_exists($class_name)) {
-                    return new $class_name();
-                } else {
-                    return self::generateFilter(true, 'Required a filter not existed.', 500);
-                }
+                return class_exists($class_name) ? new $class_name() : self::generateFilter(true, 'Required a filter not existed.', 500);
             } catch (\Exception $exception) {
                 return self::generateFilter(true, 'Exception in requiring a filter: ' . $exception->getMessage(), 500);
             }
@@ -32,6 +28,12 @@ abstract class ArkRequestFilter
         return self::generateFilter(false, null, 200);
     }
 
+    /**
+     * @param boolean $shouldDeny
+     * @param string $injectError
+     * @param int $injectCode
+     * @return ArkRequestFilter
+     */
     protected static function generateFilter($shouldDeny, $injectError, $injectCode)
     {
         return new class($shouldDeny, $injectError, $injectCode) extends ArkRequestFilter

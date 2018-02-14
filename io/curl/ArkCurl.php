@@ -10,9 +10,9 @@ namespace sinri\ark\io\curl;
 
 
 use sinri\ark\core\ArkLogger;
-use sinri\ark\io\WebInputHelper;
+use sinri\ark\io\ArkWebInput;
 
-class CurlHelper
+class ArkCurl
 {
     protected $method;
     protected $url;
@@ -30,7 +30,7 @@ class CurlHelper
 
     protected function resetParameters()
     {
-        $this->method = WebInputHelper::METHOD_GET;
+        $this->method = ArkWebInput::METHOD_GET;
         $this->url = "";
         $this->queryList = [];
         $this->postData = "";
@@ -120,7 +120,7 @@ class CurlHelper
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $this->method);
-        $use_body = in_array($this->method, [WebInputHelper::METHOD_POST, WebInputHelper::METHOD_PUT]);
+        $use_body = in_array($this->method, [ArkWebInput::METHOD_POST, ArkWebInput::METHOD_PUT]);
         if ($use_body) {
             curl_setopt($ch, CURLOPT_POST, 1);
 

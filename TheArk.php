@@ -11,8 +11,8 @@ namespace sinri\ark;
 
 use sinri\ark\core\ArkHelper;
 use sinri\ark\core\ArkLogger;
-use sinri\ark\io\WebInputHelper;
-use sinri\ark\io\WebOutputHelper;
+use sinri\ark\io\ArkWebInput;
+use sinri\ark\io\ArkWebOutput;
 use sinri\ark\web\ArkWebService;
 
 class TheArk
@@ -22,11 +22,11 @@ class TheArk
      */
     private static $instance;
     /**
-     * @var WebInputHelper
+     * @var ArkWebInput
      */
     protected $webInputHelper;
     /**
-     * @var WebOutputHelper
+     * @var ArkWebOutput
      */
     protected $webOutputHelper;
     /**
@@ -40,8 +40,8 @@ class TheArk
 
     private function __construct()
     {
-        $this->webInputHelper = new WebInputHelper();
-        $this->webOutputHelper = new WebOutputHelper();
+        $this->webInputHelper = new ArkWebInput();
+        $this->webOutputHelper = new ArkWebOutput();
         $this->webServiceHandler = new ArkWebService();
     }
 
@@ -57,7 +57,7 @@ class TheArk
     }
 
     /**
-     * @return WebInputHelper
+     * @return ArkWebInput
      */
     public function webInput()
     {
@@ -65,7 +65,7 @@ class TheArk
     }
 
     /**
-     * @return WebOutputHelper
+     * @return ArkWebOutput
      */
     public function webOutput()
     {

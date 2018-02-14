@@ -9,7 +9,7 @@
 namespace sinri\ark\io;
 
 
-class WebOutputHelper
+class ArkWebOutput
 {
     const AJAX_JSON_CODE_OK = "OK";
     const AJAX_JSON_CODE_FAIL = "FAIL";
