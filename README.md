@@ -51,3 +51,11 @@ For general routines, the multi-instance hubs (register and get) are provided:
 
 Class ArkCliProgram is designed to support a whole CLI project with certain namespace and class rule.
 
+## Donation
+
+BitCoin/BTC: 18wCjV8mnepDpLzASKdW7CGo6U8F9rPuV4
+
+Alipay Account:
+
+![Alipay](https://ourbible.net/assets/img/AlipayUkanokan258.png)
+
