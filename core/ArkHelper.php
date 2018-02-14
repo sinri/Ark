@@ -152,11 +152,11 @@ class ArkHelper
 
     /**
      * @param $object
-     * @param int $type
      * @param null $exception_message
+     * @param int $type
      * @throws \Exception
      */
-    public static function assertItem($object, $type = self::ASSERT_TYPE_NOT_EMPTY, $exception_message = null)
+    public static function assertItem($object, $exception_message = null, $type = self::ASSERT_TYPE_NOT_EMPTY)
     {
         try {
             if (($type & 0b100) > 0 && $object === false) {

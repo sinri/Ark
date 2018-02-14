@@ -6,6 +6,7 @@
       <w>exmail</w>
       <w>igniter</w>
       <w>maxlifetime</w>
+      <w>nullable</w>
       <w>phpmailer</w>
       <w>sess</w>
       <w>smallphpmailer</w>

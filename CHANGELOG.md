@@ -1,5 +1,9 @@
 # Change Log of Ark
 
+### Version 0.3
+
+* The database table model.
+
 ### Version 0.2
 
 * The Web Router (inherited from Enoch and inspired by both CI and Lumen).

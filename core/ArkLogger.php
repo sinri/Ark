@@ -15,7 +15,7 @@ use Psr\Log\LogLevel;
 class ArkLogger extends AbstractLogger
 {
     protected $targetLogDir = null;
-    protected $prefix = 'enoch';
+    protected $prefix = 'ark';
     protected $ignoreLevel;
     protected $cliUseSTDOUT = true;
     protected $silent = false;
@@ -34,7 +34,7 @@ class ArkLogger extends AbstractLogger
     {
         $this->targetLogDir = $targetLogDir;
         $this->prefix = $prefix;
-        $this->ignoreLevel = LogLevel::DEBUG;
+        $this->ignoreLevel = LogLevel::INFO;
         $this->cliUseSTDOUT = $cliUseSTDOUT;
     }
 
