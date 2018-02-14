@@ -18,6 +18,15 @@ class WebOutputHelper
     {
     }
 
+    const CONTENT_TYPE_JSON = "application/json";
+
+    const CHARSET_UTF8 = "UTF-8";
+
+    public function setContentTypeHeader($contentType, $charSet = null)
+    {
+        header("Content-Type: " . $contentType . ($charSet !== null ? '; charset=' . $charSet : ''));
+    }
+
     /**
      * @param $anything
      */

@@ -18,6 +18,17 @@ class ArkLogger extends AbstractLogger
     protected $prefix = 'enoch';
     protected $ignoreLevel;
     protected $cliUseSTDOUT = true;
+    protected $silent = false;
+
+    /**
+     * @return ArkLogger
+     */
+    public static function makeSilentLogger()
+    {
+        $logger = new ArkLogger();
+        $logger->silent = true;
+        return $logger;
+    }
 
     public function __construct($targetLogDir = null, $prefix = '', $cliUseSTDOUT = true)
     {
@@ -65,6 +76,7 @@ class ArkLogger extends AbstractLogger
      */
     protected function shouldIgnoreThisLog($level)
     {
+        if ($this->silent) return true;
         static $levelValue = [
             LogLevel::EMERGENCY => 7,
             LogLevel::ALERT => 6,

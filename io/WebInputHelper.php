@@ -24,9 +24,6 @@ class WebInputHelper
     const METHOD_PATCH = "PATCH";//since v1.3.0
     const METHOD_CLI = "cli";//since v1.3.0
 
-    const IP_TYPE_V4 = "IPv4";
-    const IP_TYPE_V6 = "IPv6";
-
     protected $headerHelper;
     protected $ipHelper;
     protected $rawPostBody;

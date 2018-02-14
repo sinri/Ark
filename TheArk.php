@@ -9,15 +9,40 @@
 namespace sinri\ark;
 
 
+use sinri\ark\core\ArkHelper;
+use sinri\ark\core\ArkLogger;
 use sinri\ark\io\WebInputHelper;
+use sinri\ark\io\WebOutputHelper;
+use sinri\ark\web\ArkWebService;
 
 class TheArk
 {
+    /**
+     * @var TheArk
+     */
     private static $instance;
+    /**
+     * @var WebInputHelper
+     */
+    protected $webInputHelper;
+    /**
+     * @var WebOutputHelper
+     */
+    protected $webOutputHelper;
+    /**
+     * @var ArkWebService
+     */
+    protected $webServiceHandler;
+    /**
+     * @var ArkLogger[]
+     */
+    protected $loggerDict = [];
 
     private function __construct()
     {
-        // do nothing
+        $this->webInputHelper = new WebInputHelper();
+        $this->webOutputHelper = new WebOutputHelper();
+        $this->webServiceHandler = new ArkWebService();
     }
 
     /**
@@ -31,14 +56,37 @@ class TheArk
         return self::$instance;
     }
 
-    // -----------
-
-    public function webInputHelper()
+    /**
+     * @return WebInputHelper
+     */
+    public function webInput()
     {
-        static $webInputHelper = null;
-        if (!$webInputHelper) {
-            $webInputHelper = new WebInputHelper();
-        }
-        return $webInputHelper;
+        return $this->webInputHelper;
+    }
+
+    /**
+     * @return WebOutputHelper
+     */
+    public function webOutput()
+    {
+        return $this->webOutputHelper;
+    }
+
+    /**
+     * @return ArkWebService
+     */
+    public function webService()
+    {
+        return $this->webServiceHandler;
+    }
+
+    public function registerLogger($name, $logger)
+    {
+        $this->loggerDict[$name] = $logger;
+    }
+
+    public function logger($name = null)
+    {
+        return ArkHelper::readTarget($this->loggerDict, $name, ArkLogger::makeSilentLogger());
     }
 }

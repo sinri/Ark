@@ -118,6 +118,33 @@ class ArkHelper
         }
     }
 
+    /**
+     * @param array $array
+     * @param array $keychain
+     * @param mixed $value
+     */
+    public static function writeIntoArray(&$array, $keychain, $value)
+    {
+        if (!is_array($array)) {
+            $array = [];
+        }
+        if (!is_array($keychain)) {
+            $keychain = [$keychain];
+        }
+
+        $headKey = array_shift($keychain);
+        if (empty($keychain)) {
+            //last
+            $array[$headKey] = $value;
+        } else {
+            //not last
+            if (!isset($array[$headKey])) {
+                $array[$headKey] = [];
+            }
+            self::writeIntoArray($array[$headKey], $keychain, $value);
+        }
+    }
+
     const ASSERT_TYPE_NOT_EMPTY = 0b111;
     const ASSERT_TYPE_NOT_VAIN = 0b1;
     const ASSERT_TYPE_NOT_NULL = 0b10;

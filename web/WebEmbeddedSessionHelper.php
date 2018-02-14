@@ -6,7 +6,7 @@
  * Time: 17:07
  */
 
-namespace sinri\ark\io;
+namespace sinri\ark\web;
 
 
 class WebEmbeddedSessionHelper implements \SessionHandlerInterface
@@ -15,11 +15,6 @@ class WebEmbeddedSessionHelper implements \SessionHandlerInterface
     private $session_id;
     private $session_name;
     private $savePath;
-
-    public function __construct()
-    {
-        // NOTHING
-    }
 
     public function getSessionID()
     {
@@ -42,7 +37,6 @@ class WebEmbeddedSessionHelper implements \SessionHandlerInterface
     }
 
     /**
-     * @deprecated Better to use the method of Lamech with same name
      * @param null $sessionDir
      */
     public static function sessionStart($sessionDir = null)
