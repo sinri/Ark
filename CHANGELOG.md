@@ -1,5 +1,10 @@
 # Change Log of Ark
 
+### Version 0.5
+
+* The SQLite3 Support.
+* Cache Interface and implementations with File and Redis.
+
 ### Version 0.4
 
 * The CLI mode program support.
