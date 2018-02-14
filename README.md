@@ -25,6 +25,7 @@ You might create an instance with certain log storage path, or use a silent one 
 Class ArkCurl provides a higher level usage of CURL.
 
 Class ArkCache defined the interface of being a cache handler, and implementations by File System and Redis, also the fallback choice Dummy.
+(Note, if you want to use Redis, `predis/predis` is needed in `composer.json`.)
 
 Class ArkPDO with model encapsulation are there for you Database Operation.
 
