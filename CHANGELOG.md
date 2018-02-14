@@ -1,5 +1,9 @@
 # Change Log of Ark
 
+### Version 0.4
+
+* The CLI mode program support.
+
 ### Version 0.3
 
 * The database table model.
