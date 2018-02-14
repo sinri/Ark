@@ -9,9 +9,9 @@
 namespace sinri\ark\cache\implement;
 
 
-use sinri\ark\cache\ArkCacheInterface;
+use sinri\ark\cache\ArkCache;
 
-class ArkFileCache implements ArkCacheInterface
+class ArkFileCache implements ArkCache
 {
 
     protected $cacheDir;

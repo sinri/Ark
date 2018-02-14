@@ -9,7 +9,7 @@
 namespace sinri\ark\cache;
 
 
-interface ArkCacheInterface
+interface ArkCache
 {
     /**
      * @param string $key

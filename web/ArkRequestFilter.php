@@ -15,7 +15,7 @@ abstract class ArkRequestFilter
      * @param $class_name string class name with namespace
      * @return ArkRequestFilter
      */
-    public static function makeInstance($class_name)
+    public static function makeInstance($class_name): ArkRequestFilter
     {
         if (!empty($class_name)) {
             try {
@@ -34,7 +34,7 @@ abstract class ArkRequestFilter
      * @param int $injectCode
      * @return ArkRequestFilter
      */
-    protected static function generateFilter($shouldDeny, $injectError, $injectCode)
+    protected static function generateFilter($shouldDeny, $injectError, $injectCode): ArkRequestFilter
     {
         return new class($shouldDeny, $injectError, $injectCode) extends ArkRequestFilter
         {

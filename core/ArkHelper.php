@@ -120,7 +120,7 @@ class ArkHelper
 
     /**
      * @param array $array
-     * @param array $keychain
+     * @param array|string|int $keychain
      * @param mixed $value
      */
     public static function writeIntoArray(&$array, $keychain, $value)

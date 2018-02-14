@@ -10,9 +10,9 @@ namespace sinri\ark\cache\implement;
 
 
 use Predis\Client;
-use sinri\ark\cache\ArkCacheInterface;
+use sinri\ark\cache\ArkCache;
 
-class ArkRedisCache implements ArkCacheInterface
+class ArkRedisCache implements ArkCache
 {
     protected $client = null;
 

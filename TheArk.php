@@ -9,8 +9,11 @@
 namespace sinri\ark;
 
 
+use sinri\ark\cache\ArkCache;
+use sinri\ark\cache\implement\ArkDummyCache;
 use sinri\ark\core\ArkHelper;
 use sinri\ark\core\ArkLogger;
+use sinri\ark\database\ArkPDO;
 use sinri\ark\io\ArkWebInput;
 use sinri\ark\io\ArkWebOutput;
 use sinri\ark\web\ArkWebService;
@@ -38,11 +41,20 @@ class TheArk
      */
     protected $loggerDict = [];
 
+    /**
+     * @var ArkPDO[]
+     */
+    protected $pdoDict = [];
+    /**
+     * @var ArkCache[]
+     */
+    protected $cacheDict = [];
+
     private function __construct()
     {
-        $this->webInputHelper = new ArkWebInput();
-        $this->webOutputHelper = new ArkWebOutput();
-        $this->webServiceHandler = new ArkWebService();
+        $this->webInputHelper = null;
+        $this->webOutputHelper = null;
+        $this->webServiceHandler = null;
     }
 
     /**
@@ -59,34 +71,102 @@ class TheArk
     /**
      * @return ArkWebInput
      */
-    public function webInput()
+    public function webInput(): ArkWebInput
     {
+        if (!$this->webInputHelper) {
+            $this->webInputHelper = new ArkWebInput();
+        }
         return $this->webInputHelper;
     }
 
     /**
      * @return ArkWebOutput
      */
-    public function webOutput()
+    public function webOutput(): ArkWebOutput
     {
+        if (!$this->webOutputHelper) {
+            $this->webOutputHelper = new ArkWebOutput();
+        }
         return $this->webOutputHelper;
     }
 
     /**
      * @return ArkWebService
      */
-    public function webService()
+    public function webService(): ArkWebService
     {
+        if (!$this->webServiceHandler) {
+            $this->webServiceHandler = new ArkWebService();
+        }
         return $this->webServiceHandler;
     }
 
-    public function registerLogger($name, $logger)
+    /**
+     * @param string $name
+     * @param ArkLogger $logger
+     */
+    public function registerLogger($name, ArkLogger $logger)
     {
-        $this->loggerDict[$name] = $logger;
+        ArkHelper::writeIntoArray($this->loggerDict, $name, $logger);
     }
 
-    public function logger($name = null)
+    /**
+     * @param string $name
+     * @return ArkLogger
+     */
+    public function logger($name = 'Ark'): ArkLogger
     {
-        return ArkHelper::readTarget($this->loggerDict, $name, ArkLogger::makeSilentLogger());
+        $logger = ArkHelper::readTarget($this->loggerDict, $name);
+        if (!$logger) {
+            $logger = ArkLogger::makeSilentLogger();
+            $this->registerLogger($name, $logger);
+        }
+        return $logger;
+    }
+
+    /**
+     * @param string $name
+     * @param ArkPDO $pdo
+     */
+    public function registerDb($name, $pdo)
+    {
+        ArkHelper::writeIntoArray($this->pdoDict, $name, $pdo);
+    }
+
+    /**
+     * @param string $name
+     * @return ArkPDO
+     */
+    public function db($name = 'default'): ArkPDO
+    {
+        $pdo = ArkHelper::readTarget($this->pdoDict, $name);
+        if (!$pdo) {
+            $pdo = new ArkPDO();
+            $this->registerDb($name, $pdo);
+        }
+        return $pdo;
+    }
+
+    /**
+     * @param string $name
+     * @param ArkCache $cache
+     */
+    public function registerCache($name, $cache)
+    {
+        ArkHelper::writeIntoArray($this->cacheDict, $name, $cache);
+    }
+
+    /**
+     * @param string $name
+     * @return ArkCache
+     */
+    public function cache($name = 'default'): ArkCache
+    {
+        $cache = ArkHelper::readTarget($this->cacheDict, $name);
+        if (!$cache) {
+            $cache = new ArkDummyCache();
+            $this->registerCache($name, $cache);
+        }
+        return $cache;
     }
 }

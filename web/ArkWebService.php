@@ -60,6 +60,14 @@ class ArkWebService
     }
 
     /**
+     * @param string $sessionDir
+     */
+    public function startPHPSession($sessionDir)
+    {
+        ArkWebSession::sessionStart($sessionDir);
+    }
+
+    /**
      * @param bool $debug
      */
     public function setDebug(bool $debug)
