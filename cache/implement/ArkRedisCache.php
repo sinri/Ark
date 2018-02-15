@@ -23,7 +23,7 @@ class ArkRedisCache implements ArkCache
             'port' => $port,
             'database' => $database,
         );
-        if ($password) $single_server['password'] = $password;
+        if ($password !== null) $single_server['password'] = $password;
         $this->client = new Client($single_server);
     }
 

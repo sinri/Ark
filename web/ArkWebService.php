@@ -28,6 +28,34 @@ class ArkWebService
     protected $router;
 
     /**
+     * @var string
+     */
+    protected $requestSerial;
+    /**
+     * @var string
+     */
+    protected $gateway;
+    protected $filterGeneratedData;
+
+    public function __construct()
+    {
+        $this->requestSerial = uniqid();
+        $this->gateway = "index.php";
+        $this->logger = ArkLogger::makeSilentLogger();
+        $this->debug = false;
+        $this->router = new ArkRouter();
+        $this->filterGeneratedData = null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequestSerial(): string
+    {
+        return $this->requestSerial;
+    }
+
+    /**
      * @return ArkRouter
      */
     public function getRouter(): ArkRouter
@@ -36,27 +64,11 @@ class ArkWebService
     }
 
     /**
-     * @var string
-     */
-    protected $gateway;
-
-    protected $filterGeneratedData;
-
-    /**
      * @return null
      */
     public function getFilterGeneratedData()
     {
         return $this->filterGeneratedData;
-    }
-
-    public function __construct()
-    {
-        $this->gateway = "index.php";
-        $this->logger = ArkLogger::makeSilentLogger();
-        $this->debug = false;
-        $this->router = new ArkRouter();
-        $this->filterGeneratedData = null;
     }
 
     /**
@@ -253,6 +265,10 @@ class ArkWebService
         return substr($_SERVER['REQUEST_URI'], strlen($prefix));
     }
 
+    /**
+     * If you decide to use PHP Session, please run this before the code to handle request.
+     * @param $sessionDir
+     */
     public function startSession($sessionDir)
     {
         ArkWebSession::sessionStart($sessionDir);

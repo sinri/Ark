@@ -1,5 +1,9 @@
 # Change Log of Ark
 
+### Version 0.6
+
+Refine for DryDockOfArk.
+
 ### Version 0.5
 
 * The SQLite3 Support.

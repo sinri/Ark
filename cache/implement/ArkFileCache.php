@@ -16,9 +16,13 @@ class ArkFileCache implements ArkCache
 
     protected $cacheDir;
 
-    public function __construct()
+    /**
+     * ArkFileCache constructor.
+     * @param string $cacheDir
+     */
+    public function __construct($cacheDir)
     {
-        $this->setCacheDir(__DIR__ . '/cache');//should be overrode by setter
+        $this->setCacheDir($cacheDir);//should be overrode by setter
     }
 
     /**
