@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Introduction to Ark</title>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/marked@0.3.6"></script>
+    <script src="https://unpkg.com/lodash@4.16.0"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- import stylesheet -->
+    <link rel="stylesheet" href="//unpkg.com/iview/dist/styles/iview.css">
+    <!-- import iView -->
+    <script src="//unpkg.com/iview/dist/iview.min.js"></script>
+
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/github.min.css">
+
+    <style>
+        .layout {
+            border: 1px solid #d7dde4;
+            background: #f5f7f9;
+            position: relative;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .layout-logo {
+            width: 100px;
+            height: 30px;
+            background: #5b6270;
+            border-radius: 3px;
+            float: left;
+            position: relative;
+            top: 15px;
+            left: 20px;
+            line-height: 30px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: white;
+            text-align: center;
+        }
+
+        .layout-nav {
+            width: 255px;
+            margin: 0 20px 0 auto;
+        }
+
+        #markdown {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="layout">
+        <Layout>
+            <Header style="position: fixed;top:0;height: 60px;width: 100%">
+                <i-menu mode="horizontal" theme="dark" active-name="1">
+                    <div class="layout-logo">Ark</div>
+                    <div class="layout-nav">
+                        <menu-item name="1">
+                            An universal framework for PHP 7
+                        </menu-item>
+                    </div>
+                </i-menu>
+            </Header>
+            <Layout>
+                <Sider hide-trigger :style="{background: '#fff', minHeight:'80vh',position:'fixed',left:0,top:'60px'}">
+                    <i-menu theme="light" @on-select="onMenuSelected" width="auto">
+                        <template v-for="(menuGroupItem,menuGroupKey) in menuGroupList">
+                            <Submenu v-if="menuGroupItem.type=='sub-menu'" :key="menuGroupKey"
+                                     :name="menuGroupItem.title">
+                                <template slot="title">
+                                    {{ menuGroupItem.title }}
+                                </template>
+                                <menu-item v-for="(menuItem,menuKey) in menuGroupItem.items" :key="menuKey"
+                                           :name="menuItem.name">
+                                    {{ menuItem.title }}
+                                </menu-item>
+                            </Submenu>
+                            <menu-item v-if="menuGroupItem.type=='menu'" :key="menuGroupKey" :name="menuGroupItem.name">
+                                {{ menuGroupItem.title }}
+                            </menu-item>
+                        </template>
+                    </i-menu>
+                </Sider>
+                <Layout :style="{padding: '0 24px 24px',marginLeft:'200px',marginTop:'60px'}">
+                    <Content :style="{margin: '24px 0',padding: '24px', minHeight: '70vh', background: '#fff'}">
+                        <div id="markdown" v-html="compiledMarkdown" v-highlight></div>
+                    </Content>
+                    <Footer style="text-align: center">
+                        Copyright 2018 <a href="mailto:e.joshua.s.e@gmail.com">Sinri Edogawa</a>
+                    </Footer>
+                </Layout>
+            </Layout>
+        </Layout>
+    </div>
+</div>
+<script>
+    Vue.directive('highlight', function (el) {
+        let blocks = el.querySelectorAll('pre code');
+        blocks.forEach((block) => {
+            hljs.highlightBlock(block)
+        })
+    });
+    let app = new Vue({
+        el: '#app',
+        data: {
+            markdownContent: '> LOADING...',
+            menuGroupList: [
+                {
+                    type: 'menu',
+                    name: 'introduction',
+                    title: 'Introduction',
+                },
+                {
+                    type: 'sub-menu',
+                    title: "Core",
+                    items: [
+                        {
+                            name: "core/helper",
+                            title: 'Helper',
+                        }
+                    ]
+                }
+            ]
+        },
+        computed: {
+            compiledMarkdown: function () {
+                return marked(this.markdownContent, {sanitize: true})
+            }
+        },
+        methods: {
+            // update: _.debounce(function (e) {
+            //     this.markdown_content = e.target.value
+            // }, 300)
+            onMenuSelected: function (name) {
+                console.log("onMenuSelected", name);
+
+                axios.get("./markdown/" + name + ".md")
+                    .then((response) => {
+                        this.markdownContent = response.data;
+                        // _.debounce(function(e){
+                        //     $('pre code').each(function(i, block) {
+                        //         hljs.highlightBlock(block);
+                        //     });
+                        // },200);
+                    })
+                    .catch((error) => {
+                        this.markdownContent = "# Page '" + name + "' is not found";
+                    });
+            }
+        },
+        mounted: function () {
+            // hljs.initHighlightingOnLoad();
+            this.onMenuSelected('introduction');
+        }
+    });
+</script>
+</body>
+</html>
