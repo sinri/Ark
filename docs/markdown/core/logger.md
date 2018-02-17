@@ -92,7 +92,11 @@ A standard instance sample.
 $storage=__DIR__ . '/log';
 $prefix='PREFIX';
 $$cliUseSTDOUT=true;// default, write to terminal under CLI.
+
 $logger = new \sinri\ark\core\ArkLogger($storage, $prefix, $$cliUseSTDOUT);
+
+$logger->setIgnoreLevel(\Psr\Log\LogLevel::ERROR);
+
 $logger->critical("Event which is ".\Psr\Log\LogLevel::CRITICAL, ["level"=>\Psr\Log\LogLevel::CRITICAL]);
 ``` 
 

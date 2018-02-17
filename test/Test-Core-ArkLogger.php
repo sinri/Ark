@@ -16,4 +16,5 @@ $logger->critical(\Psr\Log\LogLevel::CRITICAL, [\Psr\Log\LogLevel::CRITICAL]);
 
 // validate prefix
 $logger = new \sinri\ark\core\ArkLogger(__DIR__ . '/log', 'Aa0/Bb1', false);
+$logger->setIgnoreLevel(\Psr\Log\LogLevel::ERROR);
 $logger->alert("file prefix should be Aa0_Bb1");
