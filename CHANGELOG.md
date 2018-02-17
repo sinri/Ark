@@ -1,5 +1,9 @@
 # Change Log of Ark
 
+### pre Version 0.7
+
+Refine ArkLogger with prefix strict rule.
+
 ### Version 0.6
 
 Refine for DryDockOfArk.

@@ -13,3 +13,7 @@ $logger = new \sinri\ark\core\ArkLogger(__DIR__ . '/log', 'core-logger-test');
 $logger->debug(\Psr\Log\LogLevel::DEBUG, [\Psr\Log\LogLevel::DEBUG]);
 $logger = new \sinri\ark\core\ArkLogger(__DIR__ . '/log', 'core-logger-test', false);
 $logger->critical(\Psr\Log\LogLevel::CRITICAL, [\Psr\Log\LogLevel::CRITICAL]);
+
+// validate prefix
+$logger = new \sinri\ark\core\ArkLogger(__DIR__ . '/log', 'Aa0/Bb1', false);
+$logger->alert("file prefix should be Aa0_Bb1");

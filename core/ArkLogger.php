@@ -33,7 +33,7 @@ class ArkLogger extends AbstractLogger
     public function __construct($targetLogDir = null, $prefix = '', $cliUseSTDOUT = true)
     {
         $this->targetLogDir = $targetLogDir;
-        $this->prefix = $prefix;
+        $this->setPrefix($prefix);
         $this->ignoreLevel = LogLevel::INFO;
         $this->cliUseSTDOUT = $cliUseSTDOUT;
     }
@@ -51,6 +51,7 @@ class ArkLogger extends AbstractLogger
      */
     public function setPrefix(string $prefix)
     {
+        $prefix = preg_replace('/[^A-Za-z0-9]/', '_', $prefix);
         $this->prefix = $prefix;
     }
 
