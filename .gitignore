@@ -7,3 +7,4 @@ composer.phar
 /.idea/
 /test/log/
 /test/database/pdo-mysql/config.php
+/test/phar/ArkTestSuit.phar

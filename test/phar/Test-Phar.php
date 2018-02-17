@@ -16,6 +16,7 @@ if (!\sinri\ark\core\ArkHelper::isCLI()) {
 $pm = new \sinri\ark\phar\PharMaker();
 $pm->setPharName("ArkTestSuit");
 $pm->setDirectory(__DIR__ . '/../../');
+$pm->setOutputDirectory(__DIR__);
 $pm->setBootstrapStubAsCLIEntrance("test/cli/runner.php");
 $pm->addExtension("php");
 //$pm->addExcludeEntrance("composer.phar");
