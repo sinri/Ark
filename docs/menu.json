@@ -1,0 +1,11 @@
+{
+  "introduction": "Introduction",
+  "starter": "Start Using",
+  "Core": {
+    "core/helper": "Helper",
+    "core/logger": "Logger"
+  },
+  "CLI": {
+    "cli/program": "Program"
+  }
+}

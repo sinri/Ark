@@ -6,7 +6,7 @@
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/marked@0.3.6"></script>
-    <script src="https://unpkg.com/lodash@4.16.0"></script>
+    <!--<script src="https://unpkg.com/lodash@4.16.0"></script>-->
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 
     <!-- import stylesheet -->
@@ -110,7 +110,8 @@
         el: '#app',
         data: {
             markdownContent: '> LOADING...',
-            menuGroupList: [
+            menuGroupList: [],
+            menuGroupListX: [
                 {
                     type: 'menu',
                     name: 'introduction',
@@ -153,20 +154,12 @@
             }
         },
         methods: {
-            // update: _.debounce(function (e) {
-            //     this.markdown_content = e.target.value
-            // }, 300)
             onMenuSelected: function (name) {
                 console.log("onMenuSelected", name);
 
                 axios.get("./markdown/" + name + ".md")
                     .then((response) => {
                         this.markdownContent = response.data;
-                        // _.debounce(function(e){
-                        //     $('pre code').each(function(i, block) {
-                        //         hljs.highlightBlock(block);
-                        //     });
-                        // },200);
                     })
                     .catch((error) => {
                         this.markdownContent = "# Page '" + name + "' is not found";
@@ -174,10 +167,46 @@
             }
         },
         mounted: function () {
-            // hljs.initHighlightingOnLoad();
-            this.onMenuSelected('introduction');
+            axios.get("./menu.json")
+                .then((response) => {
+                    console.log(response.data);
+                    let menuGroupList = [];
+                    for (let k1 in response.data) {
+                        if (!response.data.hasOwnProperty(k1)) continue;
+                        let item1 = response.data[k1];
+                        if (typeof item1 === 'string') {
+                            menuGroupList.push({
+                                type: 'menu',
+                                name: k1,
+                                title: item1,
+                            });
+                        } else {
+                            let submenu = {
+                                type: 'sub-menu',
+                                title: k1,
+                                items: []
+                            };
+                            for (let k2 in item1) {
+                                if (!item1.hasOwnProperty(k2)) continue;
+                                let item2 = item1[k2];
+                                submenu.items.push({
+                                    name: k2,
+                                    title: item2,
+                                });
+                            }
+                            menuGroupList.push(submenu);
+                        }
+                    }
+                    this.menuGroupList = menuGroupList;
+                    this.onMenuSelected('introduction');
+                }).catch((error) => {
+                this.markdownContent = "# Menu is not found";
+            });
         }
     });
 </script>
+<!--
+This docs index.html, menu.json and markdown files would be also a good sample for GitHub Pages, ha ha ha~
+-->
 </body>
 </html>
