@@ -1,8 +1,9 @@
 # Change Log of Ark
 
-### pre Version 0.7
+### Version 0.7
 
 Refine ArkLogger with prefix strict rule.
+Phar Maker.
 
 ### Version 0.6
 
