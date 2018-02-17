@@ -55,6 +55,8 @@ class ArkCliProgram
             exit(1);
         }
 
+        $program_instance_name = str_replace('/', '\\', $program_instance_name);
+
         // $baseNamespace like '\\sinri\\enoch\\test\\Enos\\'
         $program_instance_full_name = $baseNamespace . $program_instance_name;
         $program = new $program_instance_full_name();
