@@ -1,5 +1,9 @@
 # Change Log of Ark
 
+### Version 0.8
+
+Made `ArkMailer` an interface and move the original implementation as `ArkSMTPMailer`.
+
 ### Version 0.7
 
 Refine ArkLogger with prefix strict rule.

@@ -19,8 +19,8 @@ $config = [
     'display_name' => 'Ark Mailer Tester',
 ];
 
-$mailer = new \sinri\ark\email\ArkMailer($config);
-$sent = $mailer->prepareSMTP()
+$mailer = new \sinri\ark\email\ArkSMTPMailer($config);
+$sent = $mailer->prepare()
     ->addReceiver("ljni@leqee.com", 'DANI')
     ->setSubject(__FILE__)
     ->setHTMLBody("<p style='color:red'>" . __LINE__ . "</p>")

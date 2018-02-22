@@ -7,5 +7,9 @@
   },
   "CLI": {
     "cli/program": "Program"
+  },
+  "Email": {
+    "email/mailer": "Interface",
+    "email/smtp": "Using SMTP"
   }
 }
