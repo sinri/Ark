@@ -1,8 +1,8 @@
 # Ark
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/sinri/Ark/master/LICENSE) 
-[![GitHub release](https://img.shields.io/github/release/sinri/enoch.svg)](https://github.com/sinri/Ark/releases)
-[![Packagist](https://img.shields.io/packagist/v/sinri/enoch.svg)](https://packagist.org/packages/sinri/ark) 
+[![GitHub release](https://img.shields.io/github/release/sinri/Ark.svg)](https://github.com/sinri/Ark/releases)
+[![Packagist](https://img.shields.io/packagist/v/sinri/ark.svg)](https://packagist.org/packages/sinri/ark) 
 
 
 A fundamental toolkit for PHP 7.
