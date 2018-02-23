@@ -10,6 +10,11 @@ Besides, a static method is provided to generate a complete silent ArkLogger ins
 You should build up an instance of ArkLogger first.
 When here explains the options.
 
+There are two ways to output logs:
+
+1. `log` to write files; if the target file or storage directory is not correctly existing, fall back to
+2. `echo` contents to Standard Output directly.
+
 ### Storage Directory 
 
 The directory to storage the log files.
@@ -71,12 +76,6 @@ Interesting events.
 
 Detailed debug information.
 
-### CLI Logging Method
-
-If the logger runs in the CLI mode, 
-by default the logs would not be written into file, 
-but you can force it to write file.
-
 ### Logging
 
 ArkLogger provides methods for each log level, with two parameters:
@@ -91,9 +90,8 @@ A standard instance sample.
 ```php
 $storage=__DIR__ . '/log';
 $prefix='PREFIX';
-$$cliUseSTDOUT=true;// default, write to terminal under CLI.
 
-$logger = new \sinri\ark\core\ArkLogger($storage, $prefix, $$cliUseSTDOUT);
+$logger = new \sinri\ark\core\ArkLogger($storage, $prefix);
 
 $logger->setIgnoreLevel(\Psr\Log\LogLevel::ERROR);
 

@@ -1,5 +1,9 @@
 # Change Log of Ark
 
+### pre Version 0.9
+
+Remove 'force logging to STDOUT' feature in ArkLogger and designed `echo` instead.
+
 ### Version 0.8
 
 Made `ArkMailer` an interface and move the original implementation as `ArkSMTPMailer`.

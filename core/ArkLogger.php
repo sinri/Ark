@@ -17,33 +17,13 @@ class ArkLogger extends AbstractLogger
     protected $targetLogDir = null;
     protected $prefix = 'ark';
     protected $ignoreLevel;
-    protected $cliUseSTDOUT = true;
     protected $silent = false;
 
-    /**
-     * @return ArkLogger
-     */
-    public static function makeSilentLogger()
-    {
-        $logger = new ArkLogger();
-        $logger->silent = true;
-        return $logger;
-    }
-
-    public function __construct($targetLogDir = null, $prefix = '', $cliUseSTDOUT = true)
+    public function __construct($targetLogDir = null, $prefix = '')
     {
         $this->targetLogDir = $targetLogDir;
         $this->setPrefix($prefix);
         $this->ignoreLevel = LogLevel::INFO;
-        $this->cliUseSTDOUT = $cliUseSTDOUT;
-    }
-
-    /**
-     * @param null $targetLogDir
-     */
-    public function setTargetLogDir($targetLogDir)
-    {
-        $this->targetLogDir = $targetLogDir;
     }
 
     /**
@@ -56,6 +36,24 @@ class ArkLogger extends AbstractLogger
     }
 
     /**
+     * @return ArkLogger
+     */
+    public static function makeSilentLogger()
+    {
+        $logger = new ArkLogger();
+        $logger->silent = true;
+        return $logger;
+    }
+
+    /**
+     * @param null $targetLogDir
+     */
+    public function setTargetLogDir($targetLogDir)
+    {
+        $this->targetLogDir = $targetLogDir;
+    }
+
+    /**
      * @param string $ignoreLevel
      */
     public function setIgnoreLevel(string $ignoreLevel)
@@ -64,11 +62,37 @@ class ArkLogger extends AbstractLogger
     }
 
     /**
-     * @param bool $cliUseSTDOUT
+     * @param mixed $level
+     * @param string $message
+     * @param array $context
      */
-    public function setForceUseStandardOutputInCLI(bool $cliUseSTDOUT)
+    public function log($level, $message, array $context = array())
     {
-        $this->cliUseSTDOUT = $cliUseSTDOUT;
+        if ($this->shouldIgnoreThisLog($level)) {
+            return;
+        }
+        $msg = $this->generateLog($level, $message, $context);
+        $target_file = $this->decideTargetFile();
+        if (!$target_file) {
+            echo $msg;
+            return;
+        }
+        @file_put_contents($target_file, $msg, FILE_APPEND);
+    }
+
+    /**
+     * If you want to output log directly to STDOUT, use this.
+     * @param $level
+     * @param $message
+     * @param array $context
+     */
+    public function echo($level, $message, array $context = array())
+    {
+        if ($this->shouldIgnoreThisLog($level)) {
+            return;
+        }
+        $msg = $this->generateLog($level, $message, $context);
+        echo $msg;
     }
 
     /**
@@ -94,25 +118,6 @@ class ArkLogger extends AbstractLogger
             return true;
         }
         return false;
-    }
-
-    /**
-     * @param mixed $level
-     * @param string $message
-     * @param array $context
-     */
-    public function log($level, $message, array $context = array())
-    {
-        if ($this->shouldIgnoreThisLog($level)) {
-            return;
-        }
-        $msg = $this->generateLog($level, $message, $context);
-        $target_file = $this->decideTargetFile();
-        if (!$target_file) {
-            echo $msg;
-            return;
-        }
-        @file_put_contents($target_file, $msg, FILE_APPEND);
     }
 
     /**
@@ -142,9 +147,6 @@ class ArkLogger extends AbstractLogger
     protected function decideTargetFile()
     {
         if (empty($this->targetLogDir)) {
-            return false;
-        }
-        if ($this->cliUseSTDOUT && ArkHelper::isCLI()) {
             return false;
         }
         if (!file_exists($this->targetLogDir)) {
