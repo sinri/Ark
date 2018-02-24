@@ -16,5 +16,8 @@
     "cache/interface": "Interface",
     "cache/file": "File Cache",
     "cache/redis": "Redis Cache"
+  },
+  "Phar": {
+    "phar/maker": "Phar Maker"
   }
 }
