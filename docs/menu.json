@@ -11,5 +11,10 @@
   "Email": {
     "email/mailer": "Interface",
     "email/smtp": "Using SMTP"
+  },
+  "Cache": {
+    "cache/interface": "Interface",
+    "cache/file": "File Cache",
+    "cache/redis": "Redis Cache"
   }
 }
