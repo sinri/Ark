@@ -3,6 +3,7 @@
 ### pre Version 0.9
 
 Remove 'force logging to STDOUT' feature in ArkLogger and designed `echo` instead.
+`ArkPDO` treat database config as optional.
 
 ### Version 0.8
 

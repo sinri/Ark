@@ -19,5 +19,12 @@
   },
   "Phar": {
     "phar/maker": "Phar Maker"
+  },
+  "SQLite": {
+    "database/sqlite/sqlite3": "SQLite3"
+  },
+  "Database": {
+    "database/pdo/config": "Make Configuration",
+    "database/pdo/pdo": "Use PDO"
   }
 }
