@@ -26,5 +26,8 @@
   "Database": {
     "database/pdo/config": "Make Configuration",
     "database/pdo/pdo": "Use PDO"
+  },
+  "IO": {
+    "io/curl": "Use CURL"
   }
 }
