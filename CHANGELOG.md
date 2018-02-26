@@ -4,6 +4,7 @@
 
 Remove 'force logging to STDOUT' feature in ArkLogger and designed `echo` instead.
 `ArkPDO` treat database config as optional.
+`ArkCurl` support setting raw options of CURL.
 
 ### Version 0.8
 

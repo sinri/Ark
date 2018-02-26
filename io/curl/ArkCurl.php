@@ -21,6 +21,7 @@ class ArkCurl
     protected $headerList;
     protected $cookieList;
     protected $logger;
+    protected $optionList;
 
     public function __construct()
     {
@@ -36,6 +37,7 @@ class ArkCurl
         $this->postData = "";
         $this->headerList = [];
         $this->cookieList = [];
+        $this->optionList = [];
     }
 
     /**
@@ -44,6 +46,15 @@ class ArkCurl
     public function setLogger(ArkLogger $logger)
     {
         $this->logger = $logger;
+    }
+
+    /**
+     * @param int $option definition of CURLOPT cluster
+     * @param mixed $value
+     */
+    public function setCURLOption($option, $value)
+    {
+        $this->optionList[$option] = $value;
     }
 
     /**
@@ -114,6 +125,10 @@ class ArkCurl
         return $this;
     }
 
+    /**
+     * @param bool $takePostDataAsJson
+     * @return mixed
+     */
     public function execute($takePostDataAsJson = false)
     {
         $ch = curl_init();
@@ -128,7 +143,10 @@ class ArkCurl
                 $this->headerList['Content-Type'] = 'application/json';
                 $this->postData = json_encode($this->postData);
             } else {
-                $this->postData = http_build_query($this->postData);
+                // if postData is raw string, leave it simply original
+                if (!is_scalar($this->postData)) {
+                    $this->postData = http_build_query($this->postData);
+                }
             }
 
             curl_setopt($ch, CURLOPT_POSTFIELDS, $this->postData);
@@ -152,6 +170,13 @@ class ArkCurl
             "CURL-{$this->method}-Request",
             ["URL" => $this->url, "HEADER" => $this->headerList, "BODY" => $this->postData]
         );
+
+        // inject options
+        if (!empty($this->optionList)) {
+            foreach ($this->optionList as $option => $value) {
+                curl_setopt($ch, $option, $value);
+            }
+        }
 
         $response = curl_exec($ch);
 
