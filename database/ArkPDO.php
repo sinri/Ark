@@ -60,7 +60,7 @@ class ArkPDO
         ArkHelper::assertItem($port, 'Ark PDO: Port is empty.');
         ArkHelper::assertItem($username, 'Ark PDO: Username is empty.');
         ArkHelper::assertItem($password, 'Ark PDO: Password is empty.');
-        ArkHelper::assertItem($database, 'Ark PDO: Database is empty.');
+        //ArkHelper::assertItem($database, 'Ark PDO: Database is empty.');
         ArkHelper::assertItem($charset, 'Ark PDO: CharSet is empty.');
 
         $engine = strtolower($engine);
@@ -72,11 +72,14 @@ class ArkPDO
                     ];
                 }
                 $this->pdo = new \PDO(
-                    "mysql:host={$host};port={$port};dbname={$database};charset={$charset}",
+                    "mysql:host={$host};port={$port};charset={$charset}",//dbname={$database}; seems optional
                     $username,
                     $password,
                     $options
                 );
+                if (!empty($database)) {
+                    $this->pdo->exec("use `{$database}`;");
+                }
                 if (!empty($charset)) {
                     $this->pdo->query("set names " . $charset);
                 }
