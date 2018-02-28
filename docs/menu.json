@@ -28,6 +28,7 @@
     "database/pdo/pdo": "Use PDO"
   },
   "IO": {
-    "io/curl": "Use CURL"
+    "io/curl": "Use CURL",
+    "io/web/input": "Handle Request"
   }
 }

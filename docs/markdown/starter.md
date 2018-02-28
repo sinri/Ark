@@ -2,7 +2,8 @@
 
 Ark should be referred as library installed through Composer,
 with command `composer require sinri/ark` or add require item in file `composer.json`.
-Ark could be used in various ways as following described.
+Ark could be used in various ways as following described,
+and a general entrance is provided as `Ark()`.
 
 ## Using Independent Components
 

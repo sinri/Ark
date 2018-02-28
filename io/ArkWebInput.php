@@ -50,7 +50,7 @@ class ArkWebInput
     /**
      * @return WebInputHeaderHelper
      */
-    public function getHeaderHelper()
+    public function getHeaderHelper(): WebInputHeaderHelper
     {
         return $this->headerHelper;
     }
@@ -58,7 +58,7 @@ class ArkWebInput
     /**
      * @return WebInputIPHelper
      */
-    public function getIpHelper()
+    public function getIpHelper(): WebInputIPHelper
     {
         return $this->ipHelper;
     }
@@ -79,6 +79,13 @@ class ArkWebInput
         return $this->rawPostBodyParsedAsJson;
     }
 
+    /**
+     * @param string|array $name
+     * @param null|mixed $default
+     * @param null|string $regex
+     * @param null|\Exception $error
+     * @return mixed
+     */
     public function readRequest($name, $default = null, $regex = null, &$error = null)
     {
         $value = ArkHelper::readTarget($_REQUEST, $name, $default, $regex, $error);
@@ -94,6 +101,7 @@ class ArkWebInput
             }
         } catch (\Exception $exception) {
             // actually do nothing.
+            $error = $exception;
         }
         return $value;
     }
@@ -118,6 +126,10 @@ class ArkWebInput
         return ArkHelper::readTarget($_POST, $name, $default, $regex);
     }
 
+    /**
+     * @param string[] $proxyIPs
+     * @return string
+     */
     public function visitorIP($proxyIPs = [])
     {
         return $this->ipHelper->detectVisitorIP($proxyIPs);
