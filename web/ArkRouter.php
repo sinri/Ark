@@ -213,6 +213,16 @@ class ArkRouter
     }
 
     /**
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param ArkRequestFilter[]|null $filters ArkRequestFilter
+     */
+    public function any($path, $callback, $filters = null)
+    {
+        $this->registerRoute(null, $path, $callback, $filters);
+    }
+
+    /**
      * @param $path
      * @param $method
      * @return mixed
@@ -259,6 +269,10 @@ class ArkRouter
         throw new \Exception("No route matched: path={$path} method={$method}");
     }
 
+    /**
+     * @param array $shared
+     * @param array[] $list
+     */
     public function group($shared, $list)
     {
         $filters = null;
@@ -353,19 +367,9 @@ class ArkRouter
     }
 
     /**
-     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
-     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
-     * @param ArkRequestFilter[]|null $filters ArkRequestFilter
-     */
-    public function any($path, $callback, $filters = null)
-    {
-        $this->registerRoute(null, $path, $callback, $filters);
-    }
-
-    /**
-     * @param $basePath
-     * @param $controllerClass
-     * @param null $filters
+     * @param string $basePath "" or "xx/"
+     * @param string $controllerClass full class describer
+     * @param ArkRequestFilter[]|null $filters
      */
     public function loadController($basePath, $controllerClass, $filters = null)
     {

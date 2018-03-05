@@ -12,7 +12,7 @@ namespace sinri\ark\web;
 abstract class ArkRequestFilter
 {
     /**
-     * @param $class_name string class name with namespace
+     * @param string $class_name string class name with namespace
      * @return ArkRequestFilter
      */
     public static function makeInstance($class_name): ArkRequestFilter

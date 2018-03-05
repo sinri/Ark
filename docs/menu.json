@@ -29,6 +29,7 @@
     "io/web/output": "Make Response"
   },
   "Web Service": {
-    "web/introduction": "Introduction"
+    "web/introduction": "Introduction",
+    "web/router": "Router"
   }
 }
