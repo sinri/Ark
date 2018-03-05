@@ -107,18 +107,12 @@ class ArkRouter
         }
     }
 
-    public function get($path, $callback, $filters = null)
-    {
-        $this->registerRoute(ArkWebInput::METHOD_GET, $path, $callback, $filters);
-    }
-
     /**
      * Designed after Lumen Routing: https://lumen.laravel-china.org/docs/5.3/routing
-     * posts/{post}/comments/{comment}
-     * @param $method
-     * @param $path
-     * @param $callback
-     * @param $filters ArkRequestFilter
+     * @param string $method use method constants of ArkWebInput
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param ArkRequestFilter[]|null $filters ArkRequestFilter
      */
     protected function registerRoute($method, $path, $callback, $filters = null)
     {
@@ -148,31 +142,71 @@ class ArkRouter
         array_unshift($this->routes, $new_route);
     }
 
+    /**
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param ArkRequestFilter[]|null $filters ArkRequestFilter
+     */
+    public function get($path, $callback, $filters = null)
+    {
+        $this->registerRoute(ArkWebInput::METHOD_GET, $path, $callback, $filters);
+    }
+
+    /**
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param ArkRequestFilter[]|null $filters ArkRequestFilter
+     */
     public function post($path, $callback, $filters = null)
     {
         $this->registerRoute(ArkWebInput::METHOD_POST, $path, $callback, $filters);
     }
 
+    /**
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param ArkRequestFilter[]|null $filters ArkRequestFilter
+     */
     public function put($path, $callback, $filters = null)
     {
         $this->registerRoute(ArkWebInput::METHOD_PUT, $path, $callback, $filters);
     }
 
+    /**
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param ArkRequestFilter[]|null $filters ArkRequestFilter
+     */
     public function patch($path, $callback, $filters = null)
     {
         $this->registerRoute(ArkWebInput::METHOD_PATCH, $path, $callback, $filters);
     }
 
+    /**
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param ArkRequestFilter[]|null $filters ArkRequestFilter
+     */
     public function delete($path, $callback, $filters = null)
     {
         $this->registerRoute(ArkWebInput::METHOD_DELETE, $path, $callback, $filters);
     }
 
+    /**
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param ArkRequestFilter[]|null $filters ArkRequestFilter
+     */
     public function option($path, $callback, $filters = null)
     {
         $this->registerRoute(ArkWebInput::METHOD_OPTION, $path, $callback, $filters);
     }
 
+    /**
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param ArkRequestFilter[]|null $filters ArkRequestFilter
+     */
     public function head($path, $callback, $filters = null)
     {
         $this->registerRoute(ArkWebInput::METHOD_HEAD, $path, $callback, $filters);
@@ -318,6 +352,11 @@ class ArkRouter
         }
     }
 
+    /**
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param ArkRequestFilter[]|null $filters ArkRequestFilter
+     */
     public function any($path, $callback, $filters = null)
     {
         $this->registerRoute(null, $path, $callback, $filters);

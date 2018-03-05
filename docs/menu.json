@@ -31,5 +31,8 @@
     "io/curl": "Use CURL",
     "io/web/input": "Handle Request",
     "io/web/output": "Make Response"
+  },
+  "Web Service": {
+    "web/introduction": "Introduction"
   }
 }
