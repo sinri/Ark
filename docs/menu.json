@@ -3,7 +3,8 @@
   "starter": "Start Using",
   "Core": {
     "core/helper": "Helper",
-    "core/logger": "Logger"
+    "core/logger": "Logger",
+    "phar/maker": "Phar Maker"
   },
   "CLI": {
     "cli/program": "Program"
@@ -17,15 +18,10 @@
     "cache/file": "File Cache",
     "cache/redis": "Redis Cache"
   },
-  "Phar": {
-    "phar/maker": "Phar Maker"
-  },
-  "SQLite": {
-    "database/sqlite/sqlite3": "SQLite3"
-  },
   "Database": {
-    "database/pdo/config": "Make Configuration",
-    "database/pdo/pdo": "Use PDO"
+    "database/pdo/config": "PDO Configuration",
+    "database/pdo/pdo": "PDO",
+    "database/sqlite/sqlite3": "SQLite3"
   },
   "IO": {
     "io/curl": "Use CURL",
