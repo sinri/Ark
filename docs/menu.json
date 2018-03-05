@@ -29,6 +29,7 @@
   },
   "IO": {
     "io/curl": "Use CURL",
-    "io/web/input": "Handle Request"
+    "io/web/input": "Handle Request",
+    "io/web/output": "Make Response"
   }
 }
