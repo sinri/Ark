@@ -81,9 +81,9 @@ abstract class ArkRequestFilter
      * @param $path
      * @param $method
      * @param $params
-     * @param null $preparedData @since 1.3.6
-     * @param int $responseCode @since 2.2.0
-     * @param null $error @since 2.2.0
+     * @param mixed $preparedData
+     * @param int $responseCode
+     * @param null|string $error
      * @return bool
      */
     abstract public function shouldAcceptRequest($path, $method, $params, &$preparedData = null, &$responseCode = 200, &$error = null);

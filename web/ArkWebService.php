@@ -216,6 +216,10 @@ class ArkWebService
         }
     }
 
+    /**
+     * @param string $pathString It would be as output.
+     * @return string[] array Array of components
+     */
     protected function dividePath(&$pathString = '')
     {
         $sub_paths = array();
