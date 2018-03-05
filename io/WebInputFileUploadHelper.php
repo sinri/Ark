@@ -15,7 +15,7 @@ class WebInputFileUploadHelper
 {
     /**
      * @param string $name
-     * @param callable $callback
+     * @param callable $callback e.g. function($original_file_name, $file_type, $file_size, $file_tmp_name, $error){}
      * @param string $error
      * @return bool|mixed
      */
@@ -39,7 +39,7 @@ class WebInputFileUploadHelper
 
     /**
      * @param $name
-     * @param $callback
+     * @param callable $callback e.g. function($original_file_name, $file_type, $file_size, $file_tmp_name, $error){}
      * @param string $error
      * @return bool
      */

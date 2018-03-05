@@ -27,7 +27,7 @@ class WebInputIPHelper
      *
      * @since 1.3.9 @see CodeIgniter Core
      * @param    string $ip IP address
-     * @param    string $which IP protocol: 'ipv4' or 'ipv6'
+     * @param    string $which IP protocol, IPv4 or IPv6
      * @return    bool
      */
     public function validateIP($ip, $which = '')
@@ -50,10 +50,11 @@ class WebInputIPHelper
 
     /**
      * @param string $ip
-     * @return string IP_TYPE_V?
+     * @return string|bool IP_TYPE_Vx or FALSE when not validated
      */
     public function determineVersionOfIP($ip)
     {
+        if (!$this->validateIP($ip)) return false;
         $v = strpos($ip, ":") === false ? self::IP_TYPE_V4 : self::IP_TYPE_V6;
         return $v;
     }
