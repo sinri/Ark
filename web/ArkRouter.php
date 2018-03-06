@@ -15,20 +15,16 @@ use sinri\ark\io\ArkWebOutput;
 
 class ArkRouter
 {
-    const ROUTE_PARAM_METHOD = "METHOD";
-    const ROUTE_PARAM_PATH = "PATH";
-    const ROUTE_PARAM_CALLBACK = "CALLBACK";
-    const ROUTE_PARAM_FILTER = "FILTER";
-    const ROUTE_PARAM_NAMESPACE = "NAMESPACE";// only used in `group`
-
-    const ROUTE_PARSED_PARAMETERS = "PARSED";// only used in sought result
-
     protected $debug;
     protected $logger;
     protected $defaultControllerName = null;
     protected $defaultMethodName = null;
     protected $errorHandler = null;
-    protected $routes = [];
+
+    /**
+     * @var ArkRouterRule[]
+     */
+    protected $routes;
 
     public function __construct()
     {
@@ -107,81 +103,114 @@ class ArkRouter
         }
     }
 
-    public function get($path, $callback, $filters = null)
-    {
-        $this->registerRoute(ArkWebInput::METHOD_GET, $path, $callback, $filters);
-    }
-
     /**
-     * Designed after Lumen Routing: https://lumen.laravel-china.org/docs/5.3/routing
-     * posts/{post}/comments/{comment}
-     * @param $method
-     * @param $path
-     * @param $callback
-     * @param $filters ArkRequestFilter
+     * @param ArkRouterRule $routeRule
      */
-    protected function registerRoute($method, $path, $callback, $filters = null)
+    public function registerRouteRule($routeRule)
     {
-        if ($this->debug) {
-            $this->logger->debug(__METHOD__, [$method, $path, $callback, $filters]);
-        }
-        $path = preg_replace('/\//', '\/', $path);
-        $matched = preg_match_all('/\{([^\/]+)\}/', $path, $matches);
-        if ($this->debug) {
-            $this->logger->debug("Regex Route Variable Components Matched: " . json_encode($matches));
-        }
-        if ($matched) {
-            $regex = preg_replace('/\{([^\/]+)\}/', '([^\/]+)', $path);
-        } else {
-            $regex = $path;
-        }
-        $regex = '/^\/' . $regex . '$/';
-        $new_route = [
-            self::ROUTE_PARAM_METHOD => $method,
-            self::ROUTE_PARAM_PATH => $regex,
-            self::ROUTE_PARAM_CALLBACK => $callback,
-            self::ROUTE_PARAM_FILTER => $filters,
-        ];
-        if ($this->debug) {
-            $this->logger->debug("New Regex Route: " . json_encode($new_route));
-        }
-        array_unshift($this->routes, $new_route);
+        array_unshift($this->routes, $routeRule);
     }
 
-    public function post($path, $callback, $filters = null)
+    /**
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param ArkRequestFilter[] $filters ArkRequestFilter
+     */
+    public function get($path, $callback, $filters = [])
     {
-        $this->registerRoute(ArkWebInput::METHOD_POST, $path, $callback, $filters);
+        //$this->registerRoute(ArkWebInput::METHOD_GET, $path, $callback, $filters);
+        $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_GET, $path, $callback, $filters);
+        $this->registerRouteRule($route_rule);
     }
 
-    public function put($path, $callback, $filters = null)
+    /**
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param ArkRequestFilter[] $filters ArkRequestFilter
+     */
+    public function post($path, $callback, $filters = [])
     {
-        $this->registerRoute(ArkWebInput::METHOD_PUT, $path, $callback, $filters);
+        //$this->registerRoute(ArkWebInput::METHOD_POST, $path, $callback, $filters);
+        $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_POST, $path, $callback, $filters);
+        $this->registerRouteRule($route_rule);
     }
 
-    public function patch($path, $callback, $filters = null)
+    /**
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param ArkRequestFilter[] $filters ArkRequestFilter
+     */
+    public function put($path, $callback, $filters = [])
     {
-        $this->registerRoute(ArkWebInput::METHOD_PATCH, $path, $callback, $filters);
+        //$this->registerRoute(ArkWebInput::METHOD_PUT, $path, $callback, $filters);
+        $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_PUT, $path, $callback, $filters);
+        $this->registerRouteRule($route_rule);
     }
 
-    public function delete($path, $callback, $filters = null)
+    /**
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param ArkRequestFilter[] $filters ArkRequestFilter
+     */
+    public function patch($path, $callback, $filters = [])
     {
-        $this->registerRoute(ArkWebInput::METHOD_DELETE, $path, $callback, $filters);
+        //$this->registerRoute(ArkWebInput::METHOD_PATCH, $path, $callback, $filters);
+        $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_PATCH, $path, $callback, $filters);
+        $this->registerRouteRule($route_rule);
     }
 
-    public function option($path, $callback, $filters = null)
+    /**
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param ArkRequestFilter[] $filters ArkRequestFilter
+     */
+    public function delete($path, $callback, $filters = [])
     {
-        $this->registerRoute(ArkWebInput::METHOD_OPTION, $path, $callback, $filters);
+        //$this->registerRoute(ArkWebInput::METHOD_DELETE, $path, $callback, $filters);
+        $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_DELETE, $path, $callback, $filters);
+        $this->registerRouteRule($route_rule);
     }
 
-    public function head($path, $callback, $filters = null)
+    /**
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param ArkRequestFilter[] $filters ArkRequestFilter
+     */
+    public function option($path, $callback, $filters = [])
     {
-        $this->registerRoute(ArkWebInput::METHOD_HEAD, $path, $callback, $filters);
+        //$this->registerRoute(ArkWebInput::METHOD_OPTION, $path, $callback, $filters);
+        $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_OPTION, $path, $callback, $filters);
+        $this->registerRouteRule($route_rule);
+    }
+
+    /**
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param ArkRequestFilter[] $filters ArkRequestFilter
+     */
+    public function head($path, $callback, $filters = [])
+    {
+        //$this->registerRoute(ArkWebInput::METHOD_HEAD, $path, $callback, $filters);
+        $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_HEAD, $path, $callback, $filters);
+        $this->registerRouteRule($route_rule);
+    }
+
+    /**
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param ArkRequestFilter[] $filters ArkRequestFilter
+     */
+    public function any($path, $callback, $filters = [])
+    {
+        //$this->registerRoute(ArkWebInput::METHOD_ANY, $path, $callback, $filters);
+        $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_ANY, $path, $callback, $filters);
+        $this->registerRouteRule($route_rule);
     }
 
     /**
      * @param $path
      * @param $method
-     * @return mixed
+     * @return ArkRouterRule
      * @throws \Exception
      */
     public function seekRoute($path, $method)
@@ -194,12 +223,17 @@ class ArkRouter
         }
 
         foreach ($this->routes as $route) {
-            $route_regex = $route[self::ROUTE_PARAM_PATH];
-            $route_method = $route[self::ROUTE_PARAM_METHOD];
+            //echo $route.PHP_EOL;
+            $route_regex = $route->getPath();//$route[self::ROUTE_PARAM_PATH];
+            $route_method = $route->getMethod();//$route[self::ROUTE_PARAM_METHOD];
             if ($this->debug) {
                 $this->logger->debug(__METHOD__ . " TRY TO MATCH RULE: [$route_method][$route_regex][$path]");
             }
-            if (!empty($route_method) && stripos($route_method, $method) === false) {
+            if (
+                //!empty($route_method)
+                $route_method !== ArkWebInput::METHOD_ANY
+                && stripos($route_method, $method) === false
+            ) {
                 if ($this->debug) {
                     $this->logger->debug(__METHOD__ . " ROUTE METHOD NOT MATCH [$method]");
                 }
@@ -215,7 +249,8 @@ class ArkRouter
                 array_walk($matches, function (&$v) {
                     $v = urldecode($v);
                 });
-                $route[self::ROUTE_PARSED_PARAMETERS] = $matches;
+                //$route[self::ROUTE_PARSED_PARAMETERS] = $matches;
+                $route->setParsed($matches);
                 if ($this->debug) {
                     $this->logger->debug(__METHOD__ . " MATCHED with " . json_encode($matches));
                 }
@@ -223,34 +258,50 @@ class ArkRouter
             }
         }
         throw new \Exception("No route matched: path={$path} method={$method}");
+
     }
 
+    /**
+     * @param ArkRouterRule $shared
+     * @param ArkRouterRule[] $list
+     */
     public function group($shared, $list)
     {
         $filters = null;
         $sharedPath = '';
         $sharedNamespace = '';
-        if (isset($shared[self::ROUTE_PARAM_FILTER])) {
-            $filters = $shared[self::ROUTE_PARAM_FILTER];
+//        if (isset($shared[self::ROUTE_PARAM_FILTER])) {
+//            $filters = $shared[self::ROUTE_PARAM_FILTER];
+//        }
+//        if (isset($shared[self::ROUTE_PARAM_PATH])) {
+//            $sharedPath = $shared[self::ROUTE_PARAM_PATH];
+//        }
+//        if (isset($shared[self::ROUTE_PARAM_NAMESPACE])) {
+//            $sharedNamespace = $shared[self::ROUTE_PARAM_NAMESPACE];
+//        }
+        if ($shared->getFilters() !== null) {
+            $filters = $shared->getFilters();
         }
-        if (isset($shared[self::ROUTE_PARAM_PATH])) {
-            $sharedPath = $shared[self::ROUTE_PARAM_PATH];
+        if ($shared->getPath() !== null) {
+            $sharedPath = $shared->getPath();
         }
-        if (isset($shared[self::ROUTE_PARAM_NAMESPACE])) {
-            $sharedNamespace = $shared[self::ROUTE_PARAM_NAMESPACE];
+        if ($shared->getNamespace() !== null) {
+            $sharedNamespace = $shared->getNamespace();
         }
 
         foreach ($list as $item) {
-            $callback = $item[self::ROUTE_PARAM_CALLBACK];
+            //$callback = $item[self::ROUTE_PARAM_CALLBACK];
+            $callback = $item->getCallback();
             if (is_array($callback) && isset($callback[0]) && is_string($callback[0])) {
                 $callback[0] = $sharedNamespace . $callback[0];
             }
-            $this->registerRoute(
-                $item[self::ROUTE_PARAM_METHOD],
-                $sharedPath . $item[self::ROUTE_PARAM_PATH],
+            $route_rule = ArkRouterRule::buildRouteRule(
+                $item->getMethod(),//$item[self::ROUTE_PARAM_METHOD],
+                $sharedPath . $item->getPath(),//$item[self::ROUTE_PARAM_PATH],
                 $callback,
                 $filters
             );
+            $this->registerRouteRule($route_rule);
         }
     }
 
@@ -318,15 +369,10 @@ class ArkRouter
         }
     }
 
-    public function any($path, $callback, $filters = null)
-    {
-        $this->registerRoute(null, $path, $callback, $filters);
-    }
-
     /**
-     * @param $basePath
-     * @param $controllerClass
-     * @param null $filters
+     * @param string $basePath "" or "xx/"
+     * @param string $controllerClass full class describer
+     * @param ArkRequestFilter[]|null $filters
      */
     public function loadController($basePath, $controllerClass, $filters = null)
     {
@@ -359,13 +405,15 @@ class ArkRouter
                     }
                     $path .= $after_string;
                 }
-                $this->registerRoute(null, $path, [$controllerClass, $method], $filters);
+                $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_ANY, $path, [$controllerClass, $method], $filters);
+                $this->registerRouteRule($route_rule);
                 if ($method == $this->defaultMethodName) {
                     $basePathX = $basePath;
                     if (strlen($basePathX) > 0) {
                         $basePathX = substr($basePathX, 0, strlen($basePathX) - 1);
                     }
-                    $this->registerRoute(null, $basePathX, [$controllerClass, $method], $filters);
+                    $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_ANY, $basePathX, [$controllerClass, $method], $filters);
+                    $this->registerRouteRule($route_rule);
                 }
             }
         } catch (\Exception $exception) {

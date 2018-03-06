@@ -128,36 +128,7 @@ class ArkWebService
                 $arguments[] = $argv[$i];
             }
             $route = $this->router->seekRoute($path, Ark()->webInput()->requestMethod());
-            $callable = ArkHelper::readTarget($route, ArkRouter::ROUTE_PARAM_CALLBACK);
-            $filter_chain = ArkHelper::readTarget($route, ArkRouter::ROUTE_PARAM_FILTER);
-
-            if (!is_array($filter_chain)) {
-                $filter_chain = [$filter_chain];
-            }
-            $preparedData = null;
-            foreach ($filter_chain as $filter) {
-                $filter_instance = ArkRequestFilter::makeInstance($filter);
-                $shouldAcceptRequest = $filter_instance->shouldAcceptRequest(
-                    $path,
-                    Ark()->webInput()->requestMethod(),
-                    $arguments,
-                    $this->filterGeneratedData,
-                    $responseCode,
-                    $filterError
-                );
-                if (!$shouldAcceptRequest) {
-                    //header('HTTP/1.0 403 Forbidden');
-                    throw new \Exception("Rejected by Filter " . $filter . ". " . $filterError, $responseCode);
-                }
-            }
-
-            if (is_array($callable) && isset($callable[0])) {
-                $class_instance_name = $callable[0];
-                $class_instance = new $class_instance_name();
-
-                $callable[0] = $class_instance;
-            }
-            call_user_func_array($callable, $arguments);
+            $route->execute($path, $this->filterGeneratedData, 0);
         } catch (\Exception $exception) {
             $this->logger->error("Exception in " . __METHOD__ . " : " . $exception->getMessage());
         }
@@ -166,56 +137,21 @@ class ArkWebService
     public function handleRequestForWeb()
     {
         try {
-            $responseCode = 200;
-
             $this->dividePath($path_string);
             $route = $this->router->seekRoute($path_string, Ark()->webInput()->requestMethod());
-            $callable = ArkHelper::readTarget($route, ArkRouter::ROUTE_PARAM_CALLBACK);
-            $params = ArkHelper::readTarget($route, ArkRouter::ROUTE_PARSED_PARAMETERS);
-            $filter_chain = ArkHelper::readTarget($route, ArkRouter::ROUTE_PARAM_FILTER);
-
-            if (!is_array($filter_chain)) {
-                $filter_chain = [$filter_chain];
-            }
-            $preparedData = null;
-            foreach ($filter_chain as $filter) {
-                $filter_instance = ArkRequestFilter::makeInstance($filter);
-                $shouldAcceptRequest = $filter_instance->shouldAcceptRequest(
-                    $path_string,
-                    Ark()->webInput()->requestMethod(),
-                    $params,
-                    $this->filterGeneratedData,
-                    $responseCode,
-                    $filterError
-                );
-                if (!$shouldAcceptRequest) {
-                    throw new \Exception(
-                        "Your request is rejected by [" . $filter_instance->filterTitle() . "], reason: " . $filterError,
-                        $responseCode
-                    );
-                }
-            }
-
-            if (is_array($callable) && isset($callable[0])) {
-                $class_instance_name = $callable[0];
-                $class_instance = new $class_instance_name();
-
-                $callable[0] = $class_instance;
-            }
-            call_user_func_array($callable, $params);
+            $route->execute($path_string, $this->filterGeneratedData, 200);
         } catch (\Exception $exception) {
-            $this->router->handleRouteError(
-                $exception->getMessage(),
-                $exception->getCode()
-            );
+            $this->router->handleRouteError($exception->getMessage(), $exception->getCode());
             if ($this->debug) {
-                echo "<pre>" . PHP_EOL;
-                print_r($exception);
-                echo "</pre>" . PHP_EOL;
+                echo "<pre>" . PHP_EOL . print_r($exception, true) . "</pre>" . PHP_EOL;
             }
         }
     }
 
+    /**
+     * @param string $pathString It would be as output.
+     * @return string[] array Array of components
+     */
     protected function dividePath(&$pathString = '')
     {
         $sub_paths = array();

@@ -74,7 +74,8 @@
             </Header>
             <Layout>
                 <Sider hide-trigger :style="{background: '#fff', minHeight:'80vh',position:'fixed',left:0,top:'60px'}">
-                    <i-menu theme="light" @on-select="onMenuSelected" width="auto">
+                    <i-menu theme="light" @on-select="onMenuSelected" width="auto"
+                            :style="{height:'98vh',overflow:'auto'}">
                         <template v-for="(menuGroupItem,menuGroupKey) in menuGroupList">
                             <Submenu v-if="menuGroupItem.type=='sub-menu'" :key="menuGroupKey"
                                      :name="menuGroupItem.title">

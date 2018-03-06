@@ -22,6 +22,14 @@ class ArkWebOutput
 
     const CHARSET_UTF8 = "UTF-8";
 
+    /**
+     * @param int $httpCode such as 200, 404, 500, etc.
+     */
+    public function responseHTTPCode($httpCode)
+    {
+        http_response_code($httpCode);
+    }
+
     public function setContentTypeHeader($contentType, $charSet = null)
     {
         header("Content-Type: " . $contentType . ($charSet !== null ? '; charset=' . $charSet : ''));
@@ -60,14 +68,14 @@ class ArkWebOutput
     }
 
     /**
-     * 文件下载
+     * 文件通过非直接方式下载
      * @param $file
      * @param null $down_name
      * @param null $content_type
      * @return bool
      * @throws \Exception
      */
-    public function downloadFileAsName($file, $content_type = null, $down_name = null)
+    public function downloadFileIndirectly($file, $content_type = null, $down_name = null)
     {
         if (!file_exists($file)) {
             throw new \Exception("No such file there", 404);
