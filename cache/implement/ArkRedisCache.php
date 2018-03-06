@@ -29,7 +29,7 @@ class ArkRedisCache implements ArkCache
      */
     public function __construct($host, $port = 6379, $database = 255, $password = null)
     {
-        $this->client = (new ArkRedis($host, $port, $database, $password))->$this->getClient();
+        $this->client = (ArkRedis::simpleParameterBuilder($host, $port, $database, $password))->$this->getClient();
     }
 
     /**

@@ -11,7 +11,6 @@ namespace sinri\ark\web;
 
 use sinri\ark\core\ArkLogger;
 use sinri\ark\io\ArkWebInput;
-use sinri\ark\io\ArkWebOutput;
 
 class ArkRouter
 {
@@ -72,7 +71,7 @@ class ArkRouter
      * Give a string as template file path for display-page use;
      * give an anonymous function or a callable definition array which consume one parameter of array,
      * or leave it as null to response JSON.
-     * @param null|string|callable $errorHandler
+     * @param ArkRouteErrorHandler|null $errorHandler
      */
     public function setErrorHandler($errorHandler)
     {
@@ -81,26 +80,14 @@ class ArkRouter
 
     /**
      * @param array $errorData
-     * @param int $http_code @since 1.2.8
+     * @param int $httpCode @since 1.2.8
      */
-    public function handleRouteError($errorData = [], $http_code = 404)
+    public function handleRouteError($errorData = [], $httpCode = 404)
     {
-        try {
-            http_response_code($http_code);
-            if (is_string($this->errorHandler) && file_exists($this->errorHandler)) {
-                Ark()->webOutput()->displayPage($this->errorHandler, $errorData);
-                return;
-            } elseif (is_callable($this->errorHandler)) {
-                call_user_func_array($this->errorHandler, [$errorData]);
-                return;
-            } else {
-                Ark()->webOutput()->setContentTypeHeader(ArkWebOutput::CONTENT_TYPE_JSON);
-                Ark()->webOutput()->jsonForAjax(ArkWebOutput::AJAX_JSON_CODE_FAIL, $errorData);
-            }
-        } catch (\Exception $exception) {
-            echo $exception->getMessage() . PHP_EOL;
-            echo $exception->getTraceAsString();
+        if (!$this->errorHandler) {
+            $this->errorHandler = new ArkRouteErrorHandler();
         }
+        $this->errorHandler->execute($errorData, $httpCode);
     }
 
     /**
@@ -118,7 +105,6 @@ class ArkRouter
      */
     public function get($path, $callback, $filters = [])
     {
-        //$this->registerRoute(ArkWebInput::METHOD_GET, $path, $callback, $filters);
         $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_GET, $path, $callback, $filters);
         $this->registerRouteRule($route_rule);
     }
@@ -130,7 +116,6 @@ class ArkRouter
      */
     public function post($path, $callback, $filters = [])
     {
-        //$this->registerRoute(ArkWebInput::METHOD_POST, $path, $callback, $filters);
         $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_POST, $path, $callback, $filters);
         $this->registerRouteRule($route_rule);
     }
@@ -142,7 +127,6 @@ class ArkRouter
      */
     public function put($path, $callback, $filters = [])
     {
-        //$this->registerRoute(ArkWebInput::METHOD_PUT, $path, $callback, $filters);
         $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_PUT, $path, $callback, $filters);
         $this->registerRouteRule($route_rule);
     }
@@ -154,7 +138,6 @@ class ArkRouter
      */
     public function patch($path, $callback, $filters = [])
     {
-        //$this->registerRoute(ArkWebInput::METHOD_PATCH, $path, $callback, $filters);
         $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_PATCH, $path, $callback, $filters);
         $this->registerRouteRule($route_rule);
     }
@@ -166,7 +149,6 @@ class ArkRouter
      */
     public function delete($path, $callback, $filters = [])
     {
-        //$this->registerRoute(ArkWebInput::METHOD_DELETE, $path, $callback, $filters);
         $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_DELETE, $path, $callback, $filters);
         $this->registerRouteRule($route_rule);
     }
@@ -178,7 +160,6 @@ class ArkRouter
      */
     public function option($path, $callback, $filters = [])
     {
-        //$this->registerRoute(ArkWebInput::METHOD_OPTION, $path, $callback, $filters);
         $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_OPTION, $path, $callback, $filters);
         $this->registerRouteRule($route_rule);
     }
@@ -190,7 +171,6 @@ class ArkRouter
      */
     public function head($path, $callback, $filters = [])
     {
-        //$this->registerRoute(ArkWebInput::METHOD_HEAD, $path, $callback, $filters);
         $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_HEAD, $path, $callback, $filters);
         $this->registerRouteRule($route_rule);
     }
@@ -202,7 +182,6 @@ class ArkRouter
      */
     public function any($path, $callback, $filters = [])
     {
-        //$this->registerRoute(ArkWebInput::METHOD_ANY, $path, $callback, $filters);
         $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_ANY, $path, $callback, $filters);
         $this->registerRouteRule($route_rule);
     }
@@ -223,14 +202,12 @@ class ArkRouter
         }
 
         foreach ($this->routes as $route) {
-            //echo $route.PHP_EOL;
             $route_regex = $route->getPath();//$route[self::ROUTE_PARAM_PATH];
             $route_method = $route->getMethod();//$route[self::ROUTE_PARAM_METHOD];
             if ($this->debug) {
                 $this->logger->debug(__METHOD__ . " TRY TO MATCH RULE: [$route_method][$route_regex][$path]");
             }
             if (
-                //!empty($route_method)
                 $route_method !== ArkWebInput::METHOD_ANY
                 && stripos($route_method, $method) === false
             ) {
@@ -240,7 +217,6 @@ class ArkRouter
                 continue;
             }
             if (preg_match($route_regex, $path, $matches)) {
-                // @since 1.2.8 the shift job moved here
                 if (!empty($matches)) array_shift($matches);
                 $matches = array_filter($matches, function ($v) {
                     return substr($v, 0, 1) != '/';
@@ -249,7 +225,6 @@ class ArkRouter
                 array_walk($matches, function (&$v) {
                     $v = urldecode($v);
                 });
-                //$route[self::ROUTE_PARSED_PARAMETERS] = $matches;
                 $route->setParsed($matches);
                 if ($this->debug) {
                     $this->logger->debug(__METHOD__ . " MATCHED with " . json_encode($matches));
@@ -270,15 +245,7 @@ class ArkRouter
         $filters = null;
         $sharedPath = '';
         $sharedNamespace = '';
-//        if (isset($shared[self::ROUTE_PARAM_FILTER])) {
-//            $filters = $shared[self::ROUTE_PARAM_FILTER];
-//        }
-//        if (isset($shared[self::ROUTE_PARAM_PATH])) {
-//            $sharedPath = $shared[self::ROUTE_PARAM_PATH];
-//        }
-//        if (isset($shared[self::ROUTE_PARAM_NAMESPACE])) {
-//            $sharedNamespace = $shared[self::ROUTE_PARAM_NAMESPACE];
-//        }
+
         if ($shared->getFilters() !== null) {
             $filters = $shared->getFilters();
         }
@@ -290,7 +257,6 @@ class ArkRouter
         }
 
         foreach ($list as $item) {
-            //$callback = $item[self::ROUTE_PARAM_CALLBACK];
             $callback = $item->getCallback();
             if (is_array($callback) && isset($callback[0]) && is_string($callback[0])) {
                 $callback[0] = $sharedNamespace . $callback[0];
@@ -345,8 +311,6 @@ class ArkRouter
                         //FILE
                         $list = explode('.', $entry);
                         $name = isset($list[0]) ? $list[0] : '';
-                        //$ppp=method_exists($controllerNamespaceBase . $name,$this->default_method_name);
-                        //echo "ppp=".json_encode($ppp).PHP_EOL;
                         if (
                             $this->defaultMethodName
                             && method_exists($controllerNamespaceBase . $name, $this->defaultMethodName)
@@ -388,7 +352,6 @@ class ArkRouter
                 $after_string = "";
                 $came_in_default_area = false;
                 if (!empty($parameters)) {
-                    //self::ROUTER_TYPE_REGEX
                     foreach ($parameters as $param) {
                         if ($param->isDefaultValueAvailable()) {
                             $path .= "(";
@@ -418,7 +381,6 @@ class ArkRouter
             }
         } catch (\Exception $exception) {
             // do nothing if class not exist
-
         }
     }
 }

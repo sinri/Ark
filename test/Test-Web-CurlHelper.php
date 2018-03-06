@@ -12,7 +12,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../autoload.php';
 
 $x = new ArkCurl();
-$logger = new \sinri\ark\core\ArkLogger(__DIR__ . '/log', 'curl', false);
+$logger = new \sinri\ark\core\ArkLogger(__DIR__ . '/log', 'curl');
 $x->setLogger($logger);
 $response = $x->prepareToRequestURL(\sinri\ark\io\ArkWebInput::METHOD_GET, "https://sinri.cc")
     ->execute();

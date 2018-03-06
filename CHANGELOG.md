@@ -1,11 +1,12 @@
 # Change Log of Ark
 
-### pre Version 0.9
+### Version 0.9
 
 Remove 'force logging to STDOUT' feature in ArkLogger and designed `echo` instead.
 `ArkPDO` treat database config as optional.
 `ArkCurl` support setting raw options of CURL.
 Great changes on Web Router and Session Management.
+ETC., a lot of changes.
 
 ### Version 0.8
 
