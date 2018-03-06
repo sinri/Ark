@@ -4,6 +4,8 @@ The router of Ark is based on the path of coming request.
 
 ## Define One Router Rule
 
+A router rule could be expressed as `ArkRouterRule` instance.
+
 ### Determine Support Method
 
 GET, POST, etc.
