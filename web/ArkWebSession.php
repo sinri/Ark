@@ -10,7 +10,7 @@ namespace sinri\ark\web;
 
 
 use Predis\Session\Handler;
-use sinri\ark\database\ArkRedis;
+use sinri\ark\database\redis\ArkRedis;
 
 class ArkWebSession implements \SessionHandlerInterface
 {

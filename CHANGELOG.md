@@ -1,5 +1,9 @@
 # Change Log of Ark
 
+### Version 0.10
+
+Changed Ark Database Cluster and added MySQLi Adapter.
+
 ### Version 0.9
 
 Remove 'force logging to STDOUT' feature in ArkLogger and designed `echo` instead.

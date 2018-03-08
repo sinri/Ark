@@ -6,10 +6,11 @@
  * Time: 11:45
  */
 
-namespace sinri\ark\database;
+namespace sinri\ark\database\redis;
 
 
 use Predis\Client;
+
 
 class ArkRedis
 {

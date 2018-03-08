@@ -11,7 +11,7 @@ namespace sinri\ark\cache\implement;
 
 use Predis\Client;
 use sinri\ark\cache\ArkCache;
-use sinri\ark\database\ArkRedis;
+use sinri\ark\database\redis\ArkRedis;
 
 class ArkRedisCache implements ArkCache
 {
