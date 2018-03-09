@@ -1,5 +1,9 @@
 # Change Log of Ark
 
+### pre Version 0.11
+
+Add quick not empty assert for conveniences.
+
 ### Version 0.10
 
 Changed Ark Database Cluster and added MySQLi Adapter.
