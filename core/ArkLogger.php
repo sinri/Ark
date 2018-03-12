@@ -54,7 +54,7 @@ class ArkLogger extends AbstractLogger
     }
 
     /**
-     * @param string $ignoreLevel
+     * @param string $ignoreLevel this level and above would be visible
      */
     public function setIgnoreLevel(string $ignoreLevel)
     {

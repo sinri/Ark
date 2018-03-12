@@ -14,7 +14,7 @@ require_once __DIR__ . '/../../../autoload.php';
 $logger = new \sinri\ark\core\ArkLogger(__DIR__ . '/../../log', 'pdo-mysql');
 //$logger->setIgnoreLevel(\Psr\Log\LogLevel::INFO);
 
-$config = new \sinri\ark\database\ArkPDOConfig();
+$config = new \sinri\ark\database\pdo\ArkPDOConfig();
 
 // REQUIRE config.php (you might generate one besides) to do the commented job
 //$config->setHost('db.com')
@@ -28,7 +28,7 @@ $config = new \sinri\ark\database\ArkPDOConfig();
 require __DIR__ . '/config.php';
 
 try {
-    $db = new \sinri\ark\database\ArkPDO();
+    $db = new \sinri\ark\database\pdo\ArkPDO();
     $db->setPdoConfig($config);
     $db->setLogger($logger);
     $db->connect();
@@ -87,7 +87,7 @@ try {
         }
 
         /**
-         * @return \sinri\ark\database\ArkPDO
+         * @return \sinri\ark\database\pdo\ArkPDO
          */
         public function db()
         {

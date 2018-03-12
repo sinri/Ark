@@ -9,7 +9,7 @@
 namespace sinri\ark\database\model;
 
 
-use sinri\ark\database\ArkPDO;
+use sinri\ark\database\pdo\ArkPDO;
 
 class ArkSQLCondition
 {

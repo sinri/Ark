@@ -10,7 +10,7 @@ namespace sinri\ark\database\model;
 
 
 use sinri\ark\core\ArkHelper;
-use sinri\ark\database\ArkPDO;
+use sinri\ark\database\pdo\ArkPDO;
 
 /**
  * Class ArkDatabaseTableModel

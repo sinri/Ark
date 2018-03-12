@@ -175,6 +175,19 @@ class ArkHelper
     }
 
     /**
+     * @since 0.11
+     * @param string $error
+     * @param array ...$parameters
+     * @throws \Exception
+     */
+    public static function quickNotEmptyAssert($error, ...$parameters)
+    {
+        foreach ($parameters as $parameter) {
+            self::assertItem($parameter, $error);
+        }
+    }
+
+    /**
      * @param array[] $list
      * @param string $keyField
      * @return array

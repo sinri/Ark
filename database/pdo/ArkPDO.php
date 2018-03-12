@@ -6,7 +6,7 @@
  * Time: 13:37
  */
 
-namespace sinri\ark\database;
+namespace sinri\ark\database\pdo;
 
 
 use sinri\ark\core\ArkHelper;

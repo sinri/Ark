@@ -1,10 +1,20 @@
 # Change Log of Ark
 
-### pre Version 0.9
+### pre Version 0.11
+
+Add quick not empty assert for conveniences.
+
+### Version 0.10
+
+Changed Ark Database Cluster and added MySQLi Adapter.
+
+### Version 0.9
 
 Remove 'force logging to STDOUT' feature in ArkLogger and designed `echo` instead.
 `ArkPDO` treat database config as optional.
 `ArkCurl` support setting raw options of CURL.
+Great changes on Web Router and Session Management.
+ETC., a lot of changes.
 
 ### Version 0.8
 

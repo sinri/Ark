@@ -9,32 +9,14 @@
 namespace sinri\ark\web;
 
 
+use Predis\Session\Handler;
+use sinri\ark\database\redis\ArkRedis;
+
 class ArkWebSession implements \SessionHandlerInterface
 {
-
-    private $session_id;
-    private $session_name;
+    protected $session_id;
+    protected $session_name;
     private $savePath;
-
-    public function getSessionID()
-    {
-        return $this->session_id;
-    }
-
-    public function setSessionID($id)
-    {
-        $this->session_id = $id;
-    }
-
-    public function getSessionName()
-    {
-        return $this->session_name;
-    }
-
-    public function setSessionName($name)
-    {
-        $this->session_name = $name;
-    }
 
     /**
      * @param null $sessionDir
@@ -55,6 +37,96 @@ class ArkWebSession implements \SessionHandlerInterface
         //读取会话名称
         $session_name = session_name();
         $handler->setSessionName($session_name);
+    }
+
+    /**
+     * A special entrance with Redis @uses \Predis\Session\Handler
+     * Instantiate a new client just like you would normally do. Using a prefix for
+     * keys will effectively prefix all session keys with the specified string.
+     * @param ArkRedis $redisAgent such as new Client($single_server, array('prefix' => 'sessions:'));
+     * @param int $sessionLifetime
+     */
+    public static function sessionStartWithRedis($redisAgent, $sessionLifetime = 3600)
+    {
+        $handler = new class(
+            $redisAgent->getRedisClient(),
+            ['gc_maxlifetime' => $sessionLifetime]
+        ) extends Handler
+        {
+            /**
+             * @var string
+             */
+            protected $session_id;
+
+            /**
+             * @var string
+             */
+            protected $session_name;
+
+            /**
+             * @return string
+             */
+            public function getSessionId(): string
+            {
+                return $this->session_id;
+            }
+
+            /**
+             * @param string $session_id
+             */
+            public function setSessionId(string $session_id)
+            {
+                $this->session_id = $session_id;
+            }
+
+            /**
+             * @return string
+             */
+            public function getSessionName(): string
+            {
+                return $this->session_name;
+            }
+
+            /**
+             * @param string $session_name
+             */
+            public function setSessionName(string $session_name)
+            {
+                $this->session_name = $session_name;
+            }
+        };
+
+        // Register the session handler.
+        $handler->register();
+
+        session_start();
+
+        //获取当前会话 ID
+        $session_id = session_id();
+        $handler->setSessionID($session_id);
+        //读取会话名称
+        $session_name = session_name();
+        $handler->setSessionName($session_name);
+    }
+
+    public function getSessionID()
+    {
+        return $this->session_id;
+    }
+
+    public function setSessionID($id)
+    {
+        $this->session_id = $id;
+    }
+
+    public function getSessionName()
+    {
+        return $this->session_name;
+    }
+
+    public function setSessionName($name)
+    {
+        $this->session_name = $name;
     }
 
     // interface

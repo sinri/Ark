@@ -11,9 +11,13 @@ namespace sinri\ark\cache\implement;
 
 use Predis\Client;
 use sinri\ark\cache\ArkCache;
+use sinri\ark\database\redis\ArkRedis;
 
 class ArkRedisCache implements ArkCache
 {
+    /**
+     * @var Client
+     */
     protected $client;
 
     /**
@@ -25,13 +29,7 @@ class ArkRedisCache implements ArkCache
      */
     public function __construct($host, $port = 6379, $database = 255, $password = null)
     {
-        $single_server = array(
-            'host' => $host,
-            'port' => $port,
-            'database' => $database,
-        );
-        if ($password !== null) $single_server['password'] = $password;
-        $this->client = new Client($single_server);
+        $this->client = (ArkRedis::simpleParameterBuilder($host, $port, $database, $password))->$this->getClient();
     }
 
     /**

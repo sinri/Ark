@@ -91,6 +91,8 @@ foreach ($cases as $case_index => $case) {
     echo PHP_EOL;
 }
 
+ArkHelper::quickNotEmptyAssert("quick not empty assert failed", 0, 1, false, null, '', '0', '00', 000, 0x00, 0b00, ' ', []);
+
 //turnListToMapping
 
 echo "Test For turnListToMapping ... " . PHP_EOL;

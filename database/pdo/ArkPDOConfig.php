@@ -6,11 +6,23 @@
  * Time: 13:41
  */
 
-namespace sinri\ark\database;
+namespace sinri\ark\database\pdo;
 
 
 use sinri\ark\core\ArkHelper;
 
+/**
+ * Class ArkMySQLiConfig
+ * @package sinri\ark\database\mysql
+ * @property string $host
+ * @property int $port
+ * @property string $username
+ * @property string $password
+ * @property string $database
+ * @property string $charset
+ * @property string engine
+ * @property null|array options
+ */
 class ArkPDOConfig
 {
     const CONFIG_HOST = "host";
@@ -31,6 +43,12 @@ class ArkPDOConfig
     public function __construct($dict = null)
     {
         $this->dict = is_array($dict) ? $dict : [];
+        if (null === $this->getConfigField(self::CONFIG_CHARSET)) {
+            $this->setCharset("utf8");
+        }
+        if (null === $this->getConfigField(self::CONFIG_PORT)) {
+            $this->setPort("3306");
+        }
     }
 
     public function __set($name, $value)

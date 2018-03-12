@@ -54,7 +54,7 @@ It parses a more terrific kind of SQL template into real SQL with parameters.
 
 ### Template Embedding Rule
 
-The rules of replacement are listed, the left are the embeded and the right are the operation on the parameter `$p`.
+The rules of replacement are listed, the left are the embedded and the right are the operation on the parameter `$p`.
 
  * `?` => $p
  *  ?  => quote($p)
