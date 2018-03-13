@@ -28,6 +28,22 @@ class ArkMySQLi
     }
 
     /**
+     * @return ArkMySQLiConfig
+     */
+    public function getConfig(): ArkMySQLiConfig
+    {
+        return $this->config;
+    }
+
+    /**
+     * @param ArkMySQLiConfig $config
+     */
+    public function setConfig(ArkMySQLiConfig $config)
+    {
+        $this->config = $config;
+    }
+
+    /**
      * @return \mysqli|null
      */
     public function getInstanceOfMySQLi()

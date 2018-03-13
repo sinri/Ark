@@ -22,7 +22,6 @@ class ArkPDO
      * @var \PDO
      */
     protected $pdo;
-
     /**
      * @var ArkLogger
      */
@@ -30,11 +29,28 @@ class ArkPDO
 
     /**
      * ArkPDO constructor.
+     * @param ArkPDOConfig|null $config
      */
-    public function __construct()
+    public function __construct($config = null)
     {
         $this->logger = ArkLogger::makeSilentLogger();
-        $this->pdoConfig = null;
+        $this->pdoConfig = $config;
+    }
+
+    /**
+     * @return ArkPDOConfig
+     */
+    public function getPdoConfig(): ArkPDOConfig
+    {
+        return $this->pdoConfig;
+    }
+
+    /**
+     * @param ArkPDOConfig $pdoConfig
+     */
+    public function setPdoConfig(ArkPDOConfig $pdoConfig)
+    {
+        $this->pdoConfig = $pdoConfig;
     }
 
     /**
@@ -99,19 +115,23 @@ class ArkPDO
     }
 
     /**
-     * @param ArkPDOConfig $pdoConfig
-     */
-    public function setPdoConfig(ArkPDOConfig $pdoConfig)
-    {
-        $this->pdoConfig = $pdoConfig;
-    }
-
-    /**
      * @return \PDO
      */
     public function getPdo(): \PDO
     {
         return $this->pdo;
+    }
+
+    /**
+     * @param $sql
+     * @return array
+     * @throws \Exception
+     */
+    public function getAll($sql)
+    {
+        $stmt = $this->buildPDOStatement($sql);
+        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $rows;
     }
 
     /**
@@ -134,18 +154,6 @@ class ArkPDO
             $this->logger->debug("PDO Statement Generated.", ["sql" => $sql]);
         }
         return $statement;
-    }
-
-    /**
-     * @param $sql
-     * @return array
-     * @throws \Exception
-     */
-    public function getAll($sql)
-    {
-        $stmt = $this->buildPDOStatement($sql);
-        $rows = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        return $rows;
     }
 
     /**
@@ -265,40 +273,6 @@ class ArkPDO
     public function getPDOErrorInfo()
     {
         return $this->pdo->errorInfo();
-    }
-
-    /**
-     * @param $string
-     * @param int $parameterType \PDO::PARAM_STR or \PDO::PARAM_INT
-     * @return string
-     */
-    public function quote($string, $parameterType = \PDO::PARAM_STR)
-    {
-        if (!$this->pdo) {
-            if ($parameterType == \PDO::PARAM_INT) {
-                return intval($string);
-            }
-            return self::dryQuote($string);
-        }
-        return $this->pdo->quote($string, $parameterType);
-    }
-
-    /**
-     * @since 2.1.11
-     * @param $inp
-     * @return array|mixed
-     */
-    public static function dryQuote($inp)
-    {
-        if (is_array($inp))
-            return array_map([__CLASS__, __METHOD__], $inp);
-
-        if (!empty($inp) && is_string($inp)) {
-            $x = str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"), array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'), $inp);
-            return "'{$x}'";
-        }
-
-        return $inp;
     }
 
     /**
@@ -517,6 +491,40 @@ class ArkPDO
         }
 
         return $sql;
+    }
+
+    /**
+     * @param $string
+     * @param int $parameterType \PDO::PARAM_STR or \PDO::PARAM_INT
+     * @return string
+     */
+    public function quote($string, $parameterType = \PDO::PARAM_STR)
+    {
+        if (!$this->pdo) {
+            if ($parameterType == \PDO::PARAM_INT) {
+                return intval($string);
+            }
+            return self::dryQuote($string);
+        }
+        return $this->pdo->quote($string, $parameterType);
+    }
+
+    /**
+     * @since 2.1.11
+     * @param $inp
+     * @return array|mixed
+     */
+    public static function dryQuote($inp)
+    {
+        if (is_array($inp))
+            return array_map([__CLASS__, __METHOD__], $inp);
+
+        if (!empty($inp) && is_string($inp)) {
+            $x = str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"), array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'), $inp);
+            return "'{$x}'";
+        }
+
+        return $inp;
     }
 
 }

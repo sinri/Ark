@@ -8,3 +8,4 @@ composer.phar
 /test/log/
 /test/database/pdo-mysql/config.php
 /test/phar/ArkTestSuit.phar
+/test/database/compare/config.php

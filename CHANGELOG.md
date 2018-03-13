@@ -3,6 +3,7 @@
 ### pre Version 0.11
 
 Add quick not empty assert for conveniences.
+PDO Table Compare.
 
 ### Version 0.10
 

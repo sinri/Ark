@@ -14,6 +14,7 @@ use sinri\ark\core\ArkHelper;
 /**
  * Class ArkMySQLiConfig
  * @package sinri\ark\database\mysql
+ * @property string $title
  * @property string $host
  * @property int $port
  * @property string $username
@@ -25,6 +26,7 @@ use sinri\ark\core\ArkHelper;
  */
 class ArkPDOConfig
 {
+    const CONFIG_TITLE = "title";
     const CONFIG_HOST = "host";
     const CONFIG_PORT = "port";
     const CONFIG_USERNAME = "username";
@@ -48,6 +50,9 @@ class ArkPDOConfig
         }
         if (null === $this->getConfigField(self::CONFIG_PORT)) {
             $this->setPort("3306");
+        }
+        if (null === $this->getConfigField(self::CONFIG_TITLE)) {
+            $this->setTitle(uniqid('ArkPDO-'));
         }
     }
 
@@ -115,9 +120,25 @@ class ArkPDOConfig
         return $this;
     }
 
+    /**
+     * NOTE, Aliyun DRDS need [\PDO::ATTR_EMULATE_PREPARES=>true] here!
+     * @param $value
+     * @return $this
+     */
     public function setOptions($value)
     {
         $field = self::CONFIG_OPTIONS;
+        $this->$field = $value;
+        return $this;
+    }
+
+    /**
+     * @param string $value
+     * @return $this
+     */
+    public function setTitle($value)
+    {
+        $field = self::CONFIG_TITLE;
         $this->$field = $value;
         return $this;
     }
