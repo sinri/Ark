@@ -147,16 +147,6 @@ class ArkWebInput
     }
 
     /**
-     * @deprecated TODO would be removed in 1.0
-     * @param array $proxyIPs
-     * @return string
-     */
-    public function visitorIP($proxyIPs = [])
-    {
-        return $this->getRequestSourceIP($proxyIPs);
-    }
-
-    /**
      * @return string
      */
     public function getRequestMethod()
@@ -168,15 +158,5 @@ class ArkWebInput
         }
         return ArkHelper::isCLI() ? self::METHOD_CLI : php_sapi_name();
     }
-
-    /**
-     * @deprecated TODO would be removed in 1.0
-     * @return string
-     */
-    public function requestMethod()
-    {
-        return $this->getRequestMethod();
-    }
-
 
 }

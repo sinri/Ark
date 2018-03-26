@@ -24,16 +24,6 @@ class ArkWebOutput
     }
 
     /**
-     * @deprecated TODO would be removed in 1.0
-     * @param int $httpCode such as 200, 404, 500, etc.
-     * @return int
-     */
-    public function responseHTTPCode($httpCode)
-    {
-        return http_response_code($httpCode);
-    }
-
-    /**
      * @return int
      */
     public function getCurrentHTTPCode()

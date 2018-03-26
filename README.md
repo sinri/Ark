@@ -18,6 +18,7 @@ It is a new generation for [Enoch Project](https://github.com/sinri/enoch), as w
 ## Environment
 
 Ark requests PHP 7.
+If you need Redis, you might need to declare the reference of `predis/predis`.
 
 ## Toolkit Map
 

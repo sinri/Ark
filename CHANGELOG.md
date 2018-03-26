@@ -1,5 +1,11 @@
 # Change Log of Ark
 
+### Version 1.0
+
+Removed deprecated methods.
+
+----
+
 ### Version 0.11 (as 1.0-alpha)
 
 Add quick not empty assert for conveniences.
