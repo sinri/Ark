@@ -146,7 +146,7 @@ class ArkPDOCompareTool
                     $ptrA++;
                 } else {
                     //SAME
-                    // TODO check table ddl and data
+                    // check table ddl and data
                     if ($this->shouldCheckTableCreateDDL) {
                         $creationA = $this->getTableCreation($this->getDB(self::INSTANCE_CODE_A), $currentTableNameOfA);
                         $creationB = $this->getTableCreation($this->getDB(self::INSTANCE_CODE_B), $currentTableNameOfB);
@@ -160,8 +160,7 @@ class ArkPDOCompareTool
                     if ($this->shouldCheckTableFieldsDefinition) {
                         $fieldsOfA = $this->getTableFields($this->getDB(self::INSTANCE_CODE_A), $currentTableNameOfA);
                         $fieldsOfB = $this->getTableFields($this->getDB(self::INSTANCE_CODE_B), $currentTableNameOfB);
-                        //print_r($fieldsOfA);
-                        //print_r($fieldsOfB);
+                        //print_r($fieldsOfA); print_r($fieldsOfB);
                         $same = $this->checkTablesHaveSameFields($fieldsOfA, $fieldsOfB, $onlyInA, $onlyInB, $inBothButDiff);
                         if (!$same) {
                             //print_r(['only in A'=>$onlyInA, 'only in B'=> $onlyInB, 'diff'=> $inBothButDiff]);

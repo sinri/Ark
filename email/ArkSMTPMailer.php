@@ -16,6 +16,7 @@ class ArkSMTPMailer implements ArkMailer
 {
     private $phpMailerInstance;
     private $smtpInfo;
+    protected $availableAddressList = null;
 
     /**
      * LibMail constructor.
@@ -30,6 +31,15 @@ class ArkSMTPMailer implements ArkMailer
         $this->setUpSMTP($params);
 
         $this->phpMailerInstance = new PHPMailer();
+    }
+
+    /**
+     * @param string[] $emails
+     * @return void
+     */
+    public function setReceiverLimitation($emails)
+    {
+        $this->availableAddressList = $emails;
     }
 
     /**
@@ -137,7 +147,8 @@ class ArkSMTPMailer implements ArkMailer
      */
     public function addReceiver($address, $name = '')
     {
-        $this->phpMailerInstance->addAddress($address, $name);
+        if ($this->availableAddressList === null || !in_array($address, $this->availableAddressList))
+            $this->phpMailerInstance->addAddress($address, $name);
         return $this;
     }
 
@@ -159,7 +170,8 @@ class ArkSMTPMailer implements ArkMailer
      */
     public function addCCAddress($address, $name)
     {
-        $this->phpMailerInstance->addCC($address, $name);
+        if ($this->availableAddressList === null || !in_array($address, $this->availableAddressList))
+            $this->phpMailerInstance->addCC($address, $name);
         return $this;
     }
 
@@ -170,7 +182,8 @@ class ArkSMTPMailer implements ArkMailer
      */
     public function addBCCAddress($address, $name)
     {
-        $this->phpMailerInstance->addBCC($address, $name);
+        if ($this->availableAddressList === null || !in_array($address, $this->availableAddressList))
+            $this->phpMailerInstance->addBCC($address, $name);
         return $this;
     }
 
@@ -232,4 +245,6 @@ class ArkSMTPMailer implements ArkMailer
         $error = $this->phpMailerInstance->ErrorInfo;
         return $done;
     }
+
+
 }

@@ -1,9 +1,10 @@
 # Change Log of Ark
 
-### pre Version 0.11
+### Version 0.11 (as 1.0-alpha)
 
 Add quick not empty assert for conveniences.
 PDO Table Compare.
+And other refines.
 
 ### Version 0.10
 

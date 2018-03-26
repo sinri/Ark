@@ -221,7 +221,7 @@ class ArkRouterRule
             $filter_instance = ArkRequestFilter::makeInstance($filter);
             $shouldAcceptRequest = $filter_instance->shouldAcceptRequest(
                 $path_string,
-                Ark()->webInput()->requestMethod(),
+                Ark()->webInput()->getRequestMethod(),
                 $params,
                 $preparedData,
                 $responseCode,

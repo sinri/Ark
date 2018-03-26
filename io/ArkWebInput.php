@@ -116,6 +116,16 @@ class ArkWebInput
         return ArkHelper::readTarget($_SESSION, $name, $default, $regex);
     }
 
+    public function readServer($name, $default = null, $regex = null)
+    {
+        return ArkHelper::readTarget($_SERVER, $name, $default, $regex);
+    }
+
+    public function readCookie($name, $default = null, $regex = null)
+    {
+        return ArkHelper::readTarget($_COOKIE, $name, $default, $regex);
+    }
+
     public function readGet($name, $default = null, $regex = null)
     {
         return ArkHelper::readTarget($_GET, $name, $default, $regex);
@@ -126,27 +136,47 @@ class ArkWebInput
         return ArkHelper::readTarget($_POST, $name, $default, $regex);
     }
 
+
     /**
      * @param string[] $proxyIPs
      * @return string
      */
-    public function visitorIP($proxyIPs = [])
+    public function getRequestSourceIP($proxyIPs = [])
     {
         return $this->ipHelper->detectVisitorIP($proxyIPs);
     }
 
-    public function requestMethod()
+    /**
+     * @deprecated TODO would be removed in 1.0
+     * @param array $proxyIPs
+     * @return string
+     */
+    public function visitorIP($proxyIPs = [])
+    {
+        return $this->getRequestSourceIP($proxyIPs);
+    }
+
+    /**
+     * @return string
+     */
+    public function getRequestMethod()
     {
         $method = $this->readServer('REQUEST_METHOD');
         if ($method !== null) {
             $method = strtoupper($method);
             return $method;
         }
-        return ArkHelper::isCLI() ? self::METHOD_CLI : false;
+        return ArkHelper::isCLI() ? self::METHOD_CLI : php_sapi_name();
     }
 
-    public function readServer($name, $default = null, $regex = null)
+    /**
+     * @deprecated TODO would be removed in 1.0
+     * @return string
+     */
+    public function requestMethod()
     {
-        return ArkHelper::readTarget($_SERVER, $name, $default, $regex);
+        return $this->getRequestMethod();
     }
+
+
 }

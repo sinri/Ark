@@ -17,6 +17,14 @@ interface ArkMailer
     public function prepare(&$error = null);
 
     /**
+     * This should be set before adding methods.
+     * NULL for no limit and array of email address strings as limitation
+     * @param string[]|null $emails
+     * @return void
+     */
+    public function setReceiverLimitation($emails);
+
+    /**
      * @param $address
      * @param string $name
      * @return ArkMailer

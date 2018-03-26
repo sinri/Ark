@@ -14,22 +14,46 @@ class ArkWebOutput
     const AJAX_JSON_CODE_OK = "OK";
     const AJAX_JSON_CODE_FAIL = "FAIL";
 
+    const CONTENT_TYPE_JSON = "application/json";
+    const CONTENT_TYPE_OCTET_STREAM = 'application/octet-stream';
+
+    const CHARSET_UTF8 = "UTF-8";
+
     public function __construct()
     {
     }
 
-    const CONTENT_TYPE_JSON = "application/json";
-
-    const CHARSET_UTF8 = "UTF-8";
-
     /**
+     * @deprecated TODO would be removed in 1.0
      * @param int $httpCode such as 200, 404, 500, etc.
+     * @return int
      */
     public function responseHTTPCode($httpCode)
     {
-        http_response_code($httpCode);
+        return http_response_code($httpCode);
     }
 
+    /**
+     * @return int
+     */
+    public function getCurrentHTTPCode()
+    {
+        return http_response_code();
+    }
+
+    /**
+     * @param $httpCode
+     * @return int
+     */
+    public function sendHTTPCode($httpCode)
+    {
+        return http_response_code($httpCode);
+    }
+
+    /**
+     * @param $contentType
+     * @param null $charSet
+     */
     public function setContentTypeHeader($contentType, $charSet = null)
     {
         header("Content-Type: " . $contentType . ($charSet !== null ? '; charset=' . $charSet : ''));
@@ -37,10 +61,12 @@ class ArkWebOutput
 
     /**
      * @param $anything
+     * @param int $options
+     * @param int $depth
      */
-    public function json($anything)
+    public function json($anything, $options = 0, $depth = 512)
     {
-        echo json_encode($anything);
+        echo json_encode($anything, $options, $depth);
     }
 
     /**
@@ -93,9 +119,9 @@ class ArkWebOutput
         $file_size = filesize($file);
 
         if ($content_type === null) {
-            $content_type = 'application/octet-stream';
+            $content_type = self::CONTENT_TYPE_OCTET_STREAM;
         }
-        if ($content_type === 'application/octet-stream') {
+        if ($content_type === self::CONTENT_TYPE_OCTET_STREAM) {
             $content_disposition = 'attachment; filename=' . $down_name;
         } else {
             $content_disposition = 'inline';

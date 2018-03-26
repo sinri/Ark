@@ -43,6 +43,13 @@ class ArkSQLCondition
     protected $field;
     protected $value;
 
+    /**
+     * ArkSQLCondition constructor.
+     * @param string $field
+     * @param string $operate
+     * @param string|int|array $value
+     * @param null|string $addition
+     */
     public function __construct($field, $operate, $value, $addition = null)
     {
         $this->field = $field;

@@ -21,7 +21,7 @@ $config_bi_test->setDatabase('omssync');
 $compareTool = new \sinri\ark\database\pdo\ArkPDOCompareTool($config_drds_omssync, $config_bi_test);
 $compareTool->setBigTablesToAvoidRowCount(['DB_LOCATE']);
 echo "Compare OMSSYNC" . PHP_EOL;
-$compareTool->compareTableStructure(null, true);
+$compareTool->compareTableStructure(null);
 
 // oms
 
@@ -30,4 +30,4 @@ $config_bi_test->setDatabase('oms');
 $compareTool = new \sinri\ark\database\pdo\ArkPDOCompareTool($config_drds_oms, $config_bi_test);
 $compareTool->setBigTablesToAvoidRowCount(['DB_LOCATE']);
 echo "Compare OMS" . PHP_EOL;
-$compareTool->compareTableStructure(null, true);
+$compareTool->compareTableStructure(null);
