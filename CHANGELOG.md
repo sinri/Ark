@@ -1,5 +1,9 @@
 # Change Log of Ark
 
+### Pre Version 1.1
+
+Conveniences methods in ArkWebController.
+
 ### Version 1.0
 
 Removed deprecated methods.

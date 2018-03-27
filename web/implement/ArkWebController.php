@@ -9,6 +9,7 @@
 namespace sinri\ark\web\implement;
 
 
+use sinri\ark\io\ArkWebInput;
 use sinri\ark\io\ArkWebOutput;
 
 class ArkWebController
@@ -24,6 +25,37 @@ class ArkWebController
     public function __construct()
     {
         $this->filterGeneratedData = Ark()->webService()->getFilterGeneratedData();
+    }
+
+    /**
+     * @since 1.1 method added
+     * @return ArkWebInput
+     */
+    protected function _getInputHandler()
+    {
+        return Ark()->webInput();
+    }
+
+    /**
+     * @since 1.1 method added
+     * @return ArkWebOutput
+     */
+    protected function _getOutputHandler()
+    {
+        return Ark()->webOutput();
+    }
+
+    /**
+     * @since 1.1 method added
+     * @param string|array $name
+     * @param null|mixed $default
+     * @param null|string $regex
+     * @param null|\Exception $error
+     * @return mixed
+     */
+    protected function _readRequest($name, $default = null, $regex = null, &$error = null)
+    {
+        return Ark()->webInput()->readRequest($name, $default, $regex, $error);
     }
 
     /**
