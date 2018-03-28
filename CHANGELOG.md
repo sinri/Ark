@@ -1,11 +1,9 @@
 # Change Log of Ark
 
-### Version 1.1
+### Version 1.2
 
-Conveniences methods in ArkWebController and fix filter data bug.
-
-### Version 1.0
-
+Conveniences methods in ArkWebController.
+Fix bugs for web services.
 Removed deprecated methods.
 
 ----

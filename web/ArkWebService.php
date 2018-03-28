@@ -128,7 +128,8 @@ class ArkWebService
                 $arguments[] = $argv[$i];
             }
             $route = $this->router->seekRoute($path, Ark()->webInput()->getRequestMethod());
-            $route->execute($path, $this->filterGeneratedData, 0);
+            $code = 0;
+            $route->execute($path, $this->filterGeneratedData, $code);
         } catch (\Exception $exception) {
             $this->logger->error("Exception in " . __METHOD__ . " : " . $exception->getMessage());
         }
@@ -139,7 +140,8 @@ class ArkWebService
         try {
             $this->dividePath($path_string);
             $route = $this->router->seekRoute($path_string, Ark()->webInput()->getRequestMethod());
-            $route->execute($path_string, $this->filterGeneratedData, 200);
+            $code = 200;
+            $route->execute($path_string, $this->filterGeneratedData, $code);
         } catch (\Exception $exception) {
             $this->router->handleRouteError($exception->getMessage(), $exception->getCode());
             if ($this->debug) {
