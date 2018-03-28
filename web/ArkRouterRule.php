@@ -204,11 +204,11 @@ class ArkRouterRule
 
     /**
      * @param $path_string
-     * @param array|mixed $preparedData
-     * @param int $responseCode
+     * @param array|mixed $preparedData @since 1.1 this became reference and bug fixed
+     * @param int $responseCode @since 1.1 this became reference
      * @throws \Exception
      */
-    public function execute($path_string, $preparedData = [], $responseCode = 200)
+    public function execute($path_string, &$preparedData = [], &$responseCode = 200)
     {
         $callable = $this->getCallback();//ArkHelper::readTarget($route, ArkRouter::ROUTE_PARAM_CALLBACK);
         $params = $this->getParsed();//ArkHelper::readTarget($route, ArkRouter::ROUTE_PARSED_PARAMETERS);
