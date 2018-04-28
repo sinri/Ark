@@ -1,5 +1,9 @@
 # Change Log of Ark
 
+### Version 1.4
+
+Fix Curl Header Bug.
+
 ### Version 1.3
 
 Fix HTTP Method `OPTIONS` definition.
