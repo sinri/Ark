@@ -1,5 +1,9 @@
 # Change Log of Ark
 
+### Version 1.3
+
+Fix HTTP Method `OPTIONS` definition.
+
 ### Version 1.2
 
 Conveniences methods in ArkWebController.

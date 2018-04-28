@@ -160,7 +160,7 @@ class ArkRouter
      */
     public function option($path, $callback, $filters = [])
     {
-        $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_OPTION, $path, $callback, $filters);
+        $route_rule = ArkRouterRule::buildRouteRule(ArkWebInput::METHOD_OPTIONS, $path, $callback, $filters);
         $this->registerRouteRule($route_rule);
     }
 

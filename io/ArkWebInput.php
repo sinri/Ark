@@ -20,7 +20,7 @@ class ArkWebInput
     const METHOD_POST = "POST";//since v1.3.0
     const METHOD_PUT = "PUT";//since v1.3.0
     const METHOD_DELETE = "DELETE";//since v1.3.0
-    const METHOD_OPTION = "OPTION";//since v1.3.0
+    const METHOD_OPTIONS = "OPTIONS";//since v1.3.0
     const METHOD_PATCH = "PATCH";//since v1.3.0
     const METHOD_CLI = "cli";//since v1.3.0
 
