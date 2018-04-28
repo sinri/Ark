@@ -159,7 +159,11 @@ class ArkCurl
         curl_setopt($ch, CURLOPT_URL, $this->url);
 
         if (!empty($this->headerList)) {
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $this->headerList);
+            $headers = [];
+            foreach ($this->headerList as $key => $value) {
+                $headers[] = $key . ': ' . $value;
+            }
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         }
         if (!empty($cookies)) {
             curl_setopt($ch, CURLOPT_COOKIE, implode(';', $cookies));
