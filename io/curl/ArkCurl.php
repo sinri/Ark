@@ -116,12 +116,13 @@ class ArkCurl
     }
 
     /**
-     * @param $cookie
+     * @param $cookieName
+     * @param $cookieValue
      * @return $this
      */
-    public function setCookie($cookie)
+    public function setCookie($cookieName, $cookieValue)
     {
-        $this->cookieList[] = $cookie;
+        $this->cookieList[] = urlencode($cookieName) . "=" . urlencode($cookieValue);
         return $this;
     }
 
@@ -165,8 +166,8 @@ class ArkCurl
             }
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
         }
-        if (!empty($cookies)) {
-            curl_setopt($ch, CURLOPT_COOKIE, implode(';', $cookies));
+        if (!empty($this->cookieList)) {
+            curl_setopt($ch, CURLOPT_COOKIE, implode(';', $this->cookieList));
         }
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 

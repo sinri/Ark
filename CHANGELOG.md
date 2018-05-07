@@ -1,6 +1,6 @@
 # Change Log of Ark
 
-### Version 1.4.1
+### Version 1.4.2
 
 Fix Curl Header Bug.
 
