@@ -1,5 +1,10 @@
 # Change Log of Ark
 
+### Coming Version 1.5.0
+
+Parse the incoming user agent by `Jenssegers\Agent\Agent`.
+Auto detect MIME for Content Type Header by `Mimey\MimeTypes`.
+
 ### Version 1.4.2
 
 Fix Curl Header Bug.

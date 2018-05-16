@@ -9,11 +9,13 @@
 namespace sinri\ark\io;
 
 
+use Jenssegers\Agent\Agent;
 use sinri\ark\core\ArkHelper;
 
 class WebInputHeaderHelper
 {
     protected $headers;
+    protected $userAgentWorker;
 
     public function __construct()
     {
@@ -25,6 +27,8 @@ class WebInputHeaderHelper
                 $this->headers[strtolower($key)] = $value;
             }
         }
+
+        $this->userAgentWorker = null;
     }
 
     /**
@@ -46,5 +50,15 @@ class WebInputHeaderHelper
         $lower_name = strtolower($name);
         $header = ArkHelper::readTarget($this->headers, $lower_name, $default, $regex);
         return $header;
+    }
+
+    /**
+     * @since 1.5.0
+     * @return Agent
+     */
+    public function getUserAgentWorker()
+    {
+        if (!$this->userAgentWorker) $this->userAgentWorker = new Agent();
+        return $this->userAgentWorker;
     }
 }

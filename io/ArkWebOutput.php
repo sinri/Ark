@@ -9,6 +9,8 @@
 namespace sinri\ark\io;
 
 
+use Mimey\MimeTypes;
+
 class ArkWebOutput
 {
     const AJAX_JSON_CODE_OK = "OK";
@@ -87,7 +89,7 @@ class ArkWebOutput
      * 文件通过非直接方式下载
      * @param $file
      * @param null $down_name
-     * @param null $content_type
+     * @param null|string $content_type
      * @return bool
      * @throws \Exception
      */
@@ -98,18 +100,21 @@ class ArkWebOutput
         }
 
         if ($down_name !== null && $down_name !== false) {
-            $suffix = substr($file, strrpos($file, '.')); //获取文件后缀
-            $down_name = $down_name . $suffix; //新文件名，就是下载后的名字
+            $extension = substr($file, strrpos($file, '.')); //获取文件后缀
+            $down_name = $down_name . $extension; //新文件名，就是下载后的名字
         } else {
             $k = pathinfo($file);
-            $down_name = $k['filename'] . '.' . $k['extension'];
+            $extension = $k['extension'];
+            $down_name = $k['filename'] . '.' . $extension;
         }
 
         $fp = fopen($file, "r");
         $file_size = filesize($file);
 
         if ($content_type === null) {
-            $content_type = self::CONTENT_TYPE_OCTET_STREAM;
+            // @since 1.5.0 The default $content_type for NULL would not be self::CONTENT_TYPE_OCTET_STREAM any more
+            // but use MimeTypes to parse from extension.
+            $content_type = $this->getMimeTypeByExtension($extension);
         }
         if ($content_type === self::CONTENT_TYPE_OCTET_STREAM) {
             $content_disposition = 'attachment; filename=' . $down_name;
@@ -133,5 +138,17 @@ class ArkWebOutput
         }
         fclose($fp);
         return true;
+    }
+
+    /**
+     * @since 1.5.0
+     * @param string $extension
+     * @return string
+     */
+    public function getMimeTypeByExtension($extension)
+    {
+        $mime = (new MimeTypes())->getMimeType($extension);
+        if ($mime === null) $mime = self::CONTENT_TYPE_OCTET_STREAM;
+        return $mime;
     }
 }
