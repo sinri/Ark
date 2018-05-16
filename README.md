@@ -58,6 +58,28 @@ For general routines, the multi-instance hubs (register and get) are provided:
 
 Class ArkCliProgram is designed to support a whole CLI project with certain namespace and class rule.
 
+### Server Config Reference
+
+If you use Apache to load the project, you need to add the .htaccess file and open the allow override option.
+
+```apacheconfig
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+```
+
+For Nginx, you should use try_files.
+
+```nginx
+server {
+    location / {
+        try_files $uri $uri/ /index.php$is_args$args;
+    }
+}
+```
+
+
 ## Donation
 
 BitCoin/BTC: 18wCjV8mnepDpLzASKdW7CGo6U8F9rPuV4
