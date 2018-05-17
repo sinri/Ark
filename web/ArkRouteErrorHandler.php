@@ -37,7 +37,8 @@ class ArkRouteErrorHandler
                     if (!is_callable($this->callback)) {
                         throw new \Exception("ArkRouteErrorHandler::Callback is not a proper callback instance.");
                     }
-                    call_user_func_array($this->callback, [$errorData]);
+                    // @since 1.5.0 add a second parameter as HTTP CODE to send
+                    call_user_func_array($this->callback, [$errorData, $http_code]);
                     break;
                 case self::TYPE_TEMPLATE:
                     if (!is_string($this->templateFile) || !file_exists($this->templateFile)) {
@@ -68,7 +69,7 @@ class ArkRouteErrorHandler
     }
 
     /**
-     * @param callable|string[] $callback
+     * @param callable|string[] $callback such as [class,method] or anonymous function(error_message,status_code)
      * @return ArkRouteErrorHandler
      */
     public static function buildWithCallback($callback)

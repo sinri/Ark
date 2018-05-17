@@ -124,8 +124,8 @@ class ArkWebOutput
 
         // Headers
         header("Content-Type: " . $content_type);
-        header("Accept-Ranges: bytes");
-        header("Accept-Length:" . $file_size);
+        //header("Accept-Ranges: bytes");
+        header("Content-Length:" . $file_size);
         header("Content-Disposition: " . $content_disposition);
         $buffer = 1024;
         $file_count = 0;
