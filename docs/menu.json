@@ -31,5 +31,8 @@
   "Web Service": {
     "web/introduction": "Introduction",
     "web/router": "Router"
+  },
+  "Queue": {
+    "queue/introduction": "Introduction"
   }
 }
