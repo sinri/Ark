@@ -1,5 +1,9 @@
 # Change Log of Ark
 
+### Version 1.6.0
+
+Add the daemon and handler standard for queue.
+
 ### Version 1.5.0
 
 > Take attention when upgrading from 1.4.x or earlier versions.
