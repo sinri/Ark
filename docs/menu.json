@@ -33,6 +33,8 @@
     "web/router": "Router"
   },
   "Queue": {
-    "queue/introduction": "Introduction"
+    "queue/introduction": "Introduction",
+    "queue/single_synchronized": "Serial",
+    "queue/single_pooled": "Parallel"
   }
 }
