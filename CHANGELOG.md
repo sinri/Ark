@@ -12,6 +12,7 @@ Parse the incoming user agent by `Jenssegers\Agent\Agent`.
 Auto detect MIME for Content Type Header by `Mimey\MimeTypes`.
 Make class parameter of `ArkRequestFilter` to be `string` or `string[]`.
 Rename router quick method `option` to be `options`.
+Huge changes on `ArkRouterRule` series.
 
 ### Version 1.4.2
 
