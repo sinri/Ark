@@ -1,8 +1,7 @@
 # Email Sender
 
 Ark defined an interface `ArkMailer` to support the requirement of sending emails.
-In the mean time, Ark required another library `sinri/smallphpmailer`, 
-which is a lite version of PHPMailer support only with SMTP protocol,
+In the mean time, Ark required another library `phpmailer/phpmailer` (of its 6.x version), 
 to provide an implementation of this interface, i.e. `ArkSMTPMailer`.
 
 ## Interface `ArkMailer`

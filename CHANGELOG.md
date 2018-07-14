@@ -1,5 +1,9 @@
 # Change Log of Ark
 
+### Version 1.7.0
+
+Use `phpmailer/phpmailer` 6.x instead of `sinri/smallphpmailer`.
+
 ### Version 1.6.0
 
 Add the daemon and handler standard for queue.

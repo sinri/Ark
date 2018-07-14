@@ -9,8 +9,10 @@
 namespace sinri\ark\email;
 
 
+use PHPMailer\PHPMailer\PHPMailer;
 use sinri\ark\core\ArkHelper;
-use sinri\smallphpmailer\library\PHPMailer;
+
+//use sinri\smallphpmailer\library\PHPMailer;
 
 class ArkSMTPMailer implements ArkMailer
 {
@@ -191,7 +193,7 @@ class ArkSMTPMailer implements ArkMailer
      * @param $attachmentFile
      * @param string $name
      * @return ArkMailer
-     * @throws \sinri\smallphpmailer\library\phpmailerException
+     * @throws \PHPMailer\PHPMailer\Exception
      */
     public function addAttachment($attachmentFile, $name = '')
     {

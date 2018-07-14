@@ -6,7 +6,7 @@ which uses SMTP protocol to request remote email services.
 As sending mail through the OS itself is not welcomed by almost cloud service providers, 
 using regular email services through SMTP protocol might be a better choice.
 
-As described, this implementation replies library `sinri/smallphpmailer`, which support SMTP.
+As described, this implementation replies library `phpmailer/phpmailer`, which support SMTP.
 So you must provide the configuration for SMTP linking when you construct an class instance,
 or call method `setUpSMTP`.
 
