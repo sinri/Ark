@@ -15,13 +15,16 @@ class ArkFileCache implements ArkCache
 {
 
     protected $cacheDir;
+    protected $fileMode = null;
 
     /**
      * ArkFileCache constructor.
      * @param string $cacheDir
+     * @param null|int $fileMode such as 0777
      */
-    public function __construct($cacheDir)
+    public function __construct($cacheDir, $fileMode = null)
     {
+        $this->fileMode = $fileMode;
         $this->setCacheDir($cacheDir);//should be overrode by setter
     }
 
@@ -71,7 +74,9 @@ class ArkFileCache implements ArkCache
         $data = serialize($object);
         $this->removeObject($key);
         $file_name = $key . '.' . ($life <= 0 ? '0' : time() + $life);
-        $done = file_put_contents($this->cacheDir . '/' . $file_name, $data);
+        $path = $this->cacheDir . '/' . $file_name;
+        $done = file_put_contents($path, $data);
+        if ($this->fileMode !== null) chmod($path, $this->fileMode);
         return $done ? true : false;
     }
 
