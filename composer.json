@@ -12,6 +12,8 @@
   "minimum-stability": "stable",
   "require": {
     "php": "~7.0",
+    "ext-json": "*",
+    "sinri/ark-core": "~1.0",
     "ralouphie/getallheaders": "^2.0",
     "phpmailer/phpmailer": "~6.0",
     "psr/log": "~1.0",
@@ -19,11 +21,17 @@
     "ralouphie/mimey": "^1.0"
   },
   "require-dev": {
+    "ext-curl": "*",
+    "ext-mysqli": "*",
+    "ext-pdo": "*",
+    "ext-sqlite3": "*",
+    "ext-pcntl": "*",
+    "sinri/ark-curl": "~1.0",
     "predis/predis": "^1.1"
   },
   "autoload": {
-    "files": [
-      "autoload.php"
-    ]
+    "psr-4": {
+      "sinri\\ark\\": ""
+    }
   }
 }
