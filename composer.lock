@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+      "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9adb94527807436019b8c8eded2daf8f",
+  "content-hash": "63da32115d69bb3aa1968696fe8e80bb",
     "packages": [
         {
             "name": "jaybizzle/crawler-detect",
@@ -367,6 +367,39 @@
             "time": "2017-01-27T20:57:22+00:00"
         },
         {
+          "name": "sinri/ark-cache",
+          "version": "1.0",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/sinri/Ark-Cache.git",
+            "reference": "975ca8182a124282ee97f27c11ecbe5610e23795"
+          },
+          "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sinri/Ark-Cache/zipball/975ca8182a124282ee97f27c11ecbe5610e23795",
+            "reference": "975ca8182a124282ee97f27c11ecbe5610e23795",
+            "shasum": ""
+          },
+          "type": "library",
+          "autoload": {
+            "psr-4": {
+              "sinri\\ark\\cache\\": "src/"
+            }
+          },
+          "notification-url": "https://packagist.org/downloads/",
+          "license": [
+            "MIT"
+          ],
+          "authors": [
+            {
+              "name": "Sinri Edogawa",
+              "email": "e.joshua.s.e@gmail.com"
+            }
+          ],
+          "description": "The cache component for Ark 2",
+          "time": "2018-09-07T02:53:31+00:00"
+        },
+      {
             "name": "sinri/ark-core",
             "version": "1.1",
             "source": {
@@ -406,33 +439,28 @@
     ],
     "packages-dev": [
         {
-            "name": "predis/predis",
-            "version": "v1.1.1",
+          "name": "sinri/ark-curl",
+          "version": "1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/nrk/predis.git",
-                "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1"
+              "url": "https://github.com/sinri/Ark-Curl.git",
+              "reference": "49ede56f7d22288b574856ad8346338e6a49104a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nrk/predis/zipball/f0210e38881631afeafb56ab43405a92cafd9fd1",
-                "reference": "f0210e38881631afeafb56ab43405a92cafd9fd1",
+              "url": "https://api.github.com/repos/sinri/Ark-Curl/zipball/49ede56f7d22288b574856ad8346338e6a49104a",
+              "reference": "49ede56f7d22288b574856ad8346338e6a49104a",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.9"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.8"
-            },
-            "suggest": {
-                "ext-curl": "Allows access to Webdis when paired with phpiredis",
-                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
+              "ext-curl": "*",
+              "ext-json": "*",
+              "sinri/ark-core": "~1.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "Predis\\": "src/"
+                  "sinri\\ark\\io\\curl\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -441,43 +469,35 @@
             ],
             "authors": [
                 {
-                    "name": "Daniele Alessandri",
-                    "email": "suppakilla@gmail.com",
-                    "homepage": "http://clorophilla.net"
+                  "name": "Sinri Edogawa",
+                  "email": "e.joshua.s.e@gmail.com"
                 }
             ],
-            "description": "Flexible and feature-complete Redis client for PHP and HHVM",
-            "homepage": "http://github.com/nrk/predis",
-            "keywords": [
-                "nosql",
-                "predis",
-                "redis"
-            ],
-            "time": "2016-06-16T16:22:20+00:00"
+          "description": "The cURL component for Ark 2.",
+          "time": "2018-09-06T17:07:32+00:00"
         },
         {
-            "name": "sinri/ark-curl",
+          "name": "sinri/ark-pdo",
             "version": "1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sinri/Ark-Curl.git",
-                "reference": "49ede56f7d22288b574856ad8346338e6a49104a"
+              "url": "https://github.com/sinri/Ark-PDO.git",
+              "reference": "3d81b10f3383a09ee9ad204ce30e8364adaa8586"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sinri/Ark-Curl/zipball/49ede56f7d22288b574856ad8346338e6a49104a",
-                "reference": "49ede56f7d22288b574856ad8346338e6a49104a",
+              "url": "https://api.github.com/repos/sinri/Ark-PDO/zipball/3d81b10f3383a09ee9ad204ce30e8364adaa8586",
+              "reference": "3d81b10f3383a09ee9ad204ce30e8364adaa8586",
                 "shasum": ""
             },
             "require": {
-                "ext-curl": "*",
-                "ext-json": "*",
+              "ext-pdo": "*",
                 "sinri/ark-core": "~1.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "sinri\\ark\\io\\curl\\": "src/"
+                  "sinri\\ark\\database\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -490,8 +510,8 @@
                     "email": "e.joshua.s.e@gmail.com"
                 }
             ],
-            "description": "The cURL component for Ark 2.",
-            "time": "2018-09-06T17:07:32+00:00"
+          "description": "The PDO Component for Ark 2",
+          "time": "2018-09-07T06:49:58+00:00"
         }
     ],
     "aliases": [],
