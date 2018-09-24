@@ -12,11 +12,9 @@
   "minimum-stability": "stable",
   "require": {
     "php": "~7.0",
-    "ext-json": "*",
     "sinri/ark-core": "~1.0",
     "sinri/ark-cache": "~1.0",
     "ralouphie/getallheaders": "^2.0",
-    "psr/log": "~1.0",
     "jenssegers/agent": "^2.6",
     "ralouphie/mimey": "^1.0"
   },
@@ -33,7 +31,8 @@
     "sinri/ark-sqlite3": "~1.1",
     "sinri/ark-mysqli": "~1.0",
     "sinri/ark-mail": "~1.0",
-    "sinri/ark-couchdb": "~1.0"
+    "sinri/ark-couchdb": "~1.0",
+    "sinri/ark-qr-builder": "~1.0"
   },
   "autoload": {
     "psr-4": {

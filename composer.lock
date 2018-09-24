@@ -4,7 +4,7 @@
       "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-  "content-hash": "bb0bf6924cac920e16e6f4ddcf4d27a1",
+  "content-hash": "0b7e856ebdb6a4b655af947f5ace8623",
     "packages": [
         {
             "name": "jaybizzle/crawler-detect",
@@ -335,16 +335,16 @@
         },
       {
             "name": "sinri/ark-core",
-        "version": "1.1",
+        "version": "1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sinri/Ark-Core.git",
-              "reference": "f47f233063a96d4d42ba8617e4d04615e0819623"
+              "reference": "c272dd894883a820874b690cbf9d7a88b1c8ad68"
             },
             "dist": {
                 "type": "zip",
-              "url": "https://api.github.com/repos/sinri/Ark-Core/zipball/f47f233063a96d4d42ba8617e4d04615e0819623",
-              "reference": "f47f233063a96d4d42ba8617e4d04615e0819623",
+              "url": "https://api.github.com/repos/sinri/Ark-Core/zipball/c272dd894883a820874b690cbf9d7a88b1c8ad68",
+              "reference": "c272dd894883a820874b690cbf9d7a88b1c8ad68",
                 "shasum": ""
             },
             "require": {
@@ -368,58 +368,22 @@
                 }
             ],
             "description": "The core components of Ark 2",
-        "time": "2018-09-06T17:03:51+00:00"
-      },
-      {
-        "name": "sinri/ark-queue",
-        "version": "1.0",
-        "source": {
-          "type": "git",
-          "url": "https://github.com/sinri/Ark-Queue.git",
-          "reference": "005302e13ad164fe888e1133e199c6b526b2a965"
-        },
-        "dist": {
-          "type": "zip",
-          "url": "https://api.github.com/repos/sinri/Ark-Queue/zipball/005302e13ad164fe888e1133e199c6b526b2a965",
-          "reference": "005302e13ad164fe888e1133e199c6b526b2a965",
-          "shasum": ""
-        },
-        "require": {
-          "ext-pcntl": "*"
-        },
-        "type": "library",
-        "autoload": {
-          "psr-4": {
-            "sinri\\ark\\queue\\": "src/"
-          }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-          "MIT"
-        ],
-        "authors": [
-          {
-            "name": "Sinri Edogawa",
-            "email": "e.joshua.s.e@gmail.com"
-          }
-        ],
-        "description": "The queue component for Ark 2",
-        "time": "2018-09-07T13:08:24+00:00"
+        "time": "2018-09-12T03:17:10+00:00"
         }
     ],
     "packages-dev": [
         {
           "name": "sinri/ark-curl",
-          "version": "1.0",
+          "version": "1.2",
             "source": {
                 "type": "git",
               "url": "https://github.com/sinri/Ark-Curl.git",
-              "reference": "49ede56f7d22288b574856ad8346338e6a49104a"
+              "reference": "0e901f5171badf834a9d0cb14d4977234b0b24a4"
             },
             "dist": {
                 "type": "zip",
-              "url": "https://api.github.com/repos/sinri/Ark-Curl/zipball/49ede56f7d22288b574856ad8346338e6a49104a",
-              "reference": "49ede56f7d22288b574856ad8346338e6a49104a",
+              "url": "https://api.github.com/repos/sinri/Ark-Curl/zipball/0e901f5171badf834a9d0cb14d4977234b0b24a4",
+              "reference": "0e901f5171badf834a9d0cb14d4977234b0b24a4",
                 "shasum": ""
             },
             "require": {
@@ -444,7 +408,7 @@
                 }
             ],
           "description": "The cURL component for Ark 2.",
-          "time": "2018-09-06T17:07:32+00:00"
+          "time": "2018-09-08T07:31:42+00:00"
         },
         {
           "name": "sinri/ark-pdo",
@@ -482,6 +446,42 @@
             ],
           "description": "The PDO Component for Ark 2",
           "time": "2018-09-07T06:49:58+00:00"
+        },
+      {
+        "name": "sinri/ark-queue",
+        "version": "1.1",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/sinri/Ark-Queue.git",
+          "reference": "51c0902ed28c4a41e24c3d7fb56a5af7339aac24"
+        },
+        "dist": {
+          "type": "zip",
+          "url": "https://api.github.com/repos/sinri/Ark-Queue/zipball/51c0902ed28c4a41e24c3d7fb56a5af7339aac24",
+          "reference": "51c0902ed28c4a41e24c3d7fb56a5af7339aac24",
+          "shasum": ""
+        },
+        "suggest": {
+          "ext-pcntl": "*"
+        },
+        "type": "library",
+        "autoload": {
+          "psr-4": {
+            "sinri\\ark\\queue\\": "src/"
+          }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+          "MIT"
+        ],
+        "authors": [
+          {
+            "name": "Sinri Edogawa",
+            "email": "e.joshua.s.e@gmail.com"
+          }
+        ],
+        "description": "The queue component for Ark 2",
+        "time": "2018-09-07T15:18:40+00:00"
         }
     ],
     "aliases": [],
@@ -490,8 +490,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "~7.0",
-        "ext-json": "*"
+      "php": "~7.0"
     },
     "platform-dev": {
         "ext-pcntl": "*"
