@@ -37,6 +37,9 @@
   "autoload": {
     "psr-4": {
       "sinri\\ark\\": ""
-    }
+    },
+    "files": [
+      "QuickArk.php"
+    ]
   }
 }

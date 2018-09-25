@@ -374,16 +374,16 @@
     "packages-dev": [
         {
           "name": "sinri/ark-curl",
-          "version": "1.2",
+          "version": "1.3",
             "source": {
                 "type": "git",
               "url": "https://github.com/sinri/Ark-Curl.git",
-              "reference": "0e901f5171badf834a9d0cb14d4977234b0b24a4"
+              "reference": "3f28ee12c11ff1f4cc492620b20d5b2a50a67754"
             },
             "dist": {
                 "type": "zip",
-              "url": "https://api.github.com/repos/sinri/Ark-Curl/zipball/0e901f5171badf834a9d0cb14d4977234b0b24a4",
-              "reference": "0e901f5171badf834a9d0cb14d4977234b0b24a4",
+              "url": "https://api.github.com/repos/sinri/Ark-Curl/zipball/3f28ee12c11ff1f4cc492620b20d5b2a50a67754",
+              "reference": "3f28ee12c11ff1f4cc492620b20d5b2a50a67754",
                 "shasum": ""
             },
             "require": {
@@ -408,7 +408,7 @@
                 }
             ],
           "description": "The cURL component for Ark 2.",
-          "time": "2018-09-08T07:31:42+00:00"
+          "time": "2018-09-24T16:04:35+00:00"
         },
         {
           "name": "sinri/ark-pdo",
