@@ -12,7 +12,7 @@
   "minimum-stability": "stable",
   "require": {
     "php": "~7.0",
-    "sinri/ark-core": "~1.0",
+    "sinri/ark-core": "~2.0",
     "sinri/ark-cache": "~1.0",
     "ralouphie/getallheaders": "^2.0",
     "jenssegers/agent": "^2.6",
@@ -20,12 +20,12 @@
   },
   "require-dev": {
     "ext-pcntl": "*",
-    "sinri/ark-curl": "~1.0",
+    "sinri/ark-curl": "~2.0",
     "sinri/ark-pdo": "~1.0",
     "sinri/ark-queue": "~1.0"
   },
   "suggest": {
-    "sinri/ark-curl": "~1.0",
+    "sinri/ark-curl": "~2.0",
     "sinri/ark-pdo": "~1.0",
     "sinri/ark-redis": "~1.1",
     "sinri/ark-sqlite3": "~1.1",
