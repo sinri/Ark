@@ -6,7 +6,10 @@
  * Time: 11:06
  */
 
-require_once __DIR__ . '/core/ArkHelper.php';
+// FOR DEV/TEST USE ONLY
+
+//require_once __DIR__ . '/core/ArkHelper.php';
+require_once __DIR__ . '/vendor/autoload.php';
 
 \sinri\ark\core\ArkHelper::registerAutoload(
     "sinri\ark",
