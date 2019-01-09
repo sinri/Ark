@@ -19,6 +19,7 @@ It is a new generation for [Enoch Project](https://github.com/sinri/enoch), as w
 
 Ark requests PHP 7.
 If you need Redis, you might need to declare the reference of `predis/predis`.
+Since version 2.1, Ark-Core and Ark-Curl use version 2.
 
 ## Toolkit Map
 
