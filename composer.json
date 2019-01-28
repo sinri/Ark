@@ -16,7 +16,8 @@
     "sinri/ark-cache": "~1.0",
     "ralouphie/getallheaders": "^2.0",
     "jenssegers/agent": "^2.6",
-    "ralouphie/mimey": "^1.0"
+    "ralouphie/mimey": "^1.0",
+    "ext-json": "*"
   },
   "require-dev": {
     "ext-pcntl": "*",

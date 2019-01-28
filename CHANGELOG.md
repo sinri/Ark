@@ -2,6 +2,10 @@
 
 For the serial of previous versions, see related branch.
 
+## Version 2.2
+
+Fix a bug in ArkRouter for nesting.
+
 ## Version 2.1
 
 Use version 2.x of Ark-Core.

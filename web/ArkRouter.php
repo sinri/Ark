@@ -14,7 +14,13 @@ use sinri\ark\io\ArkWebInput;
 
 class ArkRouter
 {
+    /**
+     * @var bool
+     */
     protected $debug;
+    /**
+     * @var ArkLogger
+     */
     protected $logger;
     protected $defaultControllerName = null;
     protected $defaultMethodName = null;
@@ -371,6 +377,7 @@ class ArkRouter
                     if (is_dir($directory . '/' . $entry)) {
                         //DIR,
                         $this->loadAllControllersInDirectoryAsCI(
+                            $directory . '/' . $entry,
                             $urlBase . $entry . '/',
                             $controllerNamespaceBase . $entry . '\\',
                             $filters
