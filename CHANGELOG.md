@@ -2,6 +2,10 @@
 
 For the serial of previous versions, see related branch.
 
+## Version 2.3
+
+Small refines.
+
 ## Version 2.2
 
 Fix a bug in ArkRouter for nesting.

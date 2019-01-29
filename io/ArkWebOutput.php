@@ -87,8 +87,8 @@ class ArkWebOutput
 
     /**
      * 文件通过非直接方式下载
-     * @param $file
-     * @param null $down_name
+     * @param string $file
+     * @param null $down_name Extension Free File Name For Download
      * @param null|string $content_type
      * @return bool
      * @throws \Exception
@@ -96,7 +96,7 @@ class ArkWebOutput
     public function downloadFileIndirectly($file, $content_type = null, $down_name = null)
     {
         if (!file_exists($file)) {
-            throw new \Exception("No such file there", 404);
+            throw new \Exception("No such file there: " . $file, 404);
         }
 
         if ($down_name !== null && $down_name !== false) {
@@ -125,16 +125,20 @@ class ArkWebOutput
         // Headers
         header("Content-Type: " . $content_type);
         //header("Accept-Ranges: bytes");
-        header("Content-Length:" . $file_size);
+        header("Content-Length: " . $file_size);
         header("Content-Disposition: " . $content_disposition);
-        $buffer = 1024;
-        $file_count = 0;
+        $bufferSize = 1024;
+        $fileSentBytesCount = 0;
 
         // Write to client
-        while (!feof($fp) && $file_count < $file_size) {
-            $file_con = fread($fp, $buffer);
-            $file_count += $buffer;
-            echo $file_con;
+        while (!feof($fp) && $fileSentBytesCount < $file_size) {
+            $buffer = fread($fp, $bufferSize);
+            $fileSentBytesCount += $bufferSize;
+            echo $buffer;
+            /**
+             * This flush added @since 2.3 try to make the save dialog comes soon
+             */
+            flush();
         }
         fclose($fp);
         return true;

@@ -136,6 +136,17 @@ class ArkWebInput
         return ArkHelper::readTarget($_POST, $name, $default, $regex);
     }
 
+    /**
+     * @since 2.3
+     * @param $name
+     * @param null $default
+     * @param null $regex
+     * @return mixed|null
+     */
+    public function readPostedJson($name, $default = null, $regex = null)
+    {
+        return ArkHelper::readTarget($this->rawPostBodyParsedAsJson, $name, $default, $regex, $error);
+    }
 
     /**
      * @param string[] $proxyIPs
