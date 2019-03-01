@@ -2,7 +2,7 @@
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Introduction to Ark</title>
+    <title>Introduction to Ark II</title>
     <script src="https://unpkg.com/vue"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/marked@0.3.6"></script>
@@ -19,7 +19,47 @@
 </head>
 <body>
 <div id="app">
-    <Row>
+    <Layout>
+        <Header style="padding: 10px;border-bottom: 1px solid lightgrey;">
+            <h1>
+                Ark
+                <small style="font-style: italic">2.x /* An universal framework for PHP 7 */</small>
+            </h1>
+        </Header>
+        <Layout>
+            <Sider style="background: inherit">
+                <div :style="{margin: '24px 0',padding: '24px', minHeight: '70vh',lineHeight:'2em'}">
+                    <h2>Content</h2>
+                    <div span="24" v-for="item in menuGroupList">
+                        <template v-if="item.type==='menu'">
+                            <p>
+                                <a v-on:click="onMenuSelected(item.name)">{{item.title}}</a>
+                            </p>
+                        </template>
+                        <template v-if="item.type==='sub-menu'">
+                            <h3>{{item.title}}</h3>
+                            <p v-for="sub_item in item.items">
+                                <a v-on:click="onMenuSelected(sub_item.name)">{{sub_item.title}}</a>
+                            </p>
+                        </template>
+                    </div>
+                </div>
+            </Sider>
+            <Content>
+                <div :style="{margin: '24px 0',padding: '24px', minHeight: '70vh', background: '#fff'}">
+                    <div id="markdown" class="markdown-body" v-html="compiledMarkdown" v-highlight></div>
+                </div>
+            </Content>
+        </Layout>
+        <Footer>
+            <div style="text-align: center;padding: 10px;border-top: 1px solid lightgrey;">
+                <p>Copyright 2018 <a href="mailto:e.joshua.s.e@gmail.com">Sinri Edogawa</a>.</p>
+                <p>Good contribution to this library is always welcomed.</p>
+            </div>
+        </Footer>
+    </Layout>
+    <!--
+    <Row v-if="1==0">
         <i-col span="22" offset="1">
             <Row>
                 <i-col span="24" style="padding: 10px;border-bottom: 1px solid lightgrey;">
@@ -29,7 +69,7 @@
                 </i-col>
             </Row>
             <Row>
-                <i-col span="6" style="background: #b8e8b554">
+                <i-col span="6" style="border-right: 1px solid #eee">
                     <div :style="{margin: '24px 0',padding: '24px', minHeight: '70vh',lineHeight:'2em'}">
                         <h2>Content</h2>
                         <div span="24" v-for="item in menuGroupList">
@@ -63,6 +103,7 @@
             </Row>
         </i-col>
     </Row>
+    -->
 </div>
 <script>
     Vue.directive('highlight', function (el) {
