@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dbae0dfb506f1020e6ed0a679dd29630",
+  "content-hash": "bc7feefc7c53677ede62748a5751e22c",
     "packages": [
         {
             "name": "jaybizzle/crawler-detect",
-            "version": "v1.2.76",
+          "version": "v1.2.79",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JayBizzle/Crawler-Detect.git",
-                "reference": "728dd7f210819ccafbf008a6ef7956f4f3c3571c"
+              "reference": "e6ce66e9c892c42898cf84a35ecbfec5b4ab481c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/728dd7f210819ccafbf008a6ef7956f4f3c3571c",
-                "reference": "728dd7f210819ccafbf008a6ef7956f4f3c3571c",
+              "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/e6ce66e9c892c42898cf84a35ecbfec5b4ab481c",
+              "reference": "e6ce66e9c892c42898cf84a35ecbfec5b4ab481c",
                 "shasum": ""
             },
             "require": {
@@ -53,20 +53,20 @@
                 "crawlerdetect",
                 "php crawler detect"
             ],
-            "time": "2018-12-18T08:52:44+00:00"
+          "time": "2019-03-04T19:10:41+00:00"
         },
         {
             "name": "jenssegers/agent",
-            "version": "v2.6.1",
+          "version": "v2.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jenssegers/agent.git",
-                "reference": "59f35c4640b44113389509af2a647cf6dceed6ce"
+              "reference": "bcb895395e460478e101f41cdab139c48dc721ce"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jenssegers/agent/zipball/59f35c4640b44113389509af2a647cf6dceed6ce",
-                "reference": "59f35c4640b44113389509af2a647cf6dceed6ce",
+              "url": "https://api.github.com/repos/jenssegers/agent/zipball/bcb895395e460478e101f41cdab139c48dc721ce",
+              "reference": "bcb895395e460478e101f41cdab139c48dc721ce",
                 "shasum": ""
             },
             "require": {
@@ -122,7 +122,7 @@
                 "user agent",
                 "useragent"
             ],
-            "time": "2019-01-04T13:02:53+00:00"
+          "time": "2019-01-19T21:32:55+00:00"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -224,6 +224,54 @@
             "time": "2018-11-20T15:27:04+00:00"
         },
         {
+          "name": "psr/simple-cache",
+          "version": "1.0.1",
+          "source": {
+            "type": "git",
+            "url": "https://github.com/php-fig/simple-cache.git",
+            "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b"
+          },
+          "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
+            "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
+            "shasum": ""
+          },
+          "require": {
+            "php": ">=5.3.0"
+          },
+          "type": "library",
+          "extra": {
+            "branch-alias": {
+              "dev-master": "1.0.x-dev"
+            }
+          },
+          "autoload": {
+            "psr-4": {
+              "Psr\\SimpleCache\\": "src/"
+            }
+          },
+          "notification-url": "https://packagist.org/downloads/",
+          "license": [
+            "MIT"
+          ],
+          "authors": [
+            {
+              "name": "PHP-FIG",
+              "homepage": "http://www.php-fig.org/"
+            }
+          ],
+          "description": "Common interfaces for simple caching",
+          "keywords": [
+            "cache",
+            "caching",
+            "psr",
+            "psr-16",
+            "simple-cache"
+          ],
+          "time": "2017-10-23T01:57:42+00:00"
+        },
+      {
             "name": "ralouphie/getallheaders",
             "version": "2.0.5",
             "source": {
@@ -305,18 +353,21 @@
         },
         {
             "name": "sinri/ark-cache",
-            "version": "1.0",
+          "version": "2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sinri/Ark-Cache.git",
-                "reference": "975ca8182a124282ee97f27c11ecbe5610e23795"
+              "reference": "224d0b4aa9ae54c3f05348cd11b918c2836b1d3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sinri/Ark-Cache/zipball/975ca8182a124282ee97f27c11ecbe5610e23795",
-                "reference": "975ca8182a124282ee97f27c11ecbe5610e23795",
+              "url": "https://api.github.com/repos/sinri/Ark-Cache/zipball/224d0b4aa9ae54c3f05348cd11b918c2836b1d3d",
+              "reference": "224d0b4aa9ae54c3f05348cd11b918c2836b1d3d",
                 "shasum": ""
             },
+          "require": {
+            "psr/simple-cache": "~1.0"
+          },
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -334,20 +385,20 @@
                 }
             ],
             "description": "The cache component for Ark 2",
-            "time": "2018-09-07T02:53:31+00:00"
+          "time": "2019-03-26T09:08:43+00:00"
         },
         {
             "name": "sinri/ark-core",
-            "version": "2.0",
+          "version": "2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sinri/Ark-Core.git",
-                "reference": "5c0eae9cfb2da4eefc06e92e9667f0d31c380c5c"
+              "reference": "88054fda2886993b1fe826d197ab44101900f32c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sinri/Ark-Core/zipball/5c0eae9cfb2da4eefc06e92e9667f0d31c380c5c",
-                "reference": "5c0eae9cfb2da4eefc06e92e9667f0d31c380c5c",
+              "url": "https://api.github.com/repos/sinri/Ark-Core/zipball/88054fda2886993b1fe826d197ab44101900f32c",
+              "reference": "88054fda2886993b1fe826d197ab44101900f32c",
                 "shasum": ""
             },
             "require": {
@@ -371,7 +422,7 @@
                 }
             ],
             "description": "The core components of Ark 2",
-            "time": "2019-01-08T16:30:30+00:00"
+          "time": "2019-03-17T14:58:30+00:00"
         }
     ],
     "packages-dev": [
@@ -415,16 +466,16 @@
         },
         {
             "name": "sinri/ark-pdo",
-            "version": "1.4",
+          "version": "1.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sinri/Ark-PDO.git",
-                "reference": "f52ca2f7695203bd81872c457d3c793d6b4775ac"
+              "reference": "9adf9914c41b8e3428f7dd657c4eb44c699612b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sinri/Ark-PDO/zipball/f52ca2f7695203bd81872c457d3c793d6b4775ac",
-                "reference": "f52ca2f7695203bd81872c457d3c793d6b4775ac",
+              "url": "https://api.github.com/repos/sinri/Ark-PDO/zipball/9adf9914c41b8e3428f7dd657c4eb44c699612b0",
+              "reference": "9adf9914c41b8e3428f7dd657c4eb44c699612b0",
                 "shasum": ""
             },
             "require": {
@@ -449,7 +500,7 @@
                 }
             ],
             "description": "The PDO Component for Ark 2",
-            "time": "2019-01-09T05:22:49+00:00"
+          "time": "2019-03-01T08:30:20+00:00"
         },
         {
             "name": "sinri/ark-queue",
@@ -494,7 +545,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "~7.0"
+      "php": "~7.0",
+      "ext-json": "*"
     },
     "platform-dev": {
         "ext-pcntl": "*"

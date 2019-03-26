@@ -2,6 +2,10 @@
 
 For the serial of previous versions, see related branch.
 
+## Version 2.4
+
+Adopt Cache Interface with PSR-16.
+
 ## Version 2.3
 
 Small refines.
