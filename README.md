@@ -24,6 +24,7 @@ If you have problem to connect to GitHub or too slow, try use mirror:
 Ark requests PHP 7.
 If you need Redis, you might need to declare the reference of `predis/predis`.
 Since version 2.1, Ark-Core and Ark-Curl use version 2.
+Since version 2.4, Ark-Cache use version 2.
 
 ## Toolkit Map
 
