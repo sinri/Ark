@@ -22,16 +22,16 @@
   "require-dev": {
     "ext-pcntl": "*",
     "sinri/ark-curl": "~2.0",
-    "sinri/ark-pdo": "~1.0",
-    "sinri/ark-queue": "~1.0"
+    "sinri/ark-pdo": "~1.5",
+    "sinri/ark-queue": "~2.2"
   },
   "suggest": {
     "sinri/ark-curl": "~2.0",
-    "sinri/ark-pdo": "~1.0",
+    "sinri/ark-pdo": "~1.5",
     "sinri/ark-redis": "~1.1",
     "sinri/ark-sqlite3": "~1.1",
-    "sinri/ark-mysqli": "~1.0",
-    "sinri/ark-mail": "~1.0",
+    "sinri/ark-mysqli": "~1.2",
+    "sinri/ark-mail": "~1.2",
     "sinri/ark-couchdb": "~1.0",
     "sinri/ark-qr-builder": "~1.0"
   },
