@@ -2,6 +2,10 @@
 
 For the serial of previous versions, see related branch.
 
+## Version 2.5
+
+Update Default Composer Dependency Version.
+
 ## Version 2.4
 
 Adopt Cache Interface with PSR-16.
