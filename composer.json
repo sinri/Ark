@@ -12,7 +12,7 @@
   "minimum-stability": "stable",
   "require": {
     "php": "~7.0",
-    "sinri/ark-core": "~2.0",
+    "sinri/ark-core": "~2.2",
     "sinri/ark-cache": "~2.0",
     "ralouphie/getallheaders": "^2.0",
     "jenssegers/agent": "^2.6",
