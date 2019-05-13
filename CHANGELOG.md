@@ -2,6 +2,10 @@
 
 For the serial of previous versions, see related branch.
 
+## Version 2.6
+
+Add `readIndispensableRequest` method to fetch request field.
+
 ## Version 2.5
 
 Update Default Composer Dependency Version.
