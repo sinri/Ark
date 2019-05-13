@@ -9,6 +9,7 @@
 namespace sinri\ark\web;
 
 
+use Exception;
 use sinri\ark\core\ArkHelper;
 use sinri\ark\io\ArkWebInput;
 
@@ -206,7 +207,7 @@ class ArkRouterRestfulRule implements ArkRouterRule
      * @param $path_string
      * @param array|mixed $preparedData @since 1.1 this became reference and bug fixed
      * @param int $responseCode @since 1.1 this became reference
-     * @throws \Exception
+     * @throws Exception
      */
     public function execute($path_string, &$preparedData = [], &$responseCode = 200)
     {
@@ -228,7 +229,7 @@ class ArkRouterRestfulRule implements ArkRouterRule
                 $filterError
             );
             if (!$shouldAcceptRequest) {
-                throw new \Exception(
+                throw new Exception(
                     "Your request is rejected by [" . $filter_instance->filterTitle() . "], reason: " . $filterError,
                     $responseCode
                 );
@@ -237,7 +238,7 @@ class ArkRouterRestfulRule implements ArkRouterRule
 
         if (is_array($callable)) {
             if (count($callable) < 2) {
-                throw new \Exception("Callback Array Format Mistakes", (ArkHelper::isCLI() ? -1 : 500));
+                throw new Exception("Callback Array Format Mistakes", (ArkHelper::isCLI() ? -1 : 500));
             }
             $class_instance_name = $callable[0];
             $class_instance = new $class_instance_name();

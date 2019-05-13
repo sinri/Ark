@@ -9,9 +9,12 @@
 // FOR DEV/TEST USE ONLY
 
 //require_once __DIR__ . '/core/ArkHelper.php';
+use sinri\ark\core\ArkHelper;
+use sinri\ark\TheArk;
+
 require_once __DIR__ . '/vendor/autoload.php';
 
-\sinri\ark\core\ArkHelper::registerAutoload(
+ArkHelper::registerAutoload(
     "sinri\ark",
     __DIR__,
     ".php"
@@ -20,6 +23,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 if (!function_exists('Ark')) {
     function Ark()
     {
-        return \sinri\ark\TheArk::getInstance();
+        return TheArk::getInstance();
     }
 }

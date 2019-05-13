@@ -9,7 +9,10 @@
 namespace sinri\ark\web;
 
 
-class ArkWebSession implements \SessionHandlerInterface
+use Exception;
+use SessionHandlerInterface;
+
+class ArkWebSession implements SessionHandlerInterface
 {
     protected $session_id;
     protected $session_name;
@@ -37,12 +40,12 @@ class ArkWebSession implements \SessionHandlerInterface
     }
 
     /**
-     * A special entrance with Redis @uses `\Predis\Session\Handler`
+     * A special entrance with Redis @param mixed actually ArkRedis $redisAgent such as new Client($single_server, array('prefix' => 'sessions:'));
+     * @param int $sessionLifetime
+     * @throws Exception
+     * @uses `\Predis\Session\Handler`
      * Instantiate a new client just like you would normally do. Using a prefix for
      * keys will effectively prefix all session keys with the specified string.
-     * @param mixed actually ArkRedis $redisAgent such as new Client($single_server, array('prefix' => 'sessions:'));
-     * @param int $sessionLifetime
-     * @throws \Exception
      * @deprecated in short time manually seek new implementation @uses `sinri\ark\web\ArkWebSessionWithRedis`
      */
     public static function sessionStartWithRedis($redisAgent, $sessionLifetime = 3600)
@@ -50,7 +53,7 @@ class ArkWebSession implements \SessionHandlerInterface
         if (class_exists("sinri\\ark\\web\\ArkWebSessionWithRedis")) {
             call_user_func_array(['sinri\ark\web\ArkWebSessionWithRedis', 'sessionStartWithRedis'], [$redisAgent, $sessionLifetime]);
         } else {
-            throw new \Exception("Ark Redis Component is not found!");
+            throw new Exception("Ark Redis Component is not found!");
         }
     }
 

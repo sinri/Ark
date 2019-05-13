@@ -9,6 +9,8 @@
 namespace sinri\ark\web;
 
 
+use Exception;
+use ReflectionClass;
 use sinri\ark\core\ArkLogger;
 use sinri\ark\io\ArkWebInput;
 
@@ -231,7 +233,7 @@ class ArkRouter
      * @param $incomingPath
      * @param $method
      * @return ArkRouterRule
-     * @throws \Exception
+     * @throws Exception
      */
     public function seekRoute($incomingPath, $method)
     {
@@ -306,7 +308,7 @@ class ArkRouter
                 return $route;
             }
         }
-        throw new \Exception("No route matched: path={$path} method={$method}", 404);
+        throw new Exception("No route matched: path={$path} method={$method}", 404);
 
     }
 
@@ -417,7 +419,7 @@ class ArkRouter
     {
         try {
             $method_list = get_class_methods($controllerClass);
-            $reflector = new \ReflectionClass($controllerClass);
+            $reflector = new ReflectionClass($controllerClass);
             foreach ($method_list as $method) {
                 if (strpos($method, '_') === 0) {
                     continue;
@@ -454,7 +456,7 @@ class ArkRouter
                     $this->registerRouteRule($route_rule);
                 }
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             // do nothing if class not exist
         }
     }

@@ -9,6 +9,7 @@
 namespace sinri\ark\web;
 
 
+use Exception;
 use sinri\ark\io\ArkWebOutput;
 
 class ArkRouteErrorHandler
@@ -35,14 +36,14 @@ class ArkRouteErrorHandler
             switch ($this->type) {
                 case self::TYPE_CALLBACK:
                     if (!is_callable($this->callback)) {
-                        throw new \Exception("ArkRouteErrorHandler::Callback is not a proper callback instance.");
+                        throw new Exception("ArkRouteErrorHandler::Callback is not a proper callback instance.");
                     }
                     // @since 1.5.0 add a second parameter as HTTP CODE to send
                     call_user_func_array($this->callback, [$errorData, $http_code]);
                     break;
                 case self::TYPE_TEMPLATE:
                     if (!is_string($this->templateFile) || !file_exists($this->templateFile)) {
-                        throw new \Exception("ArkRouteErrorHandler::Template file is not available.");
+                        throw new Exception("ArkRouteErrorHandler::Template file is not available.");
                     }
                     Ark()->webOutput()->displayPage($this->templateFile, $errorData);
                     break;
@@ -51,7 +52,7 @@ class ArkRouteErrorHandler
                     Ark()->webOutput()->jsonForAjax(ArkWebOutput::AJAX_JSON_CODE_FAIL, $errorData);
                     break;
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             echo $exception->getMessage() . PHP_EOL . $exception->getTraceAsString();
         }
     }

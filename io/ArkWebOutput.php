@@ -9,6 +9,7 @@
 namespace sinri\ark\io;
 
 
+use Exception;
 use Mimey\MimeTypes;
 
 class ArkWebOutput
@@ -73,13 +74,13 @@ class ArkWebOutput
     /**
      * @param $templateFile
      * @param array $params
-     * @throws \Exception
+     * @throws Exception
      */
     public function displayPage($templateFile, $params = [])
     {
         extract($params);
         if (!file_exists($templateFile)) {
-            throw new \Exception("Template file [{$templateFile}] not found.");
+            throw new Exception("Template file [{$templateFile}] not found.");
         }
         /** @noinspection PhpIncludeInspection */
         require $templateFile;
@@ -91,12 +92,12 @@ class ArkWebOutput
      * @param null $down_name Extension Free File Name For Download
      * @param null|string $content_type
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function downloadFileIndirectly($file, $content_type = null, $down_name = null)
     {
         if (!file_exists($file)) {
-            throw new \Exception("No such file there: " . $file, 404);
+            throw new Exception("No such file there: " . $file, 404);
         }
 
         if ($down_name !== null && $down_name !== false) {

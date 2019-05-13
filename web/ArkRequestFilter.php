@@ -9,6 +9,8 @@
 namespace sinri\ark\web;
 
 
+use Exception;
+
 abstract class ArkRequestFilter
 {
     /**
@@ -21,7 +23,7 @@ abstract class ArkRequestFilter
             try {
                 /** @noinspection PhpIncompatibleReturnTypeInspection */
                 return class_exists($class_name) ? new $class_name() : self::generateFilter(true, 'Required a filter not existed.', 500);
-            } catch (\Exception $exception) {
+            } catch (Exception $exception) {
                 return self::generateFilter(true, 'Exception in requiring a filter: ' . $exception->getMessage(), 500);
             }
         }

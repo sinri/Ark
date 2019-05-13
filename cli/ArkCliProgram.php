@@ -9,6 +9,7 @@
 namespace sinri\ark\cli;
 
 
+use Exception;
 use sinri\ark\core\ArkHelper;
 use sinri\ark\core\ArkLogger;
 
@@ -24,13 +25,13 @@ class ArkCliProgram
     /**
      * @param $methodName
      * @param array $parameters
-     * @throws \Exception
+     * @throws Exception
      */
     public function call($methodName, $parameters = [])
     {
         $method = 'action' . $methodName;
         if (!method_exists($this, $method)) {
-            throw new \Exception("No such method: " . $method);
+            throw new Exception("No such method: " . $method);
         }
         call_user_func_array([$this, $method], $parameters);
     }

@@ -7,24 +7,28 @@
  */
 
 use Psr\Log\LogLevel;
+use sinri\ark\core\ArkLogger;
+use sinri\ark\test\web\filter\AnotherFilter;
+use sinri\ark\test\web\filter\TestFilter;
+use sinri\ark\web\ArkRouteErrorHandler;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/../../autoload.php';
 
 //\sinri\ark\web\ArkWebSession::sessionStart(__DIR__.'/sessions');
 
-$logger = new \sinri\ark\core\ArkLogger(__DIR__ . '/../log', 'web');
+$logger = new ArkLogger(__DIR__ . '/../log', 'web');
 $logger->setIgnoreLevel(LogLevel::DEBUG);
 
 $web_service = Ark()->webService();
 //$web_service->setDebug(true);
 //$web_service->setLogger($logger);
-$web_service->setLogger(new \sinri\ark\core\ArkLogger(__DIR__ . '/../log', 'web'));
+$web_service->setLogger(new ArkLogger(__DIR__ . '/../log', 'web'));
 $router = $web_service->getRouter();
 $router->setDebug(true);
 $router->setLogger($logger);
 
-$router->setErrorHandler(\sinri\ark\web\ArkRouteErrorHandler::buildWithCallback(function ($error, $code) {
+$router->setErrorHandler(ArkRouteErrorHandler::buildWithCallback(function ($error, $code) {
     if ($code == 404) {
         echo "404!";
     } else {
@@ -40,8 +44,8 @@ $router->loadAllControllersInDirectoryAsCI(
     '',
     'sinri\ark\test\web\controller\\',
     [
-        \sinri\ark\test\web\filter\TestFilter::class,
-        \sinri\ark\test\web\filter\AnotherFilter::class,
+        TestFilter::class,
+        AnotherFilter::class,
         //'no_such_filter',//this might cause error
     ]
 );

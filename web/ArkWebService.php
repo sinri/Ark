@@ -9,6 +9,7 @@
 namespace sinri\ark\web;
 
 
+use Exception;
 use sinri\ark\core\ArkHelper;
 use sinri\ark\core\ArkLogger;
 
@@ -130,7 +131,7 @@ class ArkWebService
             $route = $this->router->seekRoute($path, Ark()->webInput()->getRequestMethod());
             $code = 0;
             $route->execute($path, $this->filterGeneratedData, $code);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->logger->error("Exception in " . __METHOD__ . " : " . $exception->getMessage());
         }
     }
@@ -142,7 +143,7 @@ class ArkWebService
             $route = $this->router->seekRoute($path_string, Ark()->webInput()->getRequestMethod());
             $code = 200;
             $route->execute($path_string, $this->filterGeneratedData, $code);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->router->handleRouteError($exception->getMessage(), $exception->getCode());
             if ($this->debug) {
                 echo "<pre>" . PHP_EOL . print_r($exception, true) . "</pre>" . PHP_EOL;

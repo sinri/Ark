@@ -6,9 +6,11 @@
  * Time: 10:35
  */
 
+use sinri\ark\TheArk;
+
 if (!function_exists('Ark')) {
     function Ark()
     {
-        return \sinri\ark\TheArk::getInstance();
+        return TheArk::getInstance();
     }
 }
