@@ -9,6 +9,7 @@
 namespace sinri\ark\web\implement;
 
 
+use Exception;
 use sinri\ark\io\ArkWebInput;
 use sinri\ark\io\ArkWebOutput;
 
@@ -46,16 +47,28 @@ class ArkWebController
     }
 
     /**
-     * @since 1.1 method added
      * @param string|array $name
      * @param null|mixed $default
      * @param null|string $regex
-     * @param null|\Exception $error
+     * @param null|Exception $error
      * @return mixed
+     * @since 1.1 method added
      */
     protected function _readRequest($name, $default = null, $regex = null, &$error = null)
     {
         return Ark()->webInput()->readRequest($name, $default, $regex, $error);
+    }
+
+    /**
+     * @param string $name
+     * @param callable|string|null $checker An anonymous function `f(v)` or a regular expression, else would not check any more
+     * @return mixed
+     * @throws Exception
+     * @since 2.6
+     */
+    protected function _readIndispensableRequest($name, $checker)
+    {
+        return Ark()->webInput()->readIndispensableRequest($name, $checker);
     }
 
     /**
@@ -99,7 +112,7 @@ class ArkWebController
         http_response_code($httpCode);
         try {
             Ark()->webOutput()->displayPage($templateFile, $params);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             echo $e->getMessage();
         }
     }

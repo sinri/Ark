@@ -9,6 +9,7 @@
 namespace sinri\ark\io;
 
 
+use Exception;
 use sinri\ark\core\ArkHelper;
 
 class ArkWebInput
@@ -83,7 +84,7 @@ class ArkWebInput
      * @param string|array $name
      * @param null|mixed $default
      * @param null|string $regex
-     * @param null|\Exception $error
+     * @param null|Exception $error
      * @return mixed
      */
     public function readRequest($name, $default = null, $regex = null, &$error = null)
@@ -99,9 +100,35 @@ class ArkWebInput
                     $value = ArkHelper::readTarget($this->rawPostBodyParsedAsJson, $name, $default, $regex, $error);
                 }
             }
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             // actually do nothing.
             $error = $exception;
+        }
+        return $value;
+    }
+
+    /**
+     * @param string $name
+     * @param callable|string|null $checker An anonymous function `f(v)` or a regular expression, else would not check any more
+     * @return mixed
+     * @throws Exception
+     * @since 2.6
+     */
+    public function readIndispensableRequest($name, $checker = null)
+    {
+        $value = $this->readRequest($name);
+        if ($value === null) {
+            throw new Exception("Field [$name] is missing!", ArkHelper::READ_TARGET_FIELD_NOT_FOUND);
+        }
+        if (is_callable($checker)) {
+            if (!call_user_func($checker, $value)) {
+                throw new Exception("Field [$name] format error with check function!", ArkHelper::READ_TARGET_REGEX_NOT_MATCH);
+            }
+        } elseif (is_string($checker) && strlen($checker) > 2) {
+            // at least it would be have `/` in head and tail
+            if (!preg_match($checker, $value)) {
+                throw new Exception("Field [$name] format error with check regex!", ArkHelper::READ_TARGET_REGEX_NOT_MATCH);
+            }
         }
         return $value;
     }
