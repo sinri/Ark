@@ -9,6 +9,7 @@
 namespace sinri\ark;
 
 
+use Psr\Log\LogLevel;
 use sinri\ark\cache\ArkCache;
 use sinri\ark\cache\implement\ArkDummyCache;
 use sinri\ark\cache\implement\ArkFileCache;
@@ -144,6 +145,8 @@ class TheArk
             $path = $this->readConfig(['log', 'path']);
             if ($path !== null) {
                 $logger = new ArkLogger($path, $name);
+                $level = $this->readConfig(['log', 'level'], LogLevel::INFO);
+                $logger->setIgnoreLevel($level);
             } else {
                 $logger = ArkLogger::makeSilentLogger();
             }

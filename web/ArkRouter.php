@@ -50,34 +50,42 @@ class ArkRouter
 
     /**
      * @param bool $debug
+     * @return ArkRouter
      */
     public function setDebug(bool $debug)
     {
         $this->debug = $debug;
+        return $this;
     }
 
     /**
      * @param ArkLogger $logger
+     * @return ArkRouter
      */
     public function setLogger(ArkLogger $logger)
     {
         $this->logger = $logger;
+        return $this;
     }
 
     /**
      * @param null|string $defaultControllerName
+     * @return ArkRouter
      */
     public function setDefaultControllerName(string $defaultControllerName)
     {
         $this->defaultControllerName = $defaultControllerName;
+        return $this;
     }
 
     /**
      * @param null|string $defaultMethodName
+     * @return ArkRouter
      */
     public function setDefaultMethodName(string $defaultMethodName)
     {
         $this->defaultMethodName = $defaultMethodName;
+        return $this;
     }
 
     /**
@@ -85,10 +93,12 @@ class ArkRouter
      * give an anonymous function or a callable definition array which consume one parameter of array,
      * or leave it as null to response JSON.
      * @param ArkRouteErrorHandler|null $errorHandler
+     * @return ArkRouter
      */
     public function setErrorHandler($errorHandler)
     {
         $this->errorHandler = $errorHandler;
+        return $this;
     }
 
     /**
@@ -105,26 +115,44 @@ class ArkRouter
 
     /**
      * @param ArkRouterRestfulRule $routeRule
+     * @return ArkRouter
      */
     public function registerRouteRule($routeRule)
     {
         array_unshift($this->routes, $routeRule);
+        return $this;
     }
 
     /**
      * @param ArkRouterStaticRule $staticRouteRule
+     * @return ArkRouter
      */
     public function registerStaticRouteRule($staticRouteRule)
     {
         array_unshift($this->staticRoutes, $staticRouteRule);
+        return $this;
+    }
+
+    /**
+     * @param $path
+     * @param $dir
+     * @param array $filters
+     * @return $this
+     * @deprecated use registerFrontendFolder instead
+     */
+    public function frontendFolder($path, $dir, $filters = [])
+    {
+        $this->registerFrontendFolder($path, $dir, $filters);
+        return $this;
     }
 
     /**
      * @param string $path
      * @param string $dir
      * @param string[] $filters
+     * @return ArkRouter
      */
-    public function frontendFolder($path, $dir, $filters = [])
+    public function registerFrontendFolder($path, $dir, $filters = [])
     {
         $staticRule = ArkRouterStaticRule::buildRouteRule(
             ArkWebInput::METHOD_ANY,
@@ -139,94 +167,111 @@ class ArkRouter
             $filters
         );
         $this->registerStaticRouteRule($staticRule);
+        return $this;
     }
 
     /**
      * @param string $path `posts/{post}/comments/{comment}` no leading `/`
      * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param string[] $filters ArkRequestFilter class name list
+     * @return ArkRouter
      */
     public function get($path, $callback, $filters = [])
     {
         $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_GET, $path, $callback, $filters);
         $this->registerRouteRule($route_rule);
+        return $this;
     }
 
     /**
      * @param string $path `posts/{post}/comments/{comment}` no leading `/`
      * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param string[] $filters ArkRequestFilter class name list
+     * @return ArkRouter
      */
     public function post($path, $callback, $filters = [])
     {
         $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_POST, $path, $callback, $filters);
         $this->registerRouteRule($route_rule);
+        return $this;
     }
 
     /**
      * @param string $path `posts/{post}/comments/{comment}` no leading `/`
      * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param string[] $filters ArkRequestFilter class name list
+     * @return ArkRouter
      */
     public function put($path, $callback, $filters = [])
     {
         $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_PUT, $path, $callback, $filters);
         $this->registerRouteRule($route_rule);
+        return $this;
     }
 
     /**
      * @param string $path `posts/{post}/comments/{comment}` no leading `/`
      * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param string[] $filters ArkRequestFilter class name list
+     * @return ArkRouter
      */
     public function patch($path, $callback, $filters = [])
     {
         $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_PATCH, $path, $callback, $filters);
         $this->registerRouteRule($route_rule);
+        return $this;
     }
 
     /**
      * @param string $path `posts/{post}/comments/{comment}` no leading `/`
      * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param string[] $filters ArkRequestFilter class name list
+     * @return ArkRouter
      */
     public function delete($path, $callback, $filters = [])
     {
         $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_DELETE, $path, $callback, $filters);
         $this->registerRouteRule($route_rule);
+        return $this;
     }
 
     /**
      * @param string $path `posts/{post}/comments/{comment}` no leading `/`
      * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param string[] $filters ArkRequestFilter class name list
+     * @return ArkRouter
      */
     public function options($path, $callback, $filters = [])
     {
         $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_OPTIONS, $path, $callback, $filters);
         $this->registerRouteRule($route_rule);
+        return $this;
     }
 
     /**
      * @param string $path `posts/{post}/comments/{comment}` no leading `/`
      * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param string[] $filters ArkRequestFilter class name list
+     * @return ArkRouter
      */
     public function head($path, $callback, $filters = [])
     {
         $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_HEAD, $path, $callback, $filters);
         $this->registerRouteRule($route_rule);
+        return $this;
     }
 
     /**
      * @param string $path `posts/{post}/comments/{comment}` no leading `/`
      * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param string[] $filters ArkRequestFilter class name list
+     * @return ArkRouter
      */
     public function any($path, $callback, $filters = [])
     {
         $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_ANY, $path, $callback, $filters);
         $this->registerRouteRule($route_rule);
+        return $this;
     }
 
     /**
@@ -248,19 +293,19 @@ class ArkRouter
             $route_regex = $staticRoute->getPath();//$route[self::ROUTE_PARAM_PATH];
             $route_method = $staticRoute->getMethod();//$route[self::ROUTE_PARAM_METHOD];
             if ($this->debug) {
-                $this->logger->debug(__METHOD__ . " TRY TO MATCH RULE: [$route_method][$route_regex][$incomingPath]");
+                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " TRY TO MATCH RULE: [$route_method][$route_regex][$incomingPath]");
             }
             if (
                 $route_method !== ArkWebInput::METHOD_ANY
                 && stripos($route_method, $method) === false
             ) {
                 if ($this->debug) {
-                    $this->logger->debug(__METHOD__ . " ROUTE METHOD NOT MATCH [$method]");
+                    $this->logger->debug(__METHOD__ . '@' . __LINE__ . " ROUTE METHOD NOT MATCH [$method]");
                 }
                 continue;
             }
             if (preg_match($route_regex, $incomingPath, $matches)) {
-                $this->logger->debug(__METHOD__ . " raw matches", $matches);
+                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " raw matches", $matches);
                 if (!empty($matches)) array_shift($matches);
                 $matches = array_filter($matches, function ($v) {
                     return substr($v, 0, 1) != '/';
@@ -271,7 +316,7 @@ class ArkRouter
                 });
                 $staticRoute->setParsed($matches);
                 if ($this->debug) {
-                    $this->logger->debug(__METHOD__ . " MATCHED with " . json_encode($matches));
+                    $this->logger->debug(__METHOD__ . '@' . __LINE__ . " MATCHED with " . json_encode($matches));
                 }
                 return $staticRoute;
             }
@@ -281,14 +326,14 @@ class ArkRouter
             $route_regex = $route->getPath();//$route[self::ROUTE_PARAM_PATH];
             $route_method = $route->getMethod();//$route[self::ROUTE_PARAM_METHOD];
             if ($this->debug) {
-                $this->logger->debug(__METHOD__ . " TRY TO MATCH RULE: [$route_method][$route_regex][$path]");
+                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " TRY TO MATCH RULE: [$route_method][$route_regex][$path]");
             }
             if (
                 $route_method !== ArkWebInput::METHOD_ANY
                 && stripos($route_method, $method) === false
             ) {
                 if ($this->debug) {
-                    $this->logger->debug(__METHOD__ . " ROUTE METHOD NOT MATCH [$method]");
+                    $this->logger->debug(__METHOD__ . '@' . __LINE__ . " ROUTE METHOD NOT MATCH [$method]");
                 }
                 continue;
             }
@@ -303,7 +348,7 @@ class ArkRouter
                 });
                 $route->setParsed($matches);
                 if ($this->debug) {
-                    $this->logger->debug(__METHOD__ . " MATCHED with " . json_encode($matches));
+                    $this->logger->debug(__METHOD__ . '@' . __LINE__ . " MATCHED with " . json_encode($matches));
                 }
                 return $route;
             }
@@ -315,6 +360,7 @@ class ArkRouter
     /**
      * @param ArkRouterRestfulRule $shared
      * @param ArkRouterRestfulRule[] $list
+     * @return ArkRouter
      */
     public function group($shared, $list)
     {
@@ -345,6 +391,7 @@ class ArkRouter
             );
             $this->registerRouteRule($route_rule);
         }
+        return $this;
     }
 
     /**
@@ -352,16 +399,15 @@ class ArkRouter
      * @param string $urlBase "XX/"
      * @param string $controllerNamespaceBase '\sinri\sample\controller\\'
      * @param string[] $filters ['\sinri\sample\filter\AuthFilter']
+     * @return ArkRouter
      */
     public function loadAllControllersInDirectoryAsCI($directory, $urlBase = '', $controllerNamespaceBase = '', $filters = [])
     {
         if (!file_exists($directory) || !is_dir($directory)) {
             if ($this->debug) {
-                $this->logger->debug(__METHOD__ . " warning: this is not a directory: " . $directory);
+                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " warning: this is not a directory: " . $directory);
             }
-            return;
-        }
-        if ($handle = opendir($directory)) {
+        } elseif ($handle = opendir($directory)) {
             if (
                 $this->defaultControllerName
                 && file_exists($directory . '/' . $this->defaultControllerName . '.php')
@@ -408,12 +454,14 @@ class ArkRouter
             }
             closedir($handle);
         }
+        return $this;
     }
 
     /**
      * @param string $basePath "" or "xx/"
      * @param string $controllerClass full class describer
      * @param string[] $filters
+     * @return ArkRouter
      */
     public function loadController($basePath, $controllerClass, $filters = [])
     {
@@ -437,9 +485,9 @@ class ArkRouter
                         } elseif ($came_in_default_area) {
                             //non-default after default
                             if ($this->debug) {
-                                $this->logger->debug("ROUTE SETTING ERROR: required-parameter after non-required-parameter");
+                                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " ROUTE SETTING ERROR: required-parameter after non-required-parameter");
                             }
-                            return;
+                            return $this;
                         }
                         $path .= '/{' . $param->name . '}';
                     }
@@ -459,5 +507,6 @@ class ArkRouter
         } catch (Exception $exception) {
             // do nothing if class not exist
         }
+        return $this;
     }
 }

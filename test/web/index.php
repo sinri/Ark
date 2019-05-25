@@ -50,6 +50,11 @@ $router->loadAllControllersInDirectoryAsCI(
     ]
 );
 
-$router->frontendFolder("qd/ym", __DIR__ . '/frontend', []);
+
+$router->get("", function () {
+    echo "Welcome to Ark!" . PHP_EOL;
+});
+
+$router->registerFrontendFolder("qd/ym", __DIR__ . '/frontend', []);
 
 $web_service->handleRequest();

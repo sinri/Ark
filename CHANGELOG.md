@@ -2,6 +2,10 @@
 
 For the serial of previous versions, see related branch.
 
+## Version 2.6.2
+
+Fluent Router Call
+
 ## Version 2.6.1
 
 Better `Ark()` Facade.
