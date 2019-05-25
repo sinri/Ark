@@ -11,9 +11,11 @@ namespace sinri\ark;
 
 use sinri\ark\cache\ArkCache;
 use sinri\ark\cache\implement\ArkDummyCache;
+use sinri\ark\cache\implement\ArkFileCache;
 use sinri\ark\core\ArkHelper;
 use sinri\ark\core\ArkLogger;
 use sinri\ark\database\pdo\ArkPDO;
+use sinri\ark\database\pdo\ArkPDOConfig;
 use sinri\ark\io\ArkWebInput;
 use sinri\ark\io\ArkWebOutput;
 use sinri\ark\web\ArkWebService;
@@ -49,12 +51,31 @@ class TheArk
      * @var ArkCache[]
      */
     protected $cacheDict = [];
+    /**
+     * @var array
+     */
+    protected $config = [];
 
     private function __construct()
     {
         $this->webInputHelper = null;
         $this->webOutputHelper = null;
         $this->webServiceHandler = null;
+    }
+
+    public function setConfig($config)
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @param array $keyChain
+     * @param null|mixed $default
+     * @return mixed|null
+     */
+    public function readConfig($keyChain, $default = null)
+    {
+        return ArkHelper::readTarget($this->config, $keyChain, $default);
     }
 
     /**
@@ -111,6 +132,8 @@ class TheArk
     }
 
     /**
+     * Register an instance of ArkLogger based on the config item [log][path]
+     *
      * @param string $name
      * @return ArkLogger
      */
@@ -118,7 +141,12 @@ class TheArk
     {
         $logger = ArkHelper::readTarget($this->loggerDict, $name);
         if (!$logger) {
-            $logger = ArkLogger::makeSilentLogger();
+            $path = $this->readConfig(['log', 'path']);
+            if ($path !== null) {
+                $logger = new ArkLogger($path, $name);
+            } else {
+                $logger = ArkLogger::makeSilentLogger();
+            }
             $this->registerLogger($name, $logger);
         }
         return $logger;
@@ -134,6 +162,8 @@ class TheArk
     }
 
     /**
+     * Register an instance of ArkPDO based on the config item [pdo][NAME]
+     *
      * @param string $name
      * @return ArkPDO
      */
@@ -141,7 +171,13 @@ class TheArk
     {
         $pdo = ArkHelper::readTarget($this->pdoDict, $name);
         if (!$pdo) {
-            $pdo = new ArkPDO();
+            $dbConfigDict = $this->readConfig(['pdo', $name]);
+            if ($dbConfigDict === null) {
+                $pdo = new ArkPDO();
+            } else {
+                $pdoConfig = new ArkPDOConfig($dbConfigDict);
+                $pdo = new ArkPDO($pdoConfig);
+            }
             $this->registerDb($name, $pdo);
         }
         return $pdo;
@@ -157,6 +193,8 @@ class TheArk
     }
 
     /**
+     * Register an instance of ArkFileCache based on the config item [cache][NAME][type|dir|mode]
+     *
      * @param string $name
      * @return ArkCache
      */
@@ -164,7 +202,17 @@ class TheArk
     {
         $cache = ArkHelper::readTarget($this->cacheDict, $name);
         if (!$cache) {
-            $cache = new ArkDummyCache();
+            $cacheType = $this->readConfig(['cache', $name, 'type']);
+            switch ($cacheType) {
+                case 'FILE':
+                    $cache = new ArkFileCache(
+                        $this->readConfig(['cache', $name, 'dir'], '/tmp/ark-cache-' . $name),
+                        $this->readConfig(['cache', $name, 'mode'], 0777)
+                    );
+                    break;
+                default:
+                    $cache = new ArkDummyCache();
+            }
             $this->registerCache($name, $cache);
         }
         return $cache;

@@ -2,6 +2,10 @@
 
 For the serial of previous versions, see related branch.
 
+## Version 2.6.1
+
+Better `Ark()` Facade.
+
 ## Version 2.6
 
 Add `readIndispensableRequest` method to fetch request field.
