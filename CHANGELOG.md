@@ -2,6 +2,10 @@
 
 For the serial of previous versions, see related branch.
 
+## Version 2.7.0
+
+Add Free Tail Route Rule.
+
 ## Version 2.6.2
 
 Fluent Router Call
