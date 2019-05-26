@@ -35,7 +35,13 @@ class ArkRouter
     /**
      * @var ArkRouterRestfulRule[]
      */
-    protected $routes;
+    protected $restfulRoutes;
+    /**
+     * @var ArkRouterFreeTailRule[]
+     */
+    protected $freeTailRoutes;
+
+
 
     public function __construct()
     {
@@ -45,7 +51,8 @@ class ArkRouter
         $this->defaultMethodName = 'index';
         $this->errorHandler = null;
         $this->staticRoutes = [];
-        $this->routes = [];
+        $this->restfulRoutes = [];
+        $this->freeTailRoutes = [];
     }
 
     /**
@@ -114,12 +121,21 @@ class ArkRouter
     }
 
     /**
-     * @param ArkRouterRestfulRule $routeRule
-     * @return ArkRouter
+     * @param $routeRule
+     * @deprecated use registerRestfulRouteRule instead
      */
     public function registerRouteRule($routeRule)
     {
-        array_unshift($this->routes, $routeRule);
+        $this->registerRestfulRouteRule($routeRule);
+    }
+
+    /**
+     * @param ArkRouterRestfulRule $routeRule
+     * @return ArkRouter
+     */
+    public function registerRestfulRouteRule($routeRule)
+    {
+        array_unshift($this->restfulRoutes, $routeRule);
         return $this;
     }
 
@@ -130,6 +146,16 @@ class ArkRouter
     public function registerStaticRouteRule($staticRouteRule)
     {
         array_unshift($this->staticRoutes, $staticRouteRule);
+        return $this;
+    }
+
+    /**
+     * @param $freeTailRouteRule
+     * @return $this
+     */
+    public function registerFreeTailRouteRule($freeTailRouteRule)
+    {
+        array_unshift($this->freeTailRoutes, $freeTailRouteRule);
         return $this;
     }
 
@@ -174,12 +200,18 @@ class ArkRouter
      * @param string $path `posts/{post}/comments/{comment}` no leading `/`
      * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param string[] $filters ArkRequestFilter class name list
+     * @param bool $hasFreeTail
      * @return ArkRouter
      */
-    public function get($path, $callback, $filters = [])
+    public function get($path, $callback, $filters = [], $hasFreeTail = false)
     {
-        $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_GET, $path, $callback, $filters);
-        $this->registerRouteRule($route_rule);
+        if ($hasFreeTail) {
+            $route_rule = ArkRouterFreeTailRule::buildRouteRule(ArkWebInput::METHOD_GET, $path, $callback, $filters);
+            $this->registerFreeTailRouteRule($route_rule);
+        } else {
+            $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_GET, $path, $callback, $filters);
+            $this->registerRestfulRouteRule($route_rule);
+        }
         return $this;
     }
 
@@ -187,12 +219,18 @@ class ArkRouter
      * @param string $path `posts/{post}/comments/{comment}` no leading `/`
      * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param string[] $filters ArkRequestFilter class name list
+     * @param bool $hasFreeTail
      * @return ArkRouter
      */
-    public function post($path, $callback, $filters = [])
+    public function post($path, $callback, $filters = [], $hasFreeTail = false)
     {
-        $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_POST, $path, $callback, $filters);
-        $this->registerRouteRule($route_rule);
+        if ($hasFreeTail) {
+            $route_rule = ArkRouterFreeTailRule::buildRouteRule(ArkWebInput::METHOD_POST, $path, $callback, $filters);
+            $this->registerFreeTailRouteRule($route_rule);
+        } else {
+            $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_POST, $path, $callback, $filters);
+            $this->registerRestfulRouteRule($route_rule);
+        }
         return $this;
     }
 
@@ -200,12 +238,18 @@ class ArkRouter
      * @param string $path `posts/{post}/comments/{comment}` no leading `/`
      * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param string[] $filters ArkRequestFilter class name list
+     * @param bool $hasFreeTail
      * @return ArkRouter
      */
-    public function put($path, $callback, $filters = [])
+    public function put($path, $callback, $filters = [], $hasFreeTail = false)
     {
-        $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_PUT, $path, $callback, $filters);
-        $this->registerRouteRule($route_rule);
+        if ($hasFreeTail) {
+            $route_rule = ArkRouterFreeTailRule::buildRouteRule(ArkWebInput::METHOD_PUT, $path, $callback, $filters);
+            $this->registerFreeTailRouteRule($route_rule);
+        } else {
+            $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_PUT, $path, $callback, $filters);
+            $this->registerRestfulRouteRule($route_rule);
+        }
         return $this;
     }
 
@@ -213,12 +257,18 @@ class ArkRouter
      * @param string $path `posts/{post}/comments/{comment}` no leading `/`
      * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param string[] $filters ArkRequestFilter class name list
+     * @param bool $hasFreeTail
      * @return ArkRouter
      */
-    public function patch($path, $callback, $filters = [])
+    public function patch($path, $callback, $filters = [], $hasFreeTail = false)
     {
-        $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_PATCH, $path, $callback, $filters);
-        $this->registerRouteRule($route_rule);
+        if ($hasFreeTail) {
+            $route_rule = ArkRouterFreeTailRule::buildRouteRule(ArkWebInput::METHOD_PATCH, $path, $callback, $filters);
+            $this->registerFreeTailRouteRule($route_rule);
+        } else {
+            $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_PATCH, $path, $callback, $filters);
+            $this->registerRestfulRouteRule($route_rule);
+        }
         return $this;
     }
 
@@ -226,12 +276,18 @@ class ArkRouter
      * @param string $path `posts/{post}/comments/{comment}` no leading `/`
      * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param string[] $filters ArkRequestFilter class name list
+     * @param bool $hasFreeTail
      * @return ArkRouter
      */
-    public function delete($path, $callback, $filters = [])
+    public function delete($path, $callback, $filters = [], $hasFreeTail = false)
     {
-        $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_DELETE, $path, $callback, $filters);
-        $this->registerRouteRule($route_rule);
+        if ($hasFreeTail) {
+            $route_rule = ArkRouterFreeTailRule::buildRouteRule(ArkWebInput::METHOD_DELETE, $path, $callback, $filters);
+            $this->registerFreeTailRouteRule($route_rule);
+        } else {
+            $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_DELETE, $path, $callback, $filters);
+            $this->registerRestfulRouteRule($route_rule);
+        }
         return $this;
     }
 
@@ -239,12 +295,18 @@ class ArkRouter
      * @param string $path `posts/{post}/comments/{comment}` no leading `/`
      * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param string[] $filters ArkRequestFilter class name list
+     * @param bool $hasFreeTail
      * @return ArkRouter
      */
-    public function options($path, $callback, $filters = [])
+    public function options($path, $callback, $filters = [], $hasFreeTail = false)
     {
-        $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_OPTIONS, $path, $callback, $filters);
-        $this->registerRouteRule($route_rule);
+        if ($hasFreeTail) {
+            $route_rule = ArkRouterFreeTailRule::buildRouteRule(ArkWebInput::METHOD_OPTIONS, $path, $callback, $filters);
+            $this->registerFreeTailRouteRule($route_rule);
+        } else {
+            $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_OPTIONS, $path, $callback, $filters);
+            $this->registerRestfulRouteRule($route_rule);
+        }
         return $this;
     }
 
@@ -252,12 +314,18 @@ class ArkRouter
      * @param string $path `posts/{post}/comments/{comment}` no leading `/`
      * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param string[] $filters ArkRequestFilter class name list
+     * @param bool $hasFreeTail
      * @return ArkRouter
      */
-    public function head($path, $callback, $filters = [])
+    public function head($path, $callback, $filters = [], $hasFreeTail = false)
     {
-        $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_HEAD, $path, $callback, $filters);
-        $this->registerRouteRule($route_rule);
+        if ($hasFreeTail) {
+            $route_rule = ArkRouterFreeTailRule::buildRouteRule(ArkWebInput::METHOD_HEAD, $path, $callback, $filters);
+            $this->registerFreeTailRouteRule($route_rule);
+        } else {
+            $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_HEAD, $path, $callback, $filters);
+            $this->registerRestfulRouteRule($route_rule);
+        }
         return $this;
     }
 
@@ -265,12 +333,18 @@ class ArkRouter
      * @param string $path `posts/{post}/comments/{comment}` no leading `/`
      * @param callable $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param string[] $filters ArkRequestFilter class name list
+     * @param bool $hasFreeTail
      * @return ArkRouter
      */
-    public function any($path, $callback, $filters = [])
+    public function any($path, $callback, $filters = [], $hasFreeTail = false)
     {
-        $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_ANY, $path, $callback, $filters);
-        $this->registerRouteRule($route_rule);
+        if ($hasFreeTail) {
+            $route_rule = ArkRouterFreeTailRule::buildRouteRule(ArkWebInput::METHOD_ANY, $path, $callback, $filters);
+            $this->registerFreeTailRouteRule($route_rule);
+        } else {
+            $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_ANY, $path, $callback, $filters);
+            $this->registerRestfulRouteRule($route_rule);
+        }
         return $this;
     }
 
@@ -322,7 +396,7 @@ class ArkRouter
             }
         }
 
-        foreach ($this->routes as $route) {
+        foreach ($this->restfulRoutes as $route) {
             $route_regex = $route->getPath();//$route[self::ROUTE_PARAM_PATH];
             $route_method = $route->getMethod();//$route[self::ROUTE_PARAM_METHOD];
             if ($this->debug) {
@@ -353,6 +427,39 @@ class ArkRouter
                 return $route;
             }
         }
+
+        foreach ($this->freeTailRoutes as $route) {
+            $route_regex = $route->getPath();//$route[self::ROUTE_PARAM_PATH];
+            $route_method = $route->getMethod();//$route[self::ROUTE_PARAM_METHOD];
+            if ($this->debug) {
+                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " TRY TO MATCH RULE: [$route_method][$route_regex][$path]");
+            }
+            if (
+                $route_method !== ArkWebInput::METHOD_ANY
+                && stripos($route_method, $method) === false
+            ) {
+                if ($this->debug) {
+                    $this->logger->debug(__METHOD__ . '@' . __LINE__ . " ROUTE METHOD NOT MATCH [$method]");
+                }
+                continue;
+            }
+            if (preg_match($route_regex, $path, $matches)) {
+                if (!empty($matches)) array_shift($matches);
+                $matches = array_filter($matches, function ($v) {
+                    return substr($v, 0, 1) != '/';
+                });
+                $matches = array_values($matches);
+                array_walk($matches, function (&$v) {
+                    $v = urldecode($v);
+                });
+                $route->setParsed($matches);
+                if ($this->debug) {
+                    $this->logger->debug(__METHOD__ . '@' . __LINE__ . " MATCHED with " . json_encode($matches));
+                }
+                return $route;
+            }
+        }
+
         throw new Exception("No route matched: path={$path} method={$method}", 404);
 
     }

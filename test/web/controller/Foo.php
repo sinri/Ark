@@ -23,4 +23,13 @@ class Foo extends ArkWebController
             'time' => ArkHelper::readTarget($this->filterGeneratedData, ['request_time'], 'unknown'),
         ]);
     }
+
+    public function tail($a, $b, $tail = [])
+    {
+        $this->_sayOK([
+            'a' => $a,
+            'b' => $b,
+            'tail' => $tail,
+        ]);
+    }
 }
