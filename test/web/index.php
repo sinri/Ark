@@ -20,6 +20,8 @@ require_once __DIR__ . '/../../autoload.php';
 
 //\sinri\ark\web\ArkWebSession::sessionStart(__DIR__.'/sessions');
 
+date_default_timezone_set("Asia/Shanghai");
+
 $logger = new ArkLogger(__DIR__ . '/../log', 'web');
 $logger->setIgnoreLevel(LogLevel::DEBUG);
 
@@ -67,6 +69,8 @@ $freeTailRouteRule = ArkRouterFreeTailRule::buildRouteRule(
 );
 
 $router->registerFreeTailRouteRule($freeTailRouteRule);
+
+$web_service->setupFileSystemViewer("fs", __DIR__ . '/../', []);
 
 $web_service->handleRequest();
 

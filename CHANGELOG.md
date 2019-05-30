@@ -2,6 +2,10 @@
 
 For the serial of previous versions, see related branch.
 
+## Version 2.7.1
+
+Add File System Viewer.
+
 ## Version 2.7.0
 
 Add Free Tail Route Rule.

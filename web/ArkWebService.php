@@ -212,4 +212,98 @@ class ArkWebService
     {
         ArkWebSession::sessionStart($sessionDir);
     }
+
+    /**
+     * @param string $pathPrefix no leading and tail '/'
+     * @param string $baseDirPath
+     * @param ArkRequestFilter[] $filters
+     * @since 2.7.1
+     * Set up a quick readonly FTP-like file system viewer,
+     * binding a uri path prefix to a file system path prefix.
+     */
+    public function setupFileSystemViewer($pathPrefix, $baseDirPath, $filters = [])
+    {
+        $this->router->get($pathPrefix, function ($components) use ($pathPrefix, $baseDirPath) {
+            if (count($components) === 1 && $components[0] === '') {
+                $components = [];
+            }
+            $baseDirPath = realpath($baseDirPath);
+            if ($baseDirPath === false) {
+                throw new Exception("Resource Configuration Error!", 500);
+            }
+            $rawPath = $baseDirPath . (empty($components) ? "" : "/" . implode("/", $components));
+            $realPath = realpath($rawPath);
+            if ($realPath === false || $realPath !== $rawPath) {
+                throw new Exception("Illegal Resource Index!", 400);
+            }
+            if (!file_exists($realPath)) {
+                throw new Exception("Resource Not Found!", 404);
+            }
+            if (is_dir($realPath)) {
+                // if dir path not ends with / add one to its tail
+                $parts = explode("?", $_SERVER['REQUEST_URI']);
+                $path = $parts[0];
+                if (substr($path, strlen($path) - 1, 1) !== '/') {
+                    header("Location: " . $path . '/' . (count($parts) > 1 ? "?" . $parts[1] : ""));
+                    return;
+                }
+                echo "<!doctype html>" . PHP_EOL;
+                echo "<head>" . PHP_EOL
+                    . "<meta charset='UTF-8'>" . PHP_EOL
+                    . "<title>~/" . implode("/", $components) . " - Ark File System Viewer</title>" . PHP_EOL
+                    . "<style>" . PHP_EOL
+                    . "table th,td {" . PHP_EOL
+                    . "padding: 5px 10px;" . PHP_EOL
+                    . "}" . PHP_EOL
+                    . "</style>" . PHP_EOL
+                    . "</head>" . PHP_EOL;
+                // list
+                echo "<body>" . PHP_EOL;
+                echo "<h1>Ark File System Viewer</h1>" . PHP_EOL;
+                echo "<p>You are here: ~/" . implode("/", $components) . "</p>" . PHP_EOL;
+                echo "<hr>" . PHP_EOL;
+                echo "<table>" . PHP_EOL;
+                echo "<tr>"
+                    . "<th>Name</th>"
+                    . "<th>Size</th>"
+                    . "<th>Created</th>"
+                    . "<th>Modified</th>"
+                    . "<th>Accessed</th>"
+                    . "</tr>" . PHP_EOL;
+                $dir = opendir($realPath);
+                while ($item = readdir($dir)) {
+                    if ($item === '.') continue;
+                    if ($item === '..' && empty($components)) {
+                        continue;
+                    }
+
+                    $fileStat = stat($realPath . '/' . $item);
+
+                    $fileSize = $fileStat[7];//filesize($realPath.'/'.$item);
+                    $lastAccessTime = date("Y-m-d H:i:s", $fileStat[8]);
+                    $lastModificationTime = date("Y-m-d H:i:s", $fileStat[9]);
+                    $lastCreateTime = date("Y-m-d H:i:s", $fileStat[10]);
+                    echo "<tr>"
+                        . "<td>" . "<a href='./{$item}'>{$item}</a> " . "</td>"
+                        . "<td>{$fileSize} bytes</td>"
+                        . "<td>{$lastCreateTime}</td>"
+                        . "<td>{$lastModificationTime}</td>"
+                        . "<td>{$lastAccessTime}</td>"
+                        . "</tr>" . PHP_EOL;
+                }
+                closedir($dir);
+                echo "</table>" . PHP_EOL;
+                echo "<hr>" . PHP_EOL;
+                echo "<div>" . PHP_EOL
+                    . "This page is generated on " . date('Y-m-d H:i:s') . ", "
+                    . "powered by Framework <a href='https://github.com/sinri/Ark' target='_blank'>sinri/ark</a>."
+                    . "</div>" . PHP_EOL;
+                echo "</body>" . PHP_EOL;
+                echo "</html>" . PHP_EOL;
+            } else {
+                // show content
+                Ark()->webOutput()->downloadFileIndirectly($realPath);
+            }
+        }, $filters, true);
+    }
 }
