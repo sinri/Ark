@@ -217,13 +217,14 @@ class ArkWebService
      * @param string $pathPrefix no leading and tail '/'
      * @param string $baseDirPath
      * @param ArkRequestFilter[] $filters
+     * @param null|callable $fileHandler e.g. function($realPath):void if return false, execute default downloader @since 2.7.2
      * @since 2.7.1
      * Set up a quick readonly FTP-like file system viewer,
      * binding a uri path prefix to a file system path prefix.
      */
-    public function setupFileSystemViewer($pathPrefix, $baseDirPath, $filters = [])
+    public function setupFileSystemViewer($pathPrefix, $baseDirPath, $filters = [], $fileHandler = null)
     {
-        $this->router->get($pathPrefix, function ($components) use ($pathPrefix, $baseDirPath) {
+        $this->router->get($pathPrefix, function ($components) use ($fileHandler, $pathPrefix, $baseDirPath) {
             if (count($components) === 1 && $components[0] === '') {
                 $components = [];
             }
@@ -302,7 +303,12 @@ class ArkWebService
                 echo "</html>" . PHP_EOL;
             } else {
                 // show content
-                Ark()->webOutput()->downloadFileIndirectly($realPath);
+                if (is_callable($fileHandler)) {
+                    //$extension=pathinfo($realPath,PATHINFO_EXTENSION);
+                    call_user_func_array($fileHandler, [$realPath]);
+                } else {
+                    Ark()->webOutput()->downloadFileIndirectly($realPath);
+                }
             }
         }, $filters, true);
     }
