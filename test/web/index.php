@@ -70,7 +70,9 @@ $freeTailRouteRule = ArkRouterFreeTailRule::buildRouteRule(
 
 $router->registerFreeTailRouteRule($freeTailRouteRule);
 
-$web_service->setupFileSystemViewer("fs", __DIR__ . '/../', []);
+$web_service->setupFileSystemViewer("fs", __DIR__ . '/../', [], function ($file) {
+    var_dump($file);
+});
 
 $web_service->handleRequest();
 
