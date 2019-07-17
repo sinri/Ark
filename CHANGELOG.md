@@ -2,6 +2,10 @@
 
 For the serial of previous versions, see related branch.
 
+## Version 2.8.1
+
+Deprecate `Ark()->db()` and replace it with `Ark()->pdo()`.
+
 ## Version 2.8.0
 
 Better Structure.

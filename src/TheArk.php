@@ -169,8 +169,22 @@ class TheArk
      *
      * @param string $name
      * @return ArkPDO
+     * @deprecated Please use method `pdo` and this would be removed in 3.x
      */
     public function db($name = 'default'): ArkPDO
+    {
+        return $this->pdo($name);
+    }
+
+    /**
+     * Register an instance of ArkPDO based on the config item [pdo][NAME]
+     *
+     * @param string $name
+     * @return ArkPDO
+     *
+     * @since 2.8.1
+     */
+    public function pdo($name = 'default'): ArkPDO
     {
         $pdo = ArkHelper::readTarget($this->pdoDict, $name);
         if (!$pdo) {
