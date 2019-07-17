@@ -164,11 +164,11 @@ class ArkWebInput
     }
 
     /**
-     * @since 2.3
      * @param $name
      * @param null $default
      * @param null $regex
      * @return mixed|null
+     * @since 2.3
      */
     public function readPostedJson($name, $default = null, $regex = null)
     {

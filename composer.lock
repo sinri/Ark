@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-  "content-hash": "bc7feefc7c53677ede62748a5751e22c",
+  "content-hash": "19cc8c3591fa8294a8a9422ef22a7884",
     "packages": [
         {
             "name": "jaybizzle/crawler-detect",
-          "version": "v1.2.79",
+          "version": "v1.2.84",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JayBizzle/Crawler-Detect.git",
-              "reference": "e6ce66e9c892c42898cf84a35ecbfec5b4ab481c"
+              "reference": "b7f35477a56609dd0d753c07ada912b66af3df01"
             },
             "dist": {
                 "type": "zip",
-              "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/e6ce66e9c892c42898cf84a35ecbfec5b4ab481c",
-              "reference": "e6ce66e9c892c42898cf84a35ecbfec5b4ab481c",
+              "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/b7f35477a56609dd0d753c07ada912b66af3df01",
+              "reference": "b7f35477a56609dd0d753c07ada912b66af3df01",
                 "shasum": ""
             },
             "require": {
@@ -53,7 +53,7 @@
                 "crawlerdetect",
                 "php crawler detect"
             ],
-          "time": "2019-03-04T19:10:41+00:00"
+          "time": "2019-06-14T21:10:21+00:00"
         },
         {
             "name": "jenssegers/agent",
@@ -389,16 +389,16 @@
         },
         {
             "name": "sinri/ark-core",
-          "version": "2.1.1",
+          "version": "2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sinri/Ark-Core.git",
-              "reference": "88054fda2886993b1fe826d197ab44101900f32c"
+              "reference": "271e70400b533e4a91976d152bc9978ba527779b"
             },
             "dist": {
                 "type": "zip",
-              "url": "https://api.github.com/repos/sinri/Ark-Core/zipball/88054fda2886993b1fe826d197ab44101900f32c",
-              "reference": "88054fda2886993b1fe826d197ab44101900f32c",
+              "url": "https://api.github.com/repos/sinri/Ark-Core/zipball/271e70400b533e4a91976d152bc9978ba527779b",
+              "reference": "271e70400b533e4a91976d152bc9978ba527779b",
                 "shasum": ""
             },
             "require": {
@@ -422,7 +422,7 @@
                 }
             ],
             "description": "The core components of Ark 2",
-          "time": "2019-03-17T14:58:30+00:00"
+          "time": "2019-07-02T06:32:33+00:00"
         }
     ],
     "packages-dev": [
@@ -466,16 +466,16 @@
         },
         {
             "name": "sinri/ark-pdo",
-          "version": "1.5.2",
+          "version": "1.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sinri/Ark-PDO.git",
-              "reference": "9adf9914c41b8e3428f7dd657c4eb44c699612b0"
+              "reference": "529a15a05cf433eef1fd05cef4a9f03b9407bf6f"
             },
             "dist": {
                 "type": "zip",
-              "url": "https://api.github.com/repos/sinri/Ark-PDO/zipball/9adf9914c41b8e3428f7dd657c4eb44c699612b0",
-              "reference": "9adf9914c41b8e3428f7dd657c4eb44c699612b0",
+              "url": "https://api.github.com/repos/sinri/Ark-PDO/zipball/529a15a05cf433eef1fd05cef4a9f03b9407bf6f",
+              "reference": "529a15a05cf433eef1fd05cef4a9f03b9407bf6f",
                 "shasum": ""
             },
             "require": {
@@ -500,24 +500,25 @@
                 }
             ],
             "description": "The PDO Component for Ark 2",
-          "time": "2019-03-01T08:30:20+00:00"
+          "time": "2019-05-17T15:43:07+00:00"
         },
         {
             "name": "sinri/ark-queue",
-            "version": "1.1",
+          "version": "2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sinri/Ark-Queue.git",
-                "reference": "51c0902ed28c4a41e24c3d7fb56a5af7339aac24"
+              "reference": "bf14fc0f82b484ba461b5347b8599274d58981c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sinri/Ark-Queue/zipball/51c0902ed28c4a41e24c3d7fb56a5af7339aac24",
-                "reference": "51c0902ed28c4a41e24c3d7fb56a5af7339aac24",
+              "url": "https://api.github.com/repos/sinri/Ark-Queue/zipball/bf14fc0f82b484ba461b5347b8599274d58981c0",
+              "reference": "bf14fc0f82b484ba461b5347b8599274d58981c0",
                 "shasum": ""
             },
             "suggest": {
-                "ext-pcntl": "*"
+              "ext-pcntl": "*",
+              "sinri/ark-lock": "^0.3"
             },
             "type": "library",
             "autoload": {
@@ -536,7 +537,7 @@
                 }
             ],
             "description": "The queue component for Ark 2",
-            "time": "2018-09-07T15:18:40+00:00"
+          "time": "2019-05-16T05:51:54+00:00"
         }
     ],
     "aliases": [],
@@ -548,7 +549,5 @@
       "php": "~7.0",
       "ext-json": "*"
     },
-    "platform-dev": {
-        "ext-pcntl": "*"
-    }
+  "platform-dev": []
 }

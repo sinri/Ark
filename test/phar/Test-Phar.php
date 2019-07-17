@@ -9,7 +9,7 @@
 use sinri\ark\core\ArkHelper;
 use sinri\ark\phar\PharMaker;
 
-require_once __DIR__ . '/../../autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 if (!ArkHelper::isCLI()) {
     echo "CLI...CLI...CLI..." . PHP_EOL;

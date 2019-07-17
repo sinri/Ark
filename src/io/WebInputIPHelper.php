@@ -25,10 +25,10 @@ class WebInputIPHelper
     /**
      * Validate IP Address
      *
-     * @since 1.3.9 @see CodeIgniter Core
-     * @param    string $ip IP address
-     * @param    string $which IP protocol, IPv4 or IPv6
+     * @param string $ip IP address
+     * @param string $which IP protocol, IPv4 or IPv6
      * @return    bool
+     * @since 1.3.9 @see CodeIgniter Core
      */
     public function validateIP($ip, $which = '')
     {
@@ -64,9 +64,9 @@ class WebInputIPHelper
      *
      * Determines and validates the visitor's IP address.
      *
-     * @see CodeIgniter Core
      * @param array $proxy_ips
      * @return string IP address
+     * @see CodeIgniter Core
      */
     public function detectVisitorIP($proxy_ips = [])
     {

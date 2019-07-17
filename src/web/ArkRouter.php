@@ -42,7 +42,6 @@ class ArkRouter
     protected $freeTailRoutes;
 
 
-
     public function __construct()
     {
         $this->debug = false;

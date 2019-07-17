@@ -220,4 +220,22 @@ class TheArk
         }
         return $cache;
     }
+
+    /**
+     * Quick Call Ark CLI Program Action
+     * @param string $programClass the full class path for ArkCliProgram Class Definition
+     * @param string $actionName the method without action prefix
+     * @param array $params any params the program needs
+     * @return bool|mixed
+     * @since 2.8.0
+     */
+    public function runProgramInCLI($programClass, $actionName, $params = [])
+    {
+        $actionName = "action" . $actionName;
+        $callable = [$programClass, $actionName];
+        if (!is_callable($callable)) {
+            return false;
+        }
+        return call_user_func_array($callable, $params);
+    }
 }

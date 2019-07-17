@@ -7,10 +7,9 @@
  */
 
 require_once __DIR__ . '/../../vendor/autoload.php';
-require_once __DIR__ . '/../../autoload.php';
 
 try {
-    Ark()->webOutput()->downloadFileIndirectly("./atom-mac.zip");
+    Ark()->webOutput()->downloadFileIndirectly(__FILE__);
 } catch (Exception $e) {
     echo $e->getMessage() . PHP_EOL;
 }

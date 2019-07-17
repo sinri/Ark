@@ -146,9 +146,9 @@ class ArkWebOutput
     }
 
     /**
-     * @since 1.5.0
      * @param string $extension
      * @return string
+     * @since 1.5.0
      */
     public function getMimeTypeByExtension($extension)
     {

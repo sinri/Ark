@@ -28,6 +28,40 @@ Since version 2.4, Ark-Cache use version 2 to support PSR-16.
 
 ## Toolkit Map
 
+### Components
+
+Basic Functions
+
+* `sinri/ark-core` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-core.svg)](https://packagist.org/packages/sinri/ark-core)
+* `sinri/ark-curl` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-curl.svg)](https://packagist.org/packages/sinri/ark-curl)
+* `sinri/ark-cache` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-cache.svg)](https://packagist.org/packages/sinri/ark-cache)
+
+Database Related
+
+* `sinri/ark-pdo` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-pdo.svg)](https://packagist.org/packages/sinri/ark-pdo)
+* `sinri/ark-mysqli` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-mysqli.svg)](https://packagist.org/packages/sinri/ark-mysqli)
+* `sinri/ark-sqlite3` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-sqlite3.svg)](https://packagist.org/packages/sinri/ark-sqlite3)
+* `sinri/ark-couchdb` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-couchdb.svg)](https://packagist.org/packages/sinri/ark-couchdb)
+* `sinri/ark-redis` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-redis.svg)](https://packagist.org/packages/sinri/ark-redis)
+
+Email Related
+
+* `sinri/ark-mail` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-mail.svg)](https://packagist.org/packages/sinri/ark-mail)
+* `sinri/ark-imap` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-imap.svg)](https://packagist.org/packages/sinri/ark-imap)
+
+Queue Related
+
+* `sinri/ark-queue` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-queue.svg)](https://packagist.org/packages/sinri/ark-queue)
+* `sinri/ark-lock` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-lock.svg)](https://packagist.org/packages/sinri/ark-lock)
+
+Lightweight Directory Access Protocol
+
+* `sinri/ark-ldap` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-ldap.svg)](https://packagist.org/packages/sinri/ark-ldap)
+
+QR Code
+
+* `sinri/ark-qr-builder` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-qr-builder.svg)](https://packagist.org/packages/sinri/ark-qr-builder)
+
 ### Independent Toolkit
 
 Class ArkHelper is designed for the convenience of developing, it help you to operate data structure safely, and some environment shortcuts.

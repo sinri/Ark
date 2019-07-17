@@ -53,8 +53,8 @@ class WebInputHeaderHelper
     }
 
     /**
-     * @since 1.5.0
      * @return Agent
+     * @since 1.5.0
      */
     public function getUserAgentWorker()
     {

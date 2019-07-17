@@ -16,7 +16,6 @@ use sinri\ark\web\ArkRouteErrorHandler;
 use sinri\ark\web\ArkRouterFreeTailRule;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
-require_once __DIR__ . '/../../autoload.php';
 
 //\sinri\ark\web\ArkWebSession::sessionStart(__DIR__.'/sessions');
 

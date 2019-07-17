@@ -29,8 +29,8 @@ class ArkWebController
     }
 
     /**
-     * @since 1.1 method added
      * @return ArkWebInput
+     * @since 1.1 method added
      */
     protected function _getInputHandler()
     {
@@ -38,8 +38,8 @@ class ArkWebController
     }
 
     /**
-     * @since 1.1 method added
      * @return ArkWebOutput
+     * @since 1.1 method added
      */
     protected function _getOutputHandler()
     {

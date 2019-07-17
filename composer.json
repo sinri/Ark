@@ -12,7 +12,7 @@
   "minimum-stability": "stable",
   "require": {
     "php": "~7.0",
-    "sinri/ark-core": "~2.2",
+    "sinri/ark-core": "~2.3",
     "sinri/ark-cache": "~2.0",
     "ralouphie/getallheaders": "^2.0",
     "jenssegers/agent": "^2.6",
@@ -20,14 +20,14 @@
     "ext-json": "*"
   },
   "require-dev": {
-    "ext-pcntl": "*",
     "sinri/ark-curl": "~2.0",
-    "sinri/ark-pdo": "~1.5",
+    "sinri/ark-pdo": "~1.6",
     "sinri/ark-queue": "~2.2"
   },
   "suggest": {
+    "ext-pcntl": "*",
     "sinri/ark-curl": "~2.0",
-    "sinri/ark-pdo": "~1.5",
+    "sinri/ark-pdo": "~1.6",
     "sinri/ark-redis": "~1.1",
     "sinri/ark-sqlite3": "~1.1",
     "sinri/ark-mysqli": "~1.2",
@@ -37,10 +37,15 @@
   },
   "autoload": {
     "psr-4": {
-      "sinri\\ark\\": ""
+      "sinri\\ark\\": "src/"
     },
     "files": [
-      "QuickArk.php"
+      "src/QuickArk.php"
     ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "sinri\\ark\\test\\": "test/"
+    }
   }
 }

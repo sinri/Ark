@@ -12,6 +12,5 @@
 use sinri\ark\cli\ArkCliProgram;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
-require_once __DIR__ . '/../../autoload.php';
 
 ArkCliProgram::run('\sinri\ark\test\cli\\');
