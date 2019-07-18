@@ -59,9 +59,14 @@ class ArkWebController
         return Ark()->webInput()->readRequest($name, $default, $regex, $error);
     }
 
+    protected function _readCookie($name, $default = null, $regex = null)
+    {
+        return Ark()->webInput()->readCookie($name, $default, $regex);
+    }
+
     /**
      * @param string $name
-     * @param callable|string|null $checker An anonymous function `f(v)` or a regular expression, else would not check any more
+     * @param callable|string|null $checker An anonymous function `f(value,name)` or a regular expression, else would not check any more
      * @return mixed
      * @throws Exception
      * @since 2.6
@@ -86,9 +91,10 @@ class ArkWebController
      */
     protected function _sayOK($data = "", $httpCode = 200)
     {
-        Ark()->webOutput()->setContentTypeHeader(ArkWebOutput::CONTENT_TYPE_JSON);
-        http_response_code($httpCode);
-        Ark()->webOutput()->jsonForAjax(ArkWebOutput::AJAX_JSON_CODE_OK, $data);
+        Ark()->webOutput()
+            ->sendHTTPCode($httpCode)
+            ->setContentTypeHeader(ArkWebOutput::CONTENT_TYPE_JSON)
+            ->jsonForAjax(ArkWebOutput::AJAX_JSON_CODE_OK, $data);
     }
 
     /**
@@ -97,9 +103,10 @@ class ArkWebController
      */
     protected function _sayFail($error = "", $httpCode = 200)
     {
-        Ark()->webOutput()->setContentTypeHeader(ArkWebOutput::CONTENT_TYPE_JSON);
-        http_response_code($httpCode);
-        Ark()->webOutput()->jsonForAjax(ArkWebOutput::AJAX_JSON_CODE_FAIL, $error);
+        Ark()->webOutput()
+            ->sendHTTPCode($httpCode)
+            ->setContentTypeHeader(ArkWebOutput::CONTENT_TYPE_JSON)
+            ->jsonForAjax(ArkWebOutput::AJAX_JSON_CODE_FAIL, $error);
     }
 
     /**
@@ -109,9 +116,10 @@ class ArkWebController
      */
     protected function _showPage($templateFile, $params = [], $httpCode = 200)
     {
-        http_response_code($httpCode);
         try {
-            Ark()->webOutput()->displayPage($templateFile, $params);
+            Ark()->webOutput()
+                ->sendHTTPCode($httpCode)
+                ->displayPage($templateFile, $params);
         } catch (Exception $e) {
             echo $e->getMessage();
         }

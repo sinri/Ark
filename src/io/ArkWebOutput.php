@@ -22,10 +22,6 @@ class ArkWebOutput
 
     const CHARSET_UTF8 = "UTF-8";
 
-    public function __construct()
-    {
-    }
-
     /**
      * @return int
      */
@@ -36,24 +32,29 @@ class ArkWebOutput
 
     /**
      * @param $httpCode
-     * @return int
+     * @return ArkWebOutput
+     * @since 2.8.1 return $this instead of int
      */
     public function sendHTTPCode($httpCode)
     {
-        return http_response_code($httpCode);
+        http_response_code($httpCode);
+        return $this;
     }
 
     /**
      * @param $contentType
      * @param null $charSet
+     * @return ArkWebOutput
+     * @since 2.8.1 return $this
      */
     public function setContentTypeHeader($contentType, $charSet = null)
     {
         header("Content-Type: " . $contentType . ($charSet !== null ? '; charset=' . $charSet : ''));
+        return $this;
     }
 
     /**
-     * @param $anything
+     * @param mixed $anything
      * @param int $options
      * @param int $depth
      */
@@ -72,7 +73,7 @@ class ArkWebOutput
     }
 
     /**
-     * @param $templateFile
+     * @param string $templateFile
      * @param array $params
      * @throws Exception
      */
@@ -84,6 +85,16 @@ class ArkWebOutput
         }
         /** @noinspection PhpIncludeInspection */
         require $templateFile;
+    }
+
+    /**
+     * @param string $url
+     * @since 2.8.1
+     */
+    public function redirect($url)
+    {
+        $this->sendHTTPCode(302);
+        header("Location: " . urlencode($url));
     }
 
     /**

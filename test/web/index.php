@@ -12,8 +12,8 @@ use sinri\ark\io\ArkWebInput;
 use sinri\ark\test\web\controller\Foo;
 use sinri\ark\test\web\filter\AnotherFilter;
 use sinri\ark\test\web\filter\TestFilter;
-use sinri\ark\web\ArkRouteErrorHandler;
 use sinri\ark\web\ArkRouterFreeTailRule;
+use sinri\ark\web\implement\ArkRouteErrorHandlerAsCallback;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
@@ -32,13 +32,20 @@ $router = $web_service->getRouter();
 $router->setDebug(true);
 $router->setLogger($logger);
 
-$router->setErrorHandler(ArkRouteErrorHandler::buildWithCallback(function ($error, $code) {
-    if ($code == 404) {
-        echo "404!";
-    } else {
-        echo json_encode(['message' => $error, 'code' => $code]);
+$router->setErrorHandler(new class extends ArkRouteErrorHandlerAsCallback
+{
+
+    /**
+     * @param mixed $errorMessage
+     * @param int $httpCode
+     */
+    public function requestErrorCallback($errorMessage, $httpCode)
+    {
+        Ark()->webOutput()
+            ->sendHTTPCode($httpCode)
+            ->json(['message' => $errorMessage, 'code' => $httpCode]);
     }
-}));
+});
 
 $router->get("getDocument/{doc_id}/page/{page_id}", function ($docId, $pageId) {
     echo "GET DOC {$docId} PAGE {$pageId}" . PHP_EOL;
@@ -69,8 +76,9 @@ $freeTailRouteRule = ArkRouterFreeTailRule::buildRouteRule(
 
 $router->registerFreeTailRouteRule($freeTailRouteRule);
 
-$web_service->setupFileSystemViewer("fs", __DIR__ . '/../', [], function ($file) {
+$web_service->setupFileSystemViewer("fs", __DIR__ . '/../', [], function ($file, $components) {
     var_dump($file);
+    var_dump($components);
 });
 
 $web_service->handleRequest();

@@ -74,36 +74,47 @@ class ArkWebService
 
     /**
      * @param string $sessionDir
+     * @return ArkWebService
      */
     public function startPHPSession($sessionDir)
     {
         ArkWebSession::sessionStart($sessionDir);
+        return $this;
     }
 
     /**
      * @param bool $debug
+     * @return ArkWebService
      */
     public function setDebug(bool $debug)
     {
         $this->debug = $debug;
+        return $this;
     }
 
     /**
      * @param string $gateway
+     * @return ArkWebService
      */
     public function setGateway(string $gateway)
     {
         $this->gateway = $gateway;
+        return $this;
     }
 
     /**
      * @param ArkLogger $logger
+     * @return ArkWebService
      */
     public function setLogger($logger)
     {
         $this->logger = $logger;
+        return $this;
     }
 
+    /**
+     * This is commonly a final call after other configurations
+     */
     public function handleRequest()
     {
         if (ArkHelper::isCLI()) {
@@ -113,6 +124,9 @@ class ArkWebService
         $this->handleRequestForWeb();
     }
 
+    /**
+     * This is commonly a final call after other configurations
+     */
     public function handleRequestForCLI()
     {
         global $argc;
@@ -136,6 +150,9 @@ class ArkWebService
         }
     }
 
+    /**
+     * This is commonly a final call after other configurations
+     */
     public function handleRequestForWeb()
     {
         try {
@@ -207,24 +224,31 @@ class ArkWebService
     /**
      * If you decide to use PHP Session, please run this before the code to handle request.
      * @param $sessionDir
+     * @return ArkWebService
+     * @deprecated Session could be implemented in many ways, this is not a good name. use startPHPSession instead.
      */
     public function startSession($sessionDir)
     {
-        ArkWebSession::sessionStart($sessionDir);
+        return $this->startPHPSession($sessionDir);
     }
 
     /**
      * @param string $pathPrefix no leading and tail '/'
      * @param string $baseDirPath
      * @param ArkRequestFilter[] $filters
-     * @param null|callable $fileHandler e.g. function($realPath):void if return false, execute default downloader @since 2.7.2
+     * @param null|callable $fileHandler e.g. function($realPath,$components):void if null, execute default downloader @since 2.7.2 added a secondary parameter in 2.8.1
+     * @param null|callable $dirHandler e.g. function($realPath,$components):void if null, use default HTML display @since 2.8.1
+     * @return ArkRouter @since 2.8.1
+     *
      * @since 2.7.1
+     *
      * Set up a quick readonly FTP-like file system viewer,
      * binding a uri path prefix to a file system path prefix.
+     *
      */
-    public function setupFileSystemViewer($pathPrefix, $baseDirPath, $filters = [], $fileHandler = null)
+    public function setupFileSystemViewer($pathPrefix, $baseDirPath, $filters = [], $fileHandler = null, $dirHandler = null)
     {
-        $this->router->get($pathPrefix, function ($components) use ($fileHandler, $pathPrefix, $baseDirPath) {
+        return $this->router->get($pathPrefix, function ($components) use ($dirHandler, $fileHandler, $pathPrefix, $baseDirPath) {
             if (count($components) === 1 && $components[0] === '') {
                 $components = [];
             }
@@ -248,68 +272,25 @@ class ArkWebService
                     header("Location: " . $path . '/' . (count($parts) > 1 ? "?" . $parts[1] : ""));
                     return;
                 }
-                echo "<!doctype html>" . PHP_EOL;
-                echo "<head>" . PHP_EOL
-                    . "<meta charset='UTF-8'>" . PHP_EOL
-                    . "<title>~/" . implode("/", $components) . " - Ark File System Viewer</title>" . PHP_EOL
-                    . "<style>" . PHP_EOL
-                    . "table th,td {" . PHP_EOL
-                    . "padding: 5px 10px;" . PHP_EOL
-                    . "}" . PHP_EOL
-                    . "</style>" . PHP_EOL
-                    . "</head>" . PHP_EOL;
-                // list
-                echo "<body>" . PHP_EOL;
-                echo "<h1>Ark File System Viewer</h1>" . PHP_EOL;
-                echo "<p>You are here: ~/" . implode("/", $components) . "</p>" . PHP_EOL;
-                echo "<hr>" . PHP_EOL;
-                echo "<table>" . PHP_EOL;
-                echo "<tr>"
-                    . "<th>Name</th>"
-                    . "<th>Size</th>"
-                    . "<th>Created</th>"
-                    . "<th>Modified</th>"
-                    . "<th>Accessed</th>"
-                    . "</tr>" . PHP_EOL;
-                $dir = opendir($realPath);
-                while ($item = readdir($dir)) {
-                    if ($item === '.') continue;
-                    if ($item === '..' && empty($components)) {
-                        continue;
-                    }
 
-                    $fileStat = stat($realPath . '/' . $item);
-
-                    $fileSize = $fileStat[7];//filesize($realPath.'/'.$item);
-                    $lastAccessTime = date("Y-m-d H:i:s", $fileStat[8]);
-                    $lastModificationTime = date("Y-m-d H:i:s", $fileStat[9]);
-                    $lastCreateTime = date("Y-m-d H:i:s", $fileStat[10]);
-                    echo "<tr>"
-                        . "<td>" . "<a href='./{$item}'>{$item}</a> " . "</td>"
-                        . "<td>{$fileSize} bytes</td>"
-                        . "<td>{$lastCreateTime}</td>"
-                        . "<td>{$lastModificationTime}</td>"
-                        . "<td>{$lastAccessTime}</td>"
-                        . "</tr>" . PHP_EOL;
+                if (is_callable($dirHandler)) {
+                    call_user_func_array($dirHandler, [$realPath, $components]);
+                } else {
+                    Ark()->webOutput()->displayPage(__DIR__ . '/template/FileSystemViewerDirPageTemplate.php', [
+                        'components' => $components,
+                        'realPath' => $realPath,
+                    ]);
                 }
-                closedir($dir);
-                echo "</table>" . PHP_EOL;
-                echo "<hr>" . PHP_EOL;
-                echo "<div>" . PHP_EOL
-                    . "This page is generated on " . date('Y-m-d H:i:s') . ", "
-                    . "powered by Framework <a href='https://github.com/sinri/Ark' target='_blank'>sinri/ark</a>."
-                    . "</div>" . PHP_EOL;
-                echo "</body>" . PHP_EOL;
-                echo "</html>" . PHP_EOL;
             } else {
                 // show content
                 if (is_callable($fileHandler)) {
                     //$extension=pathinfo($realPath,PATHINFO_EXTENSION);
-                    call_user_func_array($fileHandler, [$realPath]);
+                    call_user_func_array($fileHandler, [$realPath, $components]);
                 } else {
                     Ark()->webOutput()->downloadFileIndirectly($realPath);
                 }
             }
         }, $filters, true);
+
     }
 }

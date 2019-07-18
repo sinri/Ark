@@ -13,6 +13,7 @@ use Exception;
 use ReflectionClass;
 use sinri\ark\core\ArkLogger;
 use sinri\ark\io\ArkWebInput;
+use sinri\ark\web\implement\ArkRouteErrorHandlerAsJson;
 
 class ArkRouter
 {
@@ -26,6 +27,9 @@ class ArkRouter
     protected $logger;
     protected $defaultControllerName = null;
     protected $defaultMethodName = null;
+    /**
+     * @var ArkRouteErrorHandlerInterface
+     */
     protected $errorHandler = null;
 
     /**
@@ -98,7 +102,7 @@ class ArkRouter
      * Give a string as template file path for display-page use;
      * give an anonymous function or a callable definition array which consume one parameter of array,
      * or leave it as null to response JSON.
-     * @param ArkRouteErrorHandler|null $errorHandler
+     * @param ArkRouteErrorHandlerInterface|null $errorHandler
      * @return ArkRouter
      */
     public function setErrorHandler($errorHandler)
@@ -114,7 +118,7 @@ class ArkRouter
     public function handleRouteError($errorData = [], $httpCode = 404)
     {
         if (!$this->errorHandler) {
-            $this->errorHandler = new ArkRouteErrorHandler();
+            $this->errorHandler = new ArkRouteErrorHandlerAsJson();
         }
         $this->errorHandler->execute($errorData, $httpCode);
     }
@@ -122,6 +126,7 @@ class ArkRouter
     /**
      * @param $routeRule
      * @deprecated use registerRestfulRouteRule instead
+     * TODO To be removed in 3.x
      */
     public function registerRouteRule($routeRule)
     {
@@ -495,7 +500,8 @@ class ArkRouter
                 $callback,
                 $filters
             );
-            $this->registerRouteRule($route_rule);
+//            $this->registerRouteRule($route_rule);
+            $this->registerRestfulRouteRule($route_rule);
         }
         return $this;
     }
@@ -600,14 +606,16 @@ class ArkRouter
                     $path .= $after_string;
                 }
                 $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_ANY, $path, [$controllerClass, $method], $filters);
-                $this->registerRouteRule($route_rule);
+//                $this->registerRouteRule($route_rule);
+                $this->registerRestfulRouteRule($route_rule);
                 if ($method == $this->defaultMethodName) {
                     $basePathX = $basePath;
                     if (strlen($basePathX) > 0) {
                         $basePathX = substr($basePathX, 0, strlen($basePathX) - 1);
                     }
                     $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_ANY, $basePathX, [$controllerClass, $method], $filters);
-                    $this->registerRouteRule($route_rule);
+//                    $this->registerRouteRule($route_rule);
+                    $this->registerRestfulRouteRule($route_rule);
                 }
             }
         } catch (Exception $exception) {

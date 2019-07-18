@@ -5,6 +5,8 @@ For the serial of previous versions, see related branch.
 ## Version 2.8.1
 
 Deprecate `Ark()->db()` and replace it with `Ark()->pdo()`.
+Redesign Ark Route Error Handling.
+And other modifications.
 
 ## Version 2.8.0
 

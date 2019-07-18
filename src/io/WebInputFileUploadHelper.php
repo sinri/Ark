@@ -15,11 +15,13 @@ class WebInputFileUploadHelper
 {
     /**
      * @param string $name
-     * @param callable $callback e.g. function($original_file_name, $file_type, $file_size, $file_tmp_name, $error){}
+     * @param WebInputFileUploadHandlerInterface $fileUploadHandler
      * @param string $error
-     * @return bool|mixed
+     * @return bool
+     *
+     * @since 2.8.1 stop using anonymous function e.g. function($original_file_name, $file_type, $file_size, $file_tmp_name, $error){}
      */
-    public function handleUploadFileWithCallback($name, $callback, &$error = '')
+    public function handleUploadFileWithCallback($name, $fileUploadHandler, &$error = '')
     {
         if (!isset($_FILES[$name])) {
             return false;
@@ -34,16 +36,19 @@ class WebInputFileUploadHelper
         $file_tmp_name = $_FILES[$name]['tmp_name'];
 
         // where you might need `move_uploaded_file`
-        return call_user_func_array($callback, [$original_file_name, $file_type, $file_size, $file_tmp_name, $error]);
+        return $fileUploadHandler->handle($original_file_name, $file_type, $file_size, $file_tmp_name, $error);
+        //return call_user_func_array($callback, [$original_file_name, $file_type, $file_size, $file_tmp_name, $error]);
     }
 
     /**
      * @param $name
-     * @param callable $callback e.g. function($original_file_name, $file_type, $file_size, $file_tmp_name, $error){}
-     * @param string $error
+     * @param WebInputFileUploadHandlerInterface $fileUploadHandler
+     * @param string[] $error
      * @return bool
+     *
+     * @since 2.8.1 stop using anonymous function e.g. function($original_file_name, $file_type, $file_size, $file_tmp_name, $error){}
      */
-    public function handleUploadFilesWithCallback($name, $callback, &$error = '')
+    public function handleUploadFilesWithCallback($name, $fileUploadHandler, &$error = [])
     {
         if (!isset($_FILES[$name]) && !is_array($_FILES[$name])) {
             return false;
@@ -62,7 +67,8 @@ class WebInputFileUploadHelper
             $file_tmp_name = $item['tmp_name'];
 
             // where you might need `move_uploaded_file`
-            $done = call_user_func_array($callback, [$original_file_name, $file_type, $file_size, $file_tmp_name, $error]);
+            $done = $fileUploadHandler->handle($original_file_name, $file_type, $file_size, $file_tmp_name, $error[$index]);
+            //$done = call_user_func_array($callback, [$original_file_name, $file_type, $file_size, $file_tmp_name, $error]);
             if (!$done) {
                 return false;
             }

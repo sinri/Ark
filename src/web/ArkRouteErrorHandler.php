@@ -12,15 +12,29 @@ namespace sinri\ark\web;
 use Exception;
 use sinri\ark\io\ArkWebOutput;
 
-class ArkRouteErrorHandler
+/**
+ * Class ArkRouteErrorHandler
+ * @package sinri\ark\web
+ * @deprecated TODO To be removed in 3.x, use ArkRouteErrorHandlerAsJson instead
+ */
+class ArkRouteErrorHandler implements ArkRouteErrorHandlerInterface
 {
     const TYPE_DEFAULT = "DEFAULT";
     const TYPE_TEMPLATE = "TEMPLATE";
     const TYPE_CALLBACK = "CALLBACK";
 
+    /**
+     * @var string
+     */
     protected $type;
 
+    /**
+     * @var string
+     */
     protected $templateFile;
+    /**
+     * @var callable
+     */
     protected $callback;
 
     public function __construct()
@@ -28,6 +42,10 @@ class ArkRouteErrorHandler
         $this->type = self::TYPE_DEFAULT;
     }
 
+    /**
+     * @param array $errorData
+     * @param int $http_code
+     */
     public function execute($errorData = [], $http_code = 404)
     {
         try {

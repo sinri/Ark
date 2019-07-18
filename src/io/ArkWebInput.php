@@ -109,10 +109,11 @@ class ArkWebInput
 
     /**
      * @param string $name
-     * @param callable|string|null $checker An anonymous function `f(v)` or a regular expression, else would not check any more
+     * @param callable|string|null $checker An anonymous function `f(value,name)` or a regular expression, else would not check any more
      * @return mixed
      * @throws Exception
      * @since 2.6
+     * @since 2.8.1 add a secondary parameter to checker when it is a callable function
      */
     public function readIndispensableRequest($name, $checker = null)
     {
@@ -121,7 +122,7 @@ class ArkWebInput
             throw new Exception("Field [$name] is missing!", ArkHelper::READ_TARGET_FIELD_NOT_FOUND);
         }
         if (is_callable($checker)) {
-            if (!call_user_func($checker, $value)) {
+            if (!call_user_func_array($checker, [$value, $name])) {
                 throw new Exception("Field [$name] format error with check function!", ArkHelper::READ_TARGET_REGEX_NOT_MATCH);
             }
         } elseif (is_string($checker) && strlen($checker) > 2) {
