@@ -2,6 +2,10 @@
 
 For the serial of previous versions, see related branch.
 
+## Version 2.8.2
+
+Add `shouldConnectFirst` for Ark Quick Access for PDO.
+
 ## Version 2.8.1
 
 Deprecate `Ark()->db()` and replace it with `Ark()->pdo()`.

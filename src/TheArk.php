@@ -9,6 +9,7 @@
 namespace sinri\ark;
 
 
+use Exception;
 use Psr\Log\LogLevel;
 use sinri\ark\cache\ArkCache;
 use sinri\ark\cache\implement\ArkDummyCache;
@@ -169,6 +170,7 @@ class TheArk
      *
      * @param string $name
      * @return ArkPDO
+     * @throws Exception
      * @deprecated Please use method `pdo` and this would be removed in 3.x
      */
     public function db($name = 'default'): ArkPDO
@@ -180,11 +182,13 @@ class TheArk
      * Register an instance of ArkPDO based on the config item [pdo][NAME]
      *
      * @param string $name
+     * @param bool $shouldConnectFirst @since 2.8.2
      * @return ArkPDO
      *
+     * @throws Exception
      * @since 2.8.1
      */
-    public function pdo($name = 'default'): ArkPDO
+    public function pdo($name = 'default', $shouldConnectFirst = true): ArkPDO
     {
         $pdo = ArkHelper::readTarget($this->pdoDict, $name);
         if (!$pdo) {
@@ -194,6 +198,7 @@ class TheArk
             } else {
                 $pdoConfig = new ArkPDOConfig($dbConfigDict);
                 $pdo = new ArkPDO($pdoConfig);
+                if ($shouldConnectFirst) $pdo->connect();
             }
             $this->registerDb($name, $pdo);
         }

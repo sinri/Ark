@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-  "content-hash": "19cc8c3591fa8294a8a9422ef22a7884",
+    "content-hash": "440d2e537587840968106f528bc34c93",
     "packages": [
         {
             "name": "jaybizzle/crawler-detect",
-          "version": "v1.2.84",
+            "version": "v1.2.84",
             "source": {
                 "type": "git",
                 "url": "https://github.com/JayBizzle/Crawler-Detect.git",
-              "reference": "b7f35477a56609dd0d753c07ada912b66af3df01"
+                "reference": "b7f35477a56609dd0d753c07ada912b66af3df01"
             },
             "dist": {
                 "type": "zip",
-              "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/b7f35477a56609dd0d753c07ada912b66af3df01",
-              "reference": "b7f35477a56609dd0d753c07ada912b66af3df01",
+                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/b7f35477a56609dd0d753c07ada912b66af3df01",
+                "reference": "b7f35477a56609dd0d753c07ada912b66af3df01",
                 "shasum": ""
             },
             "require": {
@@ -53,20 +53,20 @@
                 "crawlerdetect",
                 "php crawler detect"
             ],
-          "time": "2019-06-14T21:10:21+00:00"
+            "time": "2019-06-14T21:10:21+00:00"
         },
         {
             "name": "jenssegers/agent",
-          "version": "v2.6.3",
+            "version": "v2.6.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jenssegers/agent.git",
-              "reference": "bcb895395e460478e101f41cdab139c48dc721ce"
+                "reference": "bcb895395e460478e101f41cdab139c48dc721ce"
             },
             "dist": {
                 "type": "zip",
-              "url": "https://api.github.com/repos/jenssegers/agent/zipball/bcb895395e460478e101f41cdab139c48dc721ce",
-              "reference": "bcb895395e460478e101f41cdab139c48dc721ce",
+                "url": "https://api.github.com/repos/jenssegers/agent/zipball/bcb895395e460478e101f41cdab139c48dc721ce",
+                "reference": "bcb895395e460478e101f41cdab139c48dc721ce",
                 "shasum": ""
             },
             "require": {
@@ -122,7 +122,7 @@
                 "user agent",
                 "useragent"
             ],
-          "time": "2019-01-19T21:32:55+00:00"
+            "time": "2019-01-19T21:32:55+00:00"
         },
         {
             "name": "mobiledetect/mobiledetectlib",
@@ -160,9 +160,9 @@
             "authors": [
                 {
                     "name": "Serban Ghita",
+                    "role": "Developer",
                     "email": "serbanghita@gmail.com",
-                    "homepage": "http://mobiledetect.net",
-                    "role": "Developer"
+                    "homepage": "http://mobiledetect.net"
                 }
             ],
             "description": "Mobile_Detect is a lightweight PHP class for detecting mobile devices. It uses the User-Agent string combined with specific HTTP headers to detect the mobile environment.",
@@ -224,54 +224,54 @@
             "time": "2018-11-20T15:27:04+00:00"
         },
         {
-          "name": "psr/simple-cache",
-          "version": "1.0.1",
-          "source": {
-            "type": "git",
-            "url": "https://github.com/php-fig/simple-cache.git",
-            "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b"
-          },
-          "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
-            "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
-            "shasum": ""
-          },
-          "require": {
-            "php": ">=5.3.0"
-          },
-          "type": "library",
-          "extra": {
-            "branch-alias": {
-              "dev-master": "1.0.x-dev"
-            }
-          },
-          "autoload": {
-            "psr-4": {
-              "Psr\\SimpleCache\\": "src/"
-            }
-          },
-          "notification-url": "https://packagist.org/downloads/",
-          "license": [
-            "MIT"
-          ],
-          "authors": [
-            {
-              "name": "PHP-FIG",
-              "homepage": "http://www.php-fig.org/"
-            }
-          ],
-          "description": "Common interfaces for simple caching",
-          "keywords": [
-            "cache",
-            "caching",
-            "psr",
-            "psr-16",
-            "simple-cache"
-          ],
-          "time": "2017-10-23T01:57:42+00:00"
+            "name": "psr/simple-cache",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/simple-cache.git",
+                "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
+                "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\SimpleCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interfaces for simple caching",
+            "keywords": [
+                "cache",
+                "caching",
+                "psr",
+                "psr-16",
+                "simple-cache"
+            ],
+            "time": "2017-10-23T01:57:42+00:00"
         },
-      {
+        {
             "name": "ralouphie/getallheaders",
             "version": "2.0.5",
             "source": {
@@ -353,21 +353,21 @@
         },
         {
             "name": "sinri/ark-cache",
-          "version": "2.0",
+            "version": "2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sinri/Ark-Cache.git",
-              "reference": "224d0b4aa9ae54c3f05348cd11b918c2836b1d3d"
+                "reference": "224d0b4aa9ae54c3f05348cd11b918c2836b1d3d"
             },
             "dist": {
                 "type": "zip",
-              "url": "https://api.github.com/repos/sinri/Ark-Cache/zipball/224d0b4aa9ae54c3f05348cd11b918c2836b1d3d",
-              "reference": "224d0b4aa9ae54c3f05348cd11b918c2836b1d3d",
+                "url": "https://api.github.com/repos/sinri/Ark-Cache/zipball/224d0b4aa9ae54c3f05348cd11b918c2836b1d3d",
+                "reference": "224d0b4aa9ae54c3f05348cd11b918c2836b1d3d",
                 "shasum": ""
             },
-          "require": {
-            "psr/simple-cache": "~1.0"
-          },
+            "require": {
+                "psr/simple-cache": "~1.0"
+            },
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -385,20 +385,20 @@
                 }
             ],
             "description": "The cache component for Ark 2",
-          "time": "2019-03-26T09:08:43+00:00"
+            "time": "2019-03-26T09:08:43+00:00"
         },
         {
             "name": "sinri/ark-core",
-          "version": "2.3",
+            "version": "2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sinri/Ark-Core.git",
-              "reference": "271e70400b533e4a91976d152bc9978ba527779b"
+                "reference": "271e70400b533e4a91976d152bc9978ba527779b"
             },
             "dist": {
                 "type": "zip",
-              "url": "https://api.github.com/repos/sinri/Ark-Core/zipball/271e70400b533e4a91976d152bc9978ba527779b",
-              "reference": "271e70400b533e4a91976d152bc9978ba527779b",
+                "url": "https://api.github.com/repos/sinri/Ark-Core/zipball/271e70400b533e4a91976d152bc9978ba527779b",
+                "reference": "271e70400b533e4a91976d152bc9978ba527779b",
                 "shasum": ""
             },
             "require": {
@@ -422,7 +422,7 @@
                 }
             ],
             "description": "The core components of Ark 2",
-          "time": "2019-07-02T06:32:33+00:00"
+            "time": "2019-07-02T06:32:33+00:00"
         }
     ],
     "packages-dev": [
@@ -466,16 +466,16 @@
         },
         {
             "name": "sinri/ark-pdo",
-          "version": "1.6.0",
+            "version": "1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sinri/Ark-PDO.git",
-              "reference": "529a15a05cf433eef1fd05cef4a9f03b9407bf6f"
+                "reference": "5a5175bd52e8bdc848375b07e1de8a035ca02337"
             },
             "dist": {
                 "type": "zip",
-              "url": "https://api.github.com/repos/sinri/Ark-PDO/zipball/529a15a05cf433eef1fd05cef4a9f03b9407bf6f",
-              "reference": "529a15a05cf433eef1fd05cef4a9f03b9407bf6f",
+                "url": "https://api.github.com/repos/sinri/Ark-PDO/zipball/5a5175bd52e8bdc848375b07e1de8a035ca02337",
+                "reference": "5a5175bd52e8bdc848375b07e1de8a035ca02337",
                 "shasum": ""
             },
             "require": {
@@ -500,25 +500,25 @@
                 }
             ],
             "description": "The PDO Component for Ark 2",
-          "time": "2019-05-17T15:43:07+00:00"
+            "time": "2019-08-12T09:57:48+00:00"
         },
         {
             "name": "sinri/ark-queue",
-          "version": "2.3",
+            "version": "2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sinri/Ark-Queue.git",
-              "reference": "bf14fc0f82b484ba461b5347b8599274d58981c0"
+                "reference": "bf14fc0f82b484ba461b5347b8599274d58981c0"
             },
             "dist": {
                 "type": "zip",
-              "url": "https://api.github.com/repos/sinri/Ark-Queue/zipball/bf14fc0f82b484ba461b5347b8599274d58981c0",
-              "reference": "bf14fc0f82b484ba461b5347b8599274d58981c0",
+                "url": "https://api.github.com/repos/sinri/Ark-Queue/zipball/bf14fc0f82b484ba461b5347b8599274d58981c0",
+                "reference": "bf14fc0f82b484ba461b5347b8599274d58981c0",
                 "shasum": ""
             },
             "suggest": {
-              "ext-pcntl": "*",
-              "sinri/ark-lock": "^0.3"
+                "ext-pcntl": "*",
+                "sinri/ark-lock": "^0.3"
             },
             "type": "library",
             "autoload": {
@@ -537,7 +537,7 @@
                 }
             ],
             "description": "The queue component for Ark 2",
-          "time": "2019-05-16T05:51:54+00:00"
+            "time": "2019-05-16T05:51:54+00:00"
         }
     ],
     "aliases": [],
@@ -546,8 +546,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-      "php": "~7.0",
-      "ext-json": "*"
+        "php": "~7.0",
+        "ext-json": "*"
     },
-  "platform-dev": []
+    "platform-dev": []
 }
