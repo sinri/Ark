@@ -51,7 +51,7 @@ class ArkWebSession implements SessionHandlerInterface
     public static function sessionStartWithRedis($redisAgent, $sessionLifetime = 3600)
     {
         if (class_exists("sinri\\ark\\web\\ArkWebSessionWithRedis")) {
-            call_user_func_array(['sinri\ark\web\ArkWebSessionWithRedis', 'sessionStartWithRedis'], [$redisAgent, $sessionLifetime]);
+            call_user_func_array(['sinri\\ark\\web\\ArkWebSessionWithRedis', 'sessionStartWithRedis'], [$redisAgent, $sessionLifetime]);
         } else {
             throw new Exception("Ark Redis Component is not found!");
         }

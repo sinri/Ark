@@ -8,20 +8,51 @@
 
 namespace sinri\ark\web;
 
-use Exception;
-use sinri\ark\core\ArkHelper;
+use sinri\ark\io\ArkWebInput;
 
 /**
  * Class ArkRouterStaticRule
  * @package sinri\ark\web
  * @since 1.5.0
  */
-class ArkRouterStaticRule implements ArkRouterRule
+class ArkRouterStaticRule extends ArkRouterRule
 {
     /**
      * @var string
      */
     protected $method;
+
+    /**
+     * @var string
+     */
+    protected $path;
+    /**
+     * @var callable|string[]
+     */
+    protected $callback;
+    /**
+     * @var string[] ArkRequestFilter class name list
+     */
+    protected $filters;
+    /**
+     * @var string
+     */
+    protected $namespace;
+    /**
+     * @var string[]
+     */
+    protected $parsed;
+
+    public function __construct()
+    {
+        $this->method = ArkWebInput::METHOD_ANY;
+        $this->path = '';
+        $this->callback = function () {
+        };
+        $this->filters = [];
+        $this->namespace = '';
+        $this->parsed = [];
+    }
 
     /**
      * @return string
@@ -128,31 +159,6 @@ class ArkRouterStaticRule implements ArkRouterRule
         $this->parsed = $parsed;
     }
 
-    /**
-     * @var string
-     */
-    protected $path;
-    /**
-     * @var callable|string[]
-     */
-    protected $callback;
-    /**
-     * @var string[] ArkRequestFilter class name list
-     */
-    protected $filters;
-    /**
-     * @var string
-     */
-    protected $namespace;
-    /**
-     * @var string[]
-     */
-    protected $parsed;
-
-    public function __construct()
-    {
-    }
-
     public static function buildCallbackDescriptionWithClassNameAndMethod($className, $methodName)
     {
         return [$className, $methodName];
@@ -177,50 +183,5 @@ class ArkRouterStaticRule implements ArkRouterRule
         $new_route->setFilters($filters);
 
         return $new_route;
-    }
-
-    /**
-     * @param $path_string
-     * @param array|mixed $preparedData @since 1.1 this became reference and bug fixed
-     * @param int $responseCode @since 1.1 this became reference
-     * @throws Exception
-     */
-    public function execute($path_string, &$preparedData = [], &$responseCode = 200)
-    {
-        $callable = $this->getCallback();//ArkHelper::readTarget($route, ArkRouter::ROUTE_PARAM_CALLBACK);
-        $params = $this->getParsed();//ArkHelper::readTarget($route, ArkRouter::ROUTE_PARSED_PARAMETERS);
-        $filter_chain = $this->getFilters();//ArkHelper::readTarget($route, ArkRouter::ROUTE_PARAM_FILTER);
-
-        if (!is_array($filter_chain)) {
-            $filter_chain = [$filter_chain];
-        }
-        foreach ($filter_chain as $filter) {
-            $filter_instance = ArkRequestFilter::makeInstance($filter);
-            $shouldAcceptRequest = $filter_instance->shouldAcceptRequest(
-                $path_string,
-                Ark()->webInput()->getRequestMethod(),
-                $params,
-                $preparedData,
-                $responseCode,
-                $filterError
-            );
-            if (!$shouldAcceptRequest) {
-                throw new Exception(
-                    "Your request is rejected by [" . $filter_instance->filterTitle() . "], reason: " . $filterError,
-                    $responseCode
-                );
-            }
-        }
-
-        if (is_array($callable)) {
-            if (count($callable) < 2) {
-                throw new Exception("Callback Array Format Mistakes", (ArkHelper::isCLI() ? -1 : 500));
-            }
-            $class_instance_name = $callable[0];
-            $class_instance = new $class_instance_name();
-
-            $callable[0] = $class_instance;
-        }
-        call_user_func_array($callable, $params);
     }
 }

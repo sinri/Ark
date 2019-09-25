@@ -5,10 +5,9 @@ namespace sinri\ark\web;
 
 
 use Exception;
-use sinri\ark\core\ArkHelper;
 use sinri\ark\io\ArkWebInput;
 
-class ArkRouterFreeTailRule implements ArkRouterRule
+class ArkRouterFreeTailRule extends ArkRouterRule
 {
 
     /**
@@ -188,10 +187,9 @@ class ArkRouterFreeTailRule implements ArkRouterRule
         $new_route = new ArkRouterFreeTailRule();
 
         $path = preg_replace('/\//', '\/', $path);
-        $matched = preg_match_all('/\{([^\/]+)\}/', $path, $matches);
+        $matched = preg_match_all('/{([^\/]+)}/', $path, $matches);
         if ($matched) {
-            $regex = preg_replace('/\{([^\/]+)\}/', '([^\/]+)', $path);
-//            var_dump($matches);
+            $regex = preg_replace('/{([^\/]+)}/', '([^\/]+)', $path);
             $new_route->headComponentsCount = count($matches[0]);
         } else {
             $regex = $path;
@@ -220,59 +218,17 @@ class ArkRouterFreeTailRule implements ArkRouterRule
         $filter_chain = $this->getFilters();//ArkHelper::readTarget($route, ArkRouter::ROUTE_PARAM_FILTER);
 
         // process tail
-//        echo __METHOD__.'@'.__LINE__.' $path_string is '.$path_string.PHP_EOL;
-//        var_dump($params);
-//        var_dump($this->headComponentsCount);
         if (count($params) > $this->headComponentsCount) {
-//            echo __METHOD__.'@'.__LINE__.PHP_EOL;
-//            var_dump($params);
-//            var_dump($this->headComponentsCount);
             $tail = [];
             for ($i = $this->headComponentsCount; $i < count($params); $i++) {
-//                echo __METHOD__.'@'.__LINE__.PHP_EOL;
-//                var_dump($params[$i]);
                 $items = explode('/', $params[$i]);
-//                var_dump($items);
                 $tail = array_merge($tail, $items);
-//                var_dump($tail);
             }
-//            var_dump($params,$this->headComponentsCount,count($params)-$this->headComponentsCount,$tail);
             array_splice($params, $this->headComponentsCount, count($params) - $this->headComponentsCount);
             $params[] = $tail;
-//            echo __METHOD__.'@'.__LINE__.PHP_EOL;
-//            var_dump($params);
         }
 
-        if (!is_array($filter_chain)) {
-            $filter_chain = [$filter_chain];
-        }
-        foreach ($filter_chain as $filter) {
-            $filter_instance = ArkRequestFilter::makeInstance($filter);
-            $shouldAcceptRequest = $filter_instance->shouldAcceptRequest(
-                $path_string,
-                Ark()->webInput()->getRequestMethod(),
-                $params,
-                $preparedData,
-                $responseCode,
-                $filterError
-            );
-            if (!$shouldAcceptRequest) {
-                throw new Exception(
-                    "Your request is rejected by [" . $filter_instance->filterTitle() . "], reason: " . $filterError,
-                    $responseCode
-                );
-            }
-        }
-
-        if (is_array($callable)) {
-            if (count($callable) < 2) {
-                throw new Exception("Callback Array Format Mistakes", (ArkHelper::isCLI() ? -1 : 500));
-            }
-            $class_instance_name = $callable[0];
-            $class_instance = new $class_instance_name();
-
-            $callable[0] = $class_instance;
-        }
-        call_user_func_array($callable, $params);
+        self::executeWithFilters($params, $filter_chain, $path_string, $preparedData, $responseCode);
+        self::executeWithParameters($callable, $params);
     }
 }

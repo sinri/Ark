@@ -9,11 +9,9 @@
 namespace sinri\ark\web;
 
 
-use Exception;
-use sinri\ark\core\ArkHelper;
 use sinri\ark\io\ArkWebInput;
 
-class ArkRouterRestfulRule implements ArkRouterRule
+class ArkRouterRestfulRule extends ArkRouterRule
 {
     /**
      * @var string
@@ -187,9 +185,9 @@ class ArkRouterRestfulRule implements ArkRouterRule
     public static function buildRouteRule($method, $path, $callback, $filters = [])
     {
         $path = preg_replace('/\//', '\/', $path);
-        $matched = preg_match_all('/\{([^\/]+)\}/', $path, $matches);
+        $matched = preg_match_all('/{([^\/]+)}/', $path, $matches);
         if ($matched) {
-            $regex = preg_replace('/\{([^\/]+)\}/', '([^\/]+)', $path);
+            $regex = preg_replace('/{([^\/]+)}/', '([^\/]+)', $path);
         } else {
             $regex = $path;
         }
@@ -201,50 +199,5 @@ class ArkRouterRestfulRule implements ArkRouterRule
         $new_route->setFilters($filters);
 
         return $new_route;
-    }
-
-    /**
-     * @param $path_string
-     * @param array|mixed $preparedData @since 1.1 this became reference and bug fixed
-     * @param int $responseCode @since 1.1 this became reference
-     * @throws Exception
-     */
-    public function execute($path_string, &$preparedData = [], &$responseCode = 200)
-    {
-        $callable = $this->getCallback();//ArkHelper::readTarget($route, ArkRouter::ROUTE_PARAM_CALLBACK);
-        $params = $this->getParsed();//ArkHelper::readTarget($route, ArkRouter::ROUTE_PARSED_PARAMETERS);
-        $filter_chain = $this->getFilters();//ArkHelper::readTarget($route, ArkRouter::ROUTE_PARAM_FILTER);
-
-        if (!is_array($filter_chain)) {
-            $filter_chain = [$filter_chain];
-        }
-        foreach ($filter_chain as $filter) {
-            $filter_instance = ArkRequestFilter::makeInstance($filter);
-            $shouldAcceptRequest = $filter_instance->shouldAcceptRequest(
-                $path_string,
-                Ark()->webInput()->getRequestMethod(),
-                $params,
-                $preparedData,
-                $responseCode,
-                $filterError
-            );
-            if (!$shouldAcceptRequest) {
-                throw new Exception(
-                    "Your request is rejected by [" . $filter_instance->filterTitle() . "], reason: " . $filterError,
-                    $responseCode
-                );
-            }
-        }
-
-        if (is_array($callable)) {
-            if (count($callable) < 2) {
-                throw new Exception("Callback Array Format Mistakes", (ArkHelper::isCLI() ? -1 : 500));
-            }
-            $class_instance_name = $callable[0];
-            $class_instance = new $class_instance_name();
-
-            $callable[0] = $class_instance;
-        }
-        call_user_func_array($callable, $params);
     }
 }

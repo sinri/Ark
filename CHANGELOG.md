@@ -2,6 +2,10 @@
 
 For the serial of previous versions, see related branch.
 
+## Version 2.9.0
+
+ArkRouterRule became abstract class.
+
 ## Version 2.8.2
 
 Add `shouldConnectFirst` for Ark Quick Access for PDO.

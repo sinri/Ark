@@ -49,7 +49,13 @@ class ArkWebOutput
      */
     public function setContentTypeHeader($contentType, $charSet = null)
     {
-        header("Content-Type: " . $contentType . ($charSet !== null ? '; charset=' . $charSet : ''));
+        $this->sendHeader("Content-Type: " . $contentType . ($charSet !== null ? '; charset=' . $charSet : ''));
+        return $this;
+    }
+
+    public function sendHeader($header, $replace = true)
+    {
+        header($header, $replace);
         return $this;
     }
 

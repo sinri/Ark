@@ -15,6 +15,9 @@ use sinri\ark\core\ArkLogger;
 
 class ArkCliProgram
 {
+    /**
+     * @var ArkLogger
+     */
     protected $logger;
 
     public function __construct()
@@ -23,7 +26,7 @@ class ArkCliProgram
     }
 
     /**
-     * @param $methodName
+     * @param string $methodName
      * @param array $parameters
      * @throws Exception
      */
@@ -42,7 +45,8 @@ class ArkCliProgram
     }
 
     /**
-     * @param string $baseNamespace the shared namespace prefix with \\ in tail.
+     * It is used to build the runner script. @param string $baseNamespace the shared namespace prefix. Till 2.8.2, ensure the '\\' in tail.
+     * @see test/cli/runner.php
      */
     public static function run($baseNamespace)
     {
@@ -59,6 +63,9 @@ class ArkCliProgram
         $program_instance_name = str_replace('/', '\\', $program_instance_name);
 
         // $baseNamespace like '\\sinri\\enoch\\test\\Enos\\'
+        if (substr($baseNamespace, strlen($baseNamespace) - 1) !== '\\') {
+            $baseNamespace .= '\\';
+        }
         $program_instance_full_name = $baseNamespace . $program_instance_name;
         $program = new $program_instance_full_name();
 
