@@ -173,4 +173,67 @@ class ArkWebOutput
         if ($mime === null) $mime = self::CONTENT_TYPE_OCTET_STREAM;
         return $mime;
     }
+
+    /**
+     * 这是一个实验性的功能，需要在NGINX设定好internal声明并且计划好对应的文件库。
+     * @param string $baseUrl e.g. /protected (set in nginx config)
+     * @param string $baseDirectory e.g. /var/code/protected_file
+     * @param string $relativeFilePath e.g. sub_path/file.ext
+     * @param null|string $down_name e.g. customized.name
+     * @return bool
+     * @throws Exception
+     * @since 2.9.0
+     * @todo 需要实地验证
+     */
+    public function downloadFileThroughNginxSendFile($baseUrl, $baseDirectory, $relativeFilePath, $down_name = null)
+    {
+        /**
+         * here base url is /protected
+         * # IN NGINX server block 这个是定义读取你的文件的目录的url开头  直接访问是不可以的
+         * location /protected {
+         * internal;
+         * alias   /var/vhost/demo/uploadfiles;
+         * }
+         */
+
+        $file = $baseDirectory . DIRECTORY_SEPARATOR . $relativeFilePath;
+
+        if (!file_exists($file)) {
+            throw new Exception("No such file there: " . $file, 404);
+        }
+
+        if ($down_name !== null && $down_name !== false) {
+            $extension = substr($file, strrpos($file, '.')); //获取文件后缀
+            $down_name = $down_name . $extension; //新文件名，就是下载后的名字
+        } else {
+            $k = pathinfo($file);
+            $extension = $k['extension'];
+            $down_name = $k['filename'] . '.' . $extension;
+        }
+
+        $content_type = $this->getMimeTypeByExtension($extension);
+        if ($content_type === self::CONTENT_TYPE_OCTET_STREAM) {
+            //$content_disposition = 'attachment; filename=' . $down_name;
+
+            // 处理中文文件名
+            $ua = $_SERVER ["HTTP_USER_AGENT"];
+            if (preg_match("/MSIE/", $ua)) {
+                //$encoded_filename = rawurlencode ( $down_name );
+                header('Content-Disposition: attachment; filename="' . rawurlencode($down_name) . '"');
+            } else if (preg_match("/Firefox/", $ua)) {
+                header("Content-Disposition: attachment; filename*=\"utf8''" . $down_name . '"');
+            } else {
+                header('Content-Disposition: attachment; filename="' . $down_name . '"');
+            }
+        } else {
+            // $content_disposition = 'inline';
+            header('Content-Disposition: inline');
+        }
+
+        // 就这么简单一句话搞定 注意“protected”是和nginx配置文件的 protected要一致
+        header("X-Accel-Redirect: " . $baseUrl . "/" . $relativeFilePath);
+
+        return true;
+    }
+
 }
