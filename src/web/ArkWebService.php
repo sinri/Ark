@@ -161,7 +161,13 @@ class ArkWebService
             $code = 200;
             $route->execute($path_string, $this->filterGeneratedData, $code);
         } catch (Exception $exception) {
-            $this->router->handleRouteError($exception->getMessage(), $exception->getCode());
+            $this->router->handleRouteError(
+                [
+                    'exception_code' => $exception->getCode(),
+                    'exception_message' => $exception->getMessage(),
+                ],
+                $exception->getCode()
+            );
             if ($this->debug) {
                 echo "<pre>" . PHP_EOL . print_r($exception, true) . "</pre>" . PHP_EOL;
             }

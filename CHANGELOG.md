@@ -2,6 +2,10 @@
 
 For the serial of previous versions, see related branch.
 
+## Version 2.9.1
+
+Fix bug in `ArkRouteErrorHandlerInterface::execute` usage.
+
 ## Version 2.9.0
 
 ArkRouterRule became abstract class.
