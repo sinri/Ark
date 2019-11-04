@@ -9,6 +9,7 @@
 namespace sinri\ark\test\web\controller;
 
 
+use Exception;
 use sinri\ark\core\ArkHelper;
 use sinri\ark\web\implement\ArkWebController;
 
@@ -31,5 +32,10 @@ class Foo extends ArkWebController
             'b' => $b,
             'tail' => $tail,
         ]);
+    }
+
+    public function error()
+    {
+        throw new Exception("miao", 666);
     }
 }

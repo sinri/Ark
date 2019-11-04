@@ -10,7 +10,10 @@ Fork: https://github.com/sinri/Ark
 composer require sinri/ark
 ```
 
-It is a new generation for Enoch Project, as which might continuously support projects in PHP 5.4+.
+It should be mentioned that I developed another PHP framework before Ark, which is Enoch.
+Enoch Project is generally suspended while it may continuously support projects relying on PHP 5.4 ~ 5.6.
+
+If Enoch is named for "fellowship", Ark is designed for "survival".
 
 > And every living substance was destroyed which was upon the face of the ground, both man, and cattle, and the creeping things, and the fowl of the heaven; and they were destroyed from the earth: and Noah only remained [alive], and they that [were] with him in the ark. (Genesis 7:23)
 

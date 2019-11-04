@@ -3,11 +3,16 @@
 Ark provides you class `ArkLogger`, which follows the PSR-3 standard to handle logging requirement.
 
 Log would be written into certain directory and would be able to be ignored by level.
-Besides, a static method is provided to generate a complete silent ArkLogger instance.
+Besides, a static method is provided to generate a complete silent ArkLogger instance: `ArkLogger::makeSilentLogger()`.
 
-## Usage
+## Initialization
 
 You should build up an instance of ArkLogger first.
+
+```php
+new ArkLogger($targetLogDir = null, $prefix = '', $rotateTimeFormat = 'Y-m-d', $buffer = null);
+```
+
 When here explains the options.
 
 There are two ways to output logs:
@@ -15,20 +20,42 @@ There are two ways to output logs:
 1. `log` to write files; if the target file or storage directory is not correctly existing, fall back to
 2. `echo` contents to Standard Output directly.
 
-### Storage Directory 
+### Storage Directory (`$targetLogDir`)
 
 The directory to storage the log files.
 If the directory path is not existed, ArkLogger would try to run `mkdir` to create it.
+If it is omitted or as default value `null`, all the visible logs would be printed to Standard Output. 
 
-### Log File Prefix
+### Log File Naming (`$prefix` and `$rotateTimeFormat`)
 
 If you want to store log files of more than one kinds, you might need to set prefix for each logger.
+Also, the logging content would be rotated (split) into different files according to the time.
+You can set the rotate time format, following the `date` method parameter standard.
+The default value is `Y-m-d`.
+
 The log file name would be like
 
 * log-2018-02-17.log by default without prefix,
 * log-PREFIX-2018-02-17.log with prefix.
 
-Note, prefix accepts characters `[A-Za-z0-9]`, others would be replaced by '_'.  
+Note, prefix accepts characters `[A-Za-z0-9]`, others would be replaced by `_`.
+  
+
+### Buffer (`$buffer`)
+
+Buffer is supported since Ark 2.3.
+
+By default, the buffer is turned off.
+If you need to batch process logs, for any reasons, you can turn on the buffer,
+by set the buffer parameter to an instance of `ArkLoggerBuffer`.
+
+To initialize an instance of `ArkLoggerBuffer`, three parameters are needed.
+
+* Buffer Size: an integer as the size of the cached logs, by default as 100.
+* Buffer Flusher: a callable descriptor or just an anonymous function, such as `function(ArkLoggerBufferItem[] $items):bool`, to handle the logs in cache when cache is full.
+* Buffer Only: a boolean, by default as false. If this is set to `true`, logs would not be printed to Standard Output nor target file.
+
+## Logging
 
 ### Log Levels and Ignoring
 

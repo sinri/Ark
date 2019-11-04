@@ -66,6 +66,14 @@ ArkHelper::writeIntoArray(&$array, $keychain, $value);
 
 > You might think about why no Safe Object Writer. It is easy to get: `$object=json_decode(json_encode($array));`.
 
+## Safe Array Remover
+
+As of Ark 1.2, just like safe array writer, you can remove any element in an array, plain or nested.
+
+```php
+ArkHelper::removeFromArray(&$array, $keychain);
+```
+
 ## Array Association
 
 You might sometimes want to transform an pure list to a mapped(associated) array.
@@ -99,6 +107,14 @@ The task mask would be one or mix of these:
 
 ```php
 ArkHelper::assertItem($object, $exception_message = null, $type = self::ASSERT_TYPE_NOT_EMPTY)
+```
+
+Of course, you may just assert a variable with simplest way, using `empty()` function,
+this is able to be simplified with `quickNotEmptyAssert` method.
+It could receive more than one parameters in the tail.
+
+```php
+ArkHelper::quickNotEmptyAssert("Empty Value Found!",$testValue1,$testValue2,...);
 ```
 
 ## Is running in CLI mode
