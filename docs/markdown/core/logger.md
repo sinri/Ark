@@ -10,7 +10,7 @@ Besides, a static method is provided to generate a complete silent ArkLogger ins
 You should build up an instance of ArkLogger first.
 
 ```php
-new ArkLogger($targetLogDir = null, $prefix = '', $rotateTimeFormat = 'Y-m-d', $buffer = null);
+new ArkLogger($targetLogDir, $prefix, $rotateTimeFormat, $buffer);
 ```
 
 When here explains the options.
