@@ -10,10 +10,11 @@ use Psr\Log\LogLevel;
 use sinri\ark\core\ArkLogger;
 use sinri\ark\io\ArkWebInput;
 use sinri\ark\test\web\controller\Foo;
+use sinri\ark\test\web\controller\FreeTailController;
 use sinri\ark\test\web\filter\AnotherFilter;
 use sinri\ark\test\web\filter\TestFilter;
-use sinri\ark\web\ArkRouterFreeTailRule;
 use sinri\ark\web\implement\ArkRouteErrorHandlerAsCallback;
+use sinri\ark\web\implement\ArkRouterFreeTailRule;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
@@ -25,11 +26,11 @@ $logger = new ArkLogger(__DIR__ . '/../log', 'web');
 $logger->setIgnoreLevel(LogLevel::DEBUG);
 
 $web_service = Ark()->webService();
-$web_service->setDebug(true);
+//$web_service->setDebug(true);
 $web_service->setLogger($logger);
 //$web_service->setLogger(new ArkLogger(__DIR__ . '/../log', 'web'));
 $router = $web_service->getRouter();
-$router->setDebug(true);
+//$router->setDebug(true);
 $router->setLogger($logger);
 
 $router->setErrorHandler(new class extends ArkRouteErrorHandlerAsCallback
@@ -43,6 +44,7 @@ $router->setErrorHandler(new class extends ArkRouteErrorHandlerAsCallback
     {
         Ark()->webOutput()
             ->sendHTTPCode($httpCode)
+            ->setContentTypeHeader('application/json')
             ->json(['message' => $errorMessage, 'code' => $httpCode]);
     }
 });
@@ -66,19 +68,27 @@ $router->get("", function () {
     echo "Welcome to Ark!" . PHP_EOL;
 });
 
-$router->registerFrontendFolder("qd/ym", __DIR__ . '/frontend', []);
+$router->registerFrontendFolder("static/frontend", __DIR__ . '/frontend', []);
 
-$freeTailRouteRule = ArkRouterFreeTailRule::buildRouteRule(
+$freeTailRouteRule1 = ArkRouterFreeTailRule::buildRouteRule(
     ArkWebInput::METHOD_ANY,
     "free/tail/{a}/{b}",
     ArkRouterFreeTailRule::buildCallbackDescriptionWithClassNameAndMethod(Foo::class, 'tail')
 );
 
-$router->registerFreeTailRouteRule($freeTailRouteRule);
+$router->registerRouteRule($freeTailRouteRule1);
+
+$freeTailRouteRule2 = ArkRouterFreeTailRule::buildRouteRule(
+    ArkWebInput::METHOD_ANY,
+    "freeTail",
+    ArkRouterFreeTailRule::buildCallbackDescriptionWithClassNameAndMethod(FreeTailController::class, 'handlePath')
+);
+
+$router->registerRouteRule($freeTailRouteRule2);
 
 $web_service->setupFileSystemViewer("fs", __DIR__ . '/../', [], function ($file, $components) {
-    var_dump($file);
-    var_dump($components);
+    echo "Target File: " . ($file) . PHP_EOL;
+    echo "Path Components: " . json_encode($components) . PHP_EOL;
 });
 
 $web_service->handleRequest();

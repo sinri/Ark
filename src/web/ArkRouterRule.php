@@ -10,6 +10,7 @@ namespace sinri\ark\web;
 
 use Exception;
 use sinri\ark\core\ArkHelper;
+use sinri\ark\io\ArkWebInput;
 
 /**
  * Interface ArkRouterRule
@@ -19,6 +20,179 @@ use sinri\ark\core\ArkHelper;
  */
 abstract class ArkRouterRule
 {
+    /**
+     * @var string[] ArkRequestFilter class name list
+     */
+    protected $filters;
+    /**
+     * @var string
+     */
+    protected $method;
+    /**
+     * @var string
+     */
+    protected $path;
+    /**
+     * @var callable|string[]
+     */
+    protected $callback;
+    /**
+     * @var string
+     */
+    protected $namespace;
+    /**
+     * @var string[]
+     */
+    protected $parsed;
+
+    public function __construct()
+    {
+        $this->method = ArkWebInput::METHOD_ANY;
+        $this->path = '';
+        $this->callback = function () {
+        };
+        $this->namespace = '';
+        $this->parsed = [];
+        $this->filters = [];
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getFilters(): array
+    {
+        return $this->filters;
+    }
+
+    /**
+     * @param string[] $filters
+     * @return ArkRouterRule
+     */
+    public function setFilters(array $filters): ArkRouterRule
+    {
+        $this->filters = $filters;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMethod(): string
+    {
+        return $this->method;
+    }
+
+    /**
+     * @param string $method
+     * @return ArkRouterRule
+     */
+    public function setMethod(string $method): ArkRouterRule
+    {
+        $this->method = $method;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param string $path
+     * @return ArkRouterRule
+     */
+    public function setPath(string $path): ArkRouterRule
+    {
+        $this->path = $path;
+        return $this;
+    }
+
+    /**
+     * @return callable|string[]
+     */
+    public function getCallback()
+    {
+        return $this->callback;
+    }
+
+    /**
+     * @param callable|string[] $callback
+     * @return ArkRouterRule
+     */
+    public function setCallback($callback)
+    {
+        $this->callback = $callback;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNamespace(): string
+    {
+        return $this->namespace;
+    }
+
+    /**
+     * @param string $namespace
+     * @return ArkRouterRule
+     */
+    public function setNamespace(string $namespace): ArkRouterRule
+    {
+        $this->namespace = $namespace;
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getParsed(): array
+    {
+        return $this->parsed;
+    }
+
+    /**
+     * @param string[] $parsed
+     * @return ArkRouterRule
+     */
+    public function setParsed(array $parsed): ArkRouterRule
+    {
+        $this->parsed = $parsed;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return json_encode([
+            "method" => $this->method,
+            "path" => $this->path,
+            "callback" => $this->callback,
+            "filters" => $this->filters,
+            "namespace" => $this->namespace,
+            "parsed" => $this->parsed,
+        ]);
+    }
+
+    /**
+     * @param string $className class name with full namespace; use X::CLASS is recommended.
+     * @param string $methodName
+     */
+    public function setCallbackWithClassNameAndMethod($className, $methodName)
+    {
+        $this->callback = self::buildCallbackDescriptionWithClassNameAndMethod($className, $methodName);
+    }
+
+    public static function buildCallbackDescriptionWithClassNameAndMethod($className, $methodName)
+    {
+        return [$className, $methodName];
+    }
+
     /**
      * @param string $method
      * @param string $path
@@ -93,5 +267,68 @@ abstract class ArkRouterRule
             $callable[0] = $class_instance;
         }
         call_user_func_array($callable, $params);
+    }
+
+    /**
+     * @return string
+     */
+    abstract public function getType();
+
+    protected function preprocessIncomingPath($incomingPath)
+    {
+        $path = $incomingPath;// as is for static
+        if (strlen($incomingPath) > 1 && substr($incomingPath, strlen($incomingPath) - 1, 1) == '/') {
+            $path = substr($incomingPath, 0, strlen($incomingPath) - 1);// this should be cut for non-static route rule
+        } elseif ($incomingPath == '') {
+            $path = '/'; // fulfill as no leading `/`
+        }
+        return $path;
+    }
+
+    protected function checkIfMatchMethod($method)
+    {
+        $route_method = $this->getMethod();
+
+        if (
+            $route_method !== ArkWebInput::METHOD_ANY
+            && stripos($route_method, $method) === false
+        ) {
+//            if ($this->debug) {
+//                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " ROUTE METHOD NOT MATCH [$method]");
+//            }
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param $method
+     * @param $incomingPath
+     * @return boolean
+     */
+    public function checkIfMatchRequest($method, $incomingPath)
+    {
+        if (!$this->checkIfMatchMethod($method)) return false;
+        $path = $this->preprocessIncomingPath($incomingPath);
+        $route_regex = $this->getPath();
+
+        if (preg_match($route_regex, $path, $matches)) {
+            if (!empty($matches)) array_shift($matches);
+            $matches = array_filter($matches, function ($v) {
+                return substr($v, 0, 1) != '/';
+            });
+            $matches = array_values($matches);
+            array_walk($matches, function (&$v) {
+                $v = urldecode($v);
+            });
+            $this->setParsed($matches);
+//            if ($this->debug) {
+//                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " MATCHED with " . json_encode($matches));
+//            }
+            return true;
+        }
+
+        return false;
     }
 }

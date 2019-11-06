@@ -22,7 +22,8 @@
   "require-dev": {
     "sinri/ark-curl": "~2.0",
     "sinri/ark-pdo": "~1.6",
-    "sinri/ark-queue": "~2.2"
+    "sinri/ark-queue": "~2.2",
+    "ext-curl": "*"
   },
   "suggest": {
     "ext-pcntl": "*",
