@@ -148,6 +148,7 @@ class TheArk
                 $logger = new ArkLogger($path, $name);
                 $level = $this->readConfig(['log', 'level'], LogLevel::INFO);
                 $logger->setIgnoreLevel($level);
+                $logger->setGroupByPrefix(true);
             } else {
                 $logger = ArkLogger::makeSilentLogger();
             }

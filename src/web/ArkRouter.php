@@ -14,6 +14,9 @@ use ReflectionClass;
 use sinri\ark\core\ArkLogger;
 use sinri\ark\io\ArkWebInput;
 use sinri\ark\web\implement\ArkRouteErrorHandlerAsJson;
+use sinri\ark\web\implement\ArkRouterFreeTailRule;
+use sinri\ark\web\implement\ArkRouterRestfulRule;
+use sinri\ark\web\implement\ArkRouterStaticRule;
 
 class ArkRouter
 {
@@ -34,16 +37,23 @@ class ArkRouter
 
     /**
      * @var ArkRouterStaticRule[]
+     * @deprecated
      */
-    protected $staticRoutes;
+//    protected $staticRoutes;
     /**
      * @var ArkRouterRestfulRule[]
+     * @deprecated
      */
-    protected $restfulRoutes;
+//    protected $restfulRoutes;
     /**
      * @var ArkRouterFreeTailRule[]
+     * @deprecated
      */
-    protected $freeTailRoutes;
+//    protected $freeTailRoutes;
+    /**
+     * @var ArkRouterRule[]
+     */
+    protected $rules;
 
 
     public function __construct()
@@ -53,9 +63,10 @@ class ArkRouter
         $this->defaultControllerName = 'Welcome';
         $this->defaultMethodName = 'index';
         $this->errorHandler = null;
-        $this->staticRoutes = [];
-        $this->restfulRoutes = [];
-        $this->freeTailRoutes = [];
+        //$this->staticRoutes = [];
+//        $this->restfulRoutes = [];
+//        $this->freeTailRoutes = [];
+        $this->rules = [];
     }
 
     /**
@@ -124,55 +135,12 @@ class ArkRouter
     }
 
     /**
-     * @param $routeRule
-     * @deprecated use registerRestfulRouteRule instead
-     * TODO To be removed in 3.x
+     * @param ArkRouterRule $routeRule
+     * @return $this
      */
     public function registerRouteRule($routeRule)
     {
-        $this->registerRestfulRouteRule($routeRule);
-    }
-
-    /**
-     * @param ArkRouterRestfulRule $routeRule
-     * @return ArkRouter
-     */
-    public function registerRestfulRouteRule($routeRule)
-    {
-        array_unshift($this->restfulRoutes, $routeRule);
-        return $this;
-    }
-
-    /**
-     * @param ArkRouterStaticRule $staticRouteRule
-     * @return ArkRouter
-     */
-    public function registerStaticRouteRule($staticRouteRule)
-    {
-        array_unshift($this->staticRoutes, $staticRouteRule);
-        return $this;
-    }
-
-    /**
-     * @param $freeTailRouteRule
-     * @return $this
-     */
-    public function registerFreeTailRouteRule($freeTailRouteRule)
-    {
-        array_unshift($this->freeTailRoutes, $freeTailRouteRule);
-        return $this;
-    }
-
-    /**
-     * @param $path
-     * @param $dir
-     * @param array $filters
-     * @return $this
-     * @deprecated use registerFrontendFolder instead
-     */
-    public function frontendFolder($path, $dir, $filters = [])
-    {
-        $this->registerFrontendFolder($path, $dir, $filters);
+        array_unshift($this->rules, $routeRule);
         return $this;
     }
 
@@ -196,7 +164,8 @@ class ArkRouter
             },
             $filters
         );
-        $this->registerStaticRouteRule($staticRule);
+        //$this->registerStaticRouteRule($staticRule);
+        $this->registerRouteRule($staticRule);
         return $this;
     }
 
@@ -211,11 +180,10 @@ class ArkRouter
     {
         if ($hasFreeTail) {
             $route_rule = ArkRouterFreeTailRule::buildRouteRule(ArkWebInput::METHOD_GET, $path, $callback, $filters);
-            $this->registerFreeTailRouteRule($route_rule);
         } else {
             $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_GET, $path, $callback, $filters);
-            $this->registerRestfulRouteRule($route_rule);
         }
+        $this->registerRouteRule($route_rule);
         return $this;
     }
 
@@ -230,11 +198,10 @@ class ArkRouter
     {
         if ($hasFreeTail) {
             $route_rule = ArkRouterFreeTailRule::buildRouteRule(ArkWebInput::METHOD_POST, $path, $callback, $filters);
-            $this->registerFreeTailRouteRule($route_rule);
         } else {
             $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_POST, $path, $callback, $filters);
-            $this->registerRestfulRouteRule($route_rule);
         }
+        $this->registerRouteRule($route_rule);
         return $this;
     }
 
@@ -249,11 +216,10 @@ class ArkRouter
     {
         if ($hasFreeTail) {
             $route_rule = ArkRouterFreeTailRule::buildRouteRule(ArkWebInput::METHOD_PUT, $path, $callback, $filters);
-            $this->registerFreeTailRouteRule($route_rule);
         } else {
             $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_PUT, $path, $callback, $filters);
-            $this->registerRestfulRouteRule($route_rule);
         }
+        $this->registerRouteRule($route_rule);
         return $this;
     }
 
@@ -268,11 +234,10 @@ class ArkRouter
     {
         if ($hasFreeTail) {
             $route_rule = ArkRouterFreeTailRule::buildRouteRule(ArkWebInput::METHOD_PATCH, $path, $callback, $filters);
-            $this->registerFreeTailRouteRule($route_rule);
         } else {
             $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_PATCH, $path, $callback, $filters);
-            $this->registerRestfulRouteRule($route_rule);
         }
+        $this->registerRouteRule($route_rule);
         return $this;
     }
 
@@ -287,11 +252,10 @@ class ArkRouter
     {
         if ($hasFreeTail) {
             $route_rule = ArkRouterFreeTailRule::buildRouteRule(ArkWebInput::METHOD_DELETE, $path, $callback, $filters);
-            $this->registerFreeTailRouteRule($route_rule);
         } else {
             $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_DELETE, $path, $callback, $filters);
-            $this->registerRestfulRouteRule($route_rule);
         }
+        $this->registerRouteRule($route_rule);
         return $this;
     }
 
@@ -306,11 +270,10 @@ class ArkRouter
     {
         if ($hasFreeTail) {
             $route_rule = ArkRouterFreeTailRule::buildRouteRule(ArkWebInput::METHOD_OPTIONS, $path, $callback, $filters);
-            $this->registerFreeTailRouteRule($route_rule);
         } else {
             $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_OPTIONS, $path, $callback, $filters);
-            $this->registerRestfulRouteRule($route_rule);
         }
+        $this->registerRouteRule($route_rule);
         return $this;
     }
 
@@ -325,11 +288,10 @@ class ArkRouter
     {
         if ($hasFreeTail) {
             $route_rule = ArkRouterFreeTailRule::buildRouteRule(ArkWebInput::METHOD_HEAD, $path, $callback, $filters);
-            $this->registerFreeTailRouteRule($route_rule);
         } else {
             $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_HEAD, $path, $callback, $filters);
-            $this->registerRestfulRouteRule($route_rule);
         }
+        $this->registerRouteRule($route_rule);
         return $this;
     }
 
@@ -344,10 +306,31 @@ class ArkRouter
     {
         if ($hasFreeTail) {
             $route_rule = ArkRouterFreeTailRule::buildRouteRule(ArkWebInput::METHOD_ANY, $path, $callback, $filters);
-            $this->registerFreeTailRouteRule($route_rule);
         } else {
             $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_ANY, $path, $callback, $filters);
-            $this->registerRestfulRouteRule($route_rule);
+        }
+        $this->registerRouteRule($route_rule);
+        return $this;
+    }
+
+    /**
+     * @param string[] $methods array of ArkWebInput::METHOD_*
+     * @param string $path
+     * @param callable $callback
+     * @param string[] $filters
+     * @param bool $hasFreeTail
+     * @return ArkRouter
+     * @since 2.9.2
+     */
+    public function multiMethods($methods, $path, $callback, $filters = [], $hasFreeTail = false)
+    {
+        foreach ($methods as $method) {
+            if ($hasFreeTail) {
+                $route_rule = ArkRouterFreeTailRule::buildRouteRule($method, $path, $callback, $filters);
+            } else {
+                $route_rule = ArkRouterRestfulRule::buildRouteRule($method, $path, $callback, $filters);
+            }
+            $this->registerRouteRule($route_rule);
         }
         return $this;
     }
@@ -355,123 +338,141 @@ class ArkRouter
     /**
      * @param $incomingPath
      * @param $method
-     * @return ArkRouterRule
+     * @return mixed|ArkRouterRule
      * @throws Exception
      */
     public function seekRoute($incomingPath, $method)
     {
-        $path = $incomingPath;// as is for static
-        if (strlen($incomingPath) > 1 && substr($incomingPath, strlen($incomingPath) - 1, 1) == '/') {
-            $path = substr($incomingPath, 0, strlen($incomingPath) - 1);// this should be cut for non-static route rule
-        } elseif ($incomingPath == '') {
-            $path = '/'; // fulfill as no leading `/`
-        }
-
-        foreach ($this->staticRoutes as $staticRoute) {
-            $route_regex = $staticRoute->getPath();//$route[self::ROUTE_PARAM_PATH];
-            $route_method = $staticRoute->getMethod();//$route[self::ROUTE_PARAM_METHOD];
-            if ($this->debug) {
-                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " TRY TO MATCH RULE: [$route_method][$route_regex][$incomingPath]");
-            }
-            if (
-                $route_method !== ArkWebInput::METHOD_ANY
-                && stripos($route_method, $method) === false
-            ) {
-                if ($this->debug) {
-                    $this->logger->debug(__METHOD__ . '@' . __LINE__ . " ROUTE METHOD NOT MATCH [$method]");
-                }
-                continue;
-            }
-            if (preg_match($route_regex, $incomingPath, $matches)) {
-                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " raw matches", $matches);
-                if (!empty($matches)) array_shift($matches);
-                $matches = array_filter($matches, function ($v) {
-                    return substr($v, 0, 1) != '/';
-                });
-                $matches = array_values($matches);
-                array_walk($matches, function (&$v) {
-                    $v = urldecode($v);
-                });
-                $staticRoute->setParsed($matches);
-                if ($this->debug) {
-                    $this->logger->debug(__METHOD__ . '@' . __LINE__ . " MATCHED with " . json_encode($matches));
-                }
-                return $staticRoute;
+        foreach ($this->rules as $rule) {
+            if ($rule->checkIfMatchRequest($method, $incomingPath)) {
+                return $rule;
             }
         }
-
-        foreach ($this->restfulRoutes as $route) {
-            $route_regex = $route->getPath();//$route[self::ROUTE_PARAM_PATH];
-            $route_method = $route->getMethod();//$route[self::ROUTE_PARAM_METHOD];
-            if ($this->debug) {
-                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " TRY TO MATCH RULE: [$route_method][$route_regex][$path]");
-            }
-            if (
-                $route_method !== ArkWebInput::METHOD_ANY
-                && stripos($route_method, $method) === false
-            ) {
-                if ($this->debug) {
-                    $this->logger->debug(__METHOD__ . '@' . __LINE__ . " ROUTE METHOD NOT MATCH [$method]");
-                }
-                continue;
-            }
-            if (preg_match($route_regex, $path, $matches)) {
-                if (!empty($matches)) array_shift($matches);
-                $matches = array_filter($matches, function ($v) {
-                    return substr($v, 0, 1) != '/';
-                });
-                $matches = array_values($matches);
-                array_walk($matches, function (&$v) {
-                    $v = urldecode($v);
-                });
-                $route->setParsed($matches);
-                if ($this->debug) {
-                    $this->logger->debug(__METHOD__ . '@' . __LINE__ . " MATCHED with " . json_encode($matches));
-                }
-                return $route;
-            }
-        }
-
-        foreach ($this->freeTailRoutes as $route) {
-            $route_regex = $route->getPath();//$route[self::ROUTE_PARAM_PATH];
-            $route_method = $route->getMethod();//$route[self::ROUTE_PARAM_METHOD];
-            if ($this->debug) {
-                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " TRY TO MATCH RULE: [$route_method][$route_regex][$path]");
-            }
-            if (
-                $route_method !== ArkWebInput::METHOD_ANY
-                && stripos($route_method, $method) === false
-            ) {
-                if ($this->debug) {
-                    $this->logger->debug(__METHOD__ . '@' . __LINE__ . " ROUTE METHOD NOT MATCH [$method]");
-                }
-                continue;
-            }
-            if (preg_match($route_regex, $path, $matches)) {
-                if (!empty($matches)) array_shift($matches);
-                $matches = array_filter($matches, function ($v) {
-                    return substr($v, 0, 1) != '/';
-                });
-                $matches = array_values($matches);
-                array_walk($matches, function (&$v) {
-                    $v = urldecode($v);
-                });
-                $route->setParsed($matches);
-                if ($this->debug) {
-                    $this->logger->debug(__METHOD__ . '@' . __LINE__ . " MATCHED with " . json_encode($matches));
-                }
-                return $route;
-            }
-        }
-
-        throw new Exception("No route matched: path={$path} method={$method}", 404);
-
+        throw new Exception("No route matched: path={$incomingPath} method={$method}", 404);
     }
+
+    /**
+     * @param $incomingPath
+     * @param $method
+     * @return ArkRouterRule
+     * @throws Exception
+     * @deprecated
+     */
+//    public function seekRoute0($incomingPath, $method)
+//    {
+//        $path = $incomingPath;// as is for static
+//        if (strlen($incomingPath) > 1 && substr($incomingPath, strlen($incomingPath) - 1, 1) == '/') {
+//            $path = substr($incomingPath, 0, strlen($incomingPath) - 1);// this should be cut for non-static route rule
+//        } elseif ($incomingPath == '') {
+//            $path = '/'; // fulfill as no leading `/`
+//        }
+//
+//        foreach ($this->staticRoutes as $staticRoute) {
+//            $route_regex = $staticRoute->getPath();//$route[self::ROUTE_PARAM_PATH];
+//            $route_method = $staticRoute->getMethod();//$route[self::ROUTE_PARAM_METHOD];
+//            if ($this->debug) {
+//                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " TRY TO MATCH RULE: [$route_method][$route_regex][$incomingPath]");
+//            }
+//            if (
+//                $route_method !== ArkWebInput::METHOD_ANY
+//                && stripos($route_method, $method) === false
+//            ) {
+//                if ($this->debug) {
+//                    $this->logger->debug(__METHOD__ . '@' . __LINE__ . " ROUTE METHOD NOT MATCH [$method]");
+//                }
+//                continue;
+//            }
+//            if (preg_match($route_regex, $incomingPath, $matches)) {
+//                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " raw matches", $matches);
+//                if (!empty($matches)) array_shift($matches);
+//                $matches = array_filter($matches, function ($v) {
+//                    return substr($v, 0, 1) != '/';
+//                });
+//                $matches = array_values($matches);
+//                array_walk($matches, function (&$v) {
+//                    $v = urldecode($v);
+//                });
+//                $staticRoute->setParsed($matches);
+//                if ($this->debug) {
+//                    $this->logger->debug(__METHOD__ . '@' . __LINE__ . " MATCHED with " . json_encode($matches));
+//                }
+//                return $staticRoute;
+//            }
+//        }
+//
+//        foreach ($this->restfulRoutes as $route) {
+//            $route_regex = $route->getPath();//$route[self::ROUTE_PARAM_PATH];
+//            $route_method = $route->getMethod();//$route[self::ROUTE_PARAM_METHOD];
+//            if ($this->debug) {
+//                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " TRY TO MATCH RULE: [$route_method][$route_regex][$path]");
+//            }
+//            if (
+//                $route_method !== ArkWebInput::METHOD_ANY
+//                && stripos($route_method, $method) === false
+//            ) {
+//                if ($this->debug) {
+//                    $this->logger->debug(__METHOD__ . '@' . __LINE__ . " ROUTE METHOD NOT MATCH [$method]");
+//                }
+//                continue;
+//            }
+//            if (preg_match($route_regex, $path, $matches)) {
+//                if (!empty($matches)) array_shift($matches);
+//                $matches = array_filter($matches, function ($v) {
+//                    return substr($v, 0, 1) != '/';
+//                });
+//                $matches = array_values($matches);
+//                array_walk($matches, function (&$v) {
+//                    $v = urldecode($v);
+//                });
+//                $route->setParsed($matches);
+//                if ($this->debug) {
+//                    $this->logger->debug(__METHOD__ . '@' . __LINE__ . " MATCHED with " . json_encode($matches));
+//                }
+//                return $route;
+//            }
+//        }
+//
+//        foreach ($this->freeTailRoutes as $route) {
+//            $route_regex = $route->getPath();//$route[self::ROUTE_PARAM_PATH];
+//            $route_method = $route->getMethod();//$route[self::ROUTE_PARAM_METHOD];
+//            if ($this->debug) {
+//                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " TRY TO MATCH RULE: [$route_method][$route_regex][$path]");
+//            }
+//            if (
+//                $route_method !== ArkWebInput::METHOD_ANY
+//                && stripos($route_method, $method) === false
+//            ) {
+//                if ($this->debug) {
+//                    $this->logger->debug(__METHOD__ . '@' . __LINE__ . " ROUTE METHOD NOT MATCH [$method]");
+//                }
+//                continue;
+//            }
+//            if (preg_match($route_regex, $path, $matches)) {
+//                if (!empty($matches)) array_shift($matches);
+//                $matches = array_filter($matches, function ($v) {
+//                    return substr($v, 0, 1) != '/';
+//                });
+//                $matches = array_values($matches);
+//                array_walk($matches, function (&$v) {
+//                    $v = urldecode($v);
+//                });
+//                $route->setParsed($matches);
+//                if ($this->debug) {
+//                    $this->logger->debug(__METHOD__ . '@' . __LINE__ . " MATCHED with " . json_encode($matches));
+//                }
+//                return $route;
+//            }
+//        }
+//
+//        throw new Exception("No route matched: path={$path} method={$method}", 404);
+//
+//    }
 
     /**
      * @param ArkRouterRestfulRule $shared
      * @param ArkRouterRestfulRule[] $list
      * @return ArkRouter
+     * @deprecated since 2.10 It should not be used anymore
      */
     public function group($shared, $list)
     {
@@ -500,8 +501,8 @@ class ArkRouter
                 $callback,
                 $filters
             );
-//            $this->registerRouteRule($route_rule);
-            $this->registerRestfulRouteRule($route_rule);
+            $this->registerRouteRule($route_rule);
+//            $this->registerRestfulRouteRule($route_rule);
         }
         return $this;
     }
@@ -607,7 +608,7 @@ class ArkRouter
                 }
                 $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_ANY, $path, [$controllerClass, $method], $filters);
 //                $this->registerRouteRule($route_rule);
-                $this->registerRestfulRouteRule($route_rule);
+                $this->registerRouteRule($route_rule);
                 if ($method == $this->defaultMethodName) {
                     $basePathX = $basePath;
                     if (strlen($basePathX) > 0) {
@@ -615,7 +616,7 @@ class ArkRouter
                     }
                     $route_rule = ArkRouterRestfulRule::buildRouteRule(ArkWebInput::METHOD_ANY, $basePathX, [$controllerClass, $method], $filters);
 //                    $this->registerRouteRule($route_rule);
-                    $this->registerRestfulRouteRule($route_rule);
+                    $this->registerRouteRule($route_rule);
                 }
             }
         } catch (Exception $exception) {

@@ -2,6 +2,10 @@
 
 For the serial of previous versions, see related branch.
 
+## Version 2.10.0
+
+A great change!
+
 ## Version 2.9.1
 
 Fix bug in `ArkRouteErrorHandlerInterface::execute` usage.

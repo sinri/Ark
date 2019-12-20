@@ -30,11 +30,11 @@ class TestFilter extends ArkRequestFilter
     public function shouldAcceptRequest($path, $method, $params, &$preparedData = null, &$responseCode = 200, &$error = null)
     {
         $x = Ark()->webInput()->readRequest('token', false, '/^[A-Z]+$/');
-        if (!$x) {
+        if ($x == 'wrong_token') {
             $responseCode = 403;
             $error = "No Correct Token";
         }
-        return !!$x;
+        return true;
     }
 
     /**
