@@ -24,11 +24,11 @@ date_default_timezone_set("Asia/Shanghai");
 
 $logger = new ArkLogger(__DIR__ . '/../log', 'web');
 $logger->setIgnoreLevel(LogLevel::DEBUG);
+$logger->setGroupByPrefix(true);
 
 $web_service = Ark()->webService();
 //$web_service->setDebug(true);
 $web_service->setLogger($logger);
-//$web_service->setLogger(new ArkLogger(__DIR__ . '/../log', 'web'));
 $router = $web_service->getRouter();
 //$router->setDebug(true);
 $router->setLogger($logger);
@@ -64,7 +64,8 @@ $router->loadAllControllersInDirectoryAsCI(
 );
 
 
-$router->get("", function () {
+$router->get("", function () use ($logger) {
+    $logger->info("Homepage Requested");
     echo "Welcome to Ark!" . PHP_EOL;
 });
 
