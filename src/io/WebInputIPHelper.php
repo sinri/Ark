@@ -67,6 +67,7 @@ class WebInputIPHelper
      * @param array $proxy_ips
      * @return string IP address
      * @see CodeIgniter Core
+     * @deprecated @since 3.0.1
      */
     public function detectVisitorIP($proxy_ips = [])
     {
@@ -173,5 +174,28 @@ class WebInputIPHelper
         $this->ip_address = $ip_address;
 
         return $this->ip_address;
+    }
+
+    /**
+     * 理论上 最左边是最原始客户端的IP地址 最右边 加上了最终TCP传输使用的IP
+     * @return string[]
+     * @since 3.0.1
+     */
+    public function readForwardIpLine()
+    {
+        $forwardForIpList = ArkHelper::readTarget($_SERVER, ['HTTP_X_FORWARDED_FOR'], '');
+        if ($forwardForIpList === '') {
+            $forwardForIpList = [];
+        } else {
+            $forwardForIpList = preg_split('/([,\s]+)/', $forwardForIpList);
+            $forwardForIpList = array_filter($forwardForIpList);
+        }
+        $remoteIp = ArkHelper::readTarget($_SERVER, 'REMOTE_ADDR');
+        if (!in_array($remoteIp, $forwardForIpList)) {
+            $forwardForIpList[] = $remoteIp;
+        }
+        return array_filter($forwardForIpList, function ($x) {
+            return $this->validateIP($x);
+        });
     }
 }
