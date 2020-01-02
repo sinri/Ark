@@ -177,12 +177,17 @@ class ArkWebInput
     }
 
     /**
-     * @param string[] $proxyIPs
+     * Modified Implementation @param string[] $proxyIPs
      * @return string
+     * @since 3.0.1
      */
     public function getRequestSourceIP($proxyIPs = [])
     {
-        return $this->ipHelper->detectVisitorIP($proxyIPs);
+        //return $this->ipHelper->detectVisitorIP($proxyIPs);
+        $ips = $this->ipHelper->readForwardIpLine();
+        $ips = array_diff($ips, $proxyIPs);
+        if (empty($ips)) return '0.0.0.0';
+        return $ips[0];
     }
 
     /**
