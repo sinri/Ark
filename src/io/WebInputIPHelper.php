@@ -9,6 +9,7 @@
 namespace sinri\ark\io;
 
 
+use Exception;
 use sinri\ark\core\ArkHelper;
 
 class WebInputIPHelper
@@ -197,5 +198,60 @@ class WebInputIPHelper
         return array_filter($forwardForIpList, function ($x) {
             return $this->validateIP($x);
         });
+    }
+
+    /**
+     * @param int[] $ipv4components [X,X,X,X]
+     * @return string "0101010...00101"
+     * @throws Exception
+     */
+    protected function ipv4ToBinaryString($ipv4components)
+    {
+        for ($i = 0; $i < 4; $i++) {
+            if ($ipv4components[$i] < 0 || $ipv4components[$i] > 255) {
+                throw new Exception("Illegal IPv4 With Mask Expression - ip - " . $i);
+            }
+        }
+        $bins = "";
+        for ($i = 0; $i < 4; $i++) {
+            $t = decbin($ipv4components[$i]);
+            $t = str_pad($t, 8, "0", STR_PAD_LEFT);
+            $bins .= $t;
+        }
+
+        return $bins;
+    }
+
+    /**
+     * If IPv4 matches the masked IPv4
+     * @param string $ipv4WithMask X.X.X.X/Y
+     * @param string $ipv4 Z.Z.Z.Z
+     * @return bool
+     * @throws Exception
+     * @since 3.0.2
+     */
+    public function compareIPv4WithMask($ipv4WithMask, $ipv4)
+    {
+        if (!preg_match('/^(\d+)\.(\d+)\.(\d+)\.(\d+)\/(\d+)$/', $ipv4WithMask, $matches)) {
+            throw new Exception("Illegal IPv4 With Mask Expression - whole");
+        }
+        if ($matches[5] < 0 || $matches[5] > 32) {
+            throw new Exception("Illegal IPv4 With Mask Expression - mask");
+        }
+
+        $mask = $matches[5];
+        $full = $this->ipv4ToBinaryString(array_slice($matches, 1, 4));
+
+        if (!preg_match('/^(\d+)\.(\d+)\.(\d+)\.(\d+)$/', $ipv4, $matches)) {
+            throw new Exception("Illegal IPv4 Expression - whole");
+        }
+        $target = $this->ipv4ToBinaryString(array_slice($matches, 1, 4));
+
+        for ($i = 0; $i < $mask; $i++) {
+            if ($full[$i] != $target[$i]) {
+                return false;
+            }
+        }
+        return true;
     }
 }

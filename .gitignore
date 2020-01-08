@@ -10,3 +10,5 @@ composer.phar
 /test/phar/ArkTestSuit.phar
 /test/database/compare/config.php
 /.htaccess
+
+/debug
