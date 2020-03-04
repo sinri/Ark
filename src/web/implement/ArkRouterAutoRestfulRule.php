@@ -83,7 +83,7 @@ class ArkRouterAutoRestfulRule extends ArkRouterRule
 //            var_dump($i);
             $className .= '\\' . $components[$i];
             $i++;
-            if (class_exists($className, false)) {
+            if (class_exists($className, true)) {
                 // great!
                 $this->callback[0] = $className;
                 break;
