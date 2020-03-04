@@ -14,6 +14,7 @@ use sinri\ark\test\web\controller\FreeTailController;
 use sinri\ark\test\web\filter\AnotherFilter;
 use sinri\ark\test\web\filter\TestFilter;
 use sinri\ark\web\implement\ArkRouteErrorHandlerAsCallback;
+use sinri\ark\web\implement\ArkRouterAutoRestfulRule;
 use sinri\ark\web\implement\ArkRouterFreeTailRule;
 
 require_once __DIR__ . '/../../vendor/autoload.php';
@@ -71,7 +72,17 @@ $router->get("", function () use ($logger) {
 
 $router->registerFrontendFolder("static/frontend", __DIR__ . '/frontend', []);
 
-$freeTailRouteRule1 = ArkRouterFreeTailRule::buildRouteRule(
+$autoRoute = new ArkRouterAutoRestfulRule(
+    ArkWebInput::METHOD_ANY,
+    'auto_router',
+    'sinri\ark\test\web\controller',
+    []
+);
+$router->registerRouteRule($autoRoute);
+
+// $router->loadAutoRestfulControllerRoot('/','sinri\ark\test\web\controller',[]);
+
+$freeTailRouteRule1 = new ArkRouterFreeTailRule(
     ArkWebInput::METHOD_ANY,
     "free/tail/{a}/{b}",
     ArkRouterFreeTailRule::buildCallbackDescriptionWithClassNameAndMethod(Foo::class, 'tail')
@@ -79,7 +90,7 @@ $freeTailRouteRule1 = ArkRouterFreeTailRule::buildRouteRule(
 
 $router->registerRouteRule($freeTailRouteRule1);
 
-$freeTailRouteRule2 = ArkRouterFreeTailRule::buildRouteRule(
+$freeTailRouteRule2 = new ArkRouterFreeTailRule(
     ArkWebInput::METHOD_ANY,
     "freeTail",
     ArkRouterFreeTailRule::buildCallbackDescriptionWithClassNameAndMethod(FreeTailController::class, 'handlePath')

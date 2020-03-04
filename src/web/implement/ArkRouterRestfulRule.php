@@ -18,18 +18,17 @@ use sinri\ark\web\ArkRouterRule;
  */
 class ArkRouterRestfulRule extends ArkRouterRule
 {
-
-
     /**
      * Designed after Lumen Routing: https://lumen.laravel-china.org/docs/5.3/routing
      * @param string $method use method constants of ArkWebInput
      * @param string $path `posts/{post}/comments/{comment}` no leading `/`
      * @param callable|string[] $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param string[] $filters ArkRequestFilter class name list
-     * @return ArkRouterRestfulRule
      */
-    public static function buildRouteRule($method, $path, $callback, $filters = [])
+    public function __construct($method, $path, $callback, $filters = [])
     {
+        parent::__construct();
+
         $path = preg_replace('/\//', '\/', $path);
         $matched = preg_match_all('/{([^\/]+)}/', $path, $matches);
         if ($matched) {
@@ -38,13 +37,40 @@ class ArkRouterRestfulRule extends ArkRouterRule
             $regex = $path;
         }
         $regex = '/^\/' . $regex . '$/';
-        $new_route = new ArkRouterRestfulRule();
-        $new_route->setMethod($method);
-        $new_route->setPath($regex);
-        $new_route->setCallback($callback);
-        $new_route->setFilters($filters);
+        $this->setMethod($method);
+        $this->setPath($regex);
+        $this->setCallback($callback);
+        $this->setFilters($filters);
+    }
 
-        return $new_route;
+    /**
+     * Designed after Lumen Routing: https://lumen.laravel-china.org/docs/5.3/routing
+     * @param string $method use method constants of ArkWebInput
+     * @param string $path `posts/{post}/comments/{comment}` no leading `/`
+     * @param callable|string[] $callback a function with parameters in path, such as `function($post,$comment)` for above
+     * @param string[] $filters ArkRequestFilter class name list
+     * @return ArkRouterRestfulRule
+     * @deprecated since 3.1.0
+     */
+    public static function buildRouteRule($method, $path, $callback, $filters = [])
+    {
+        return new ArkRouterRestfulRule($method, $path, $callback, $filters);
+
+//        $path = preg_replace('/\//', '\/', $path);
+//        $matched = preg_match_all('/{([^\/]+)}/', $path, $matches);
+//        if ($matched) {
+//            $regex = preg_replace('/{([^\/]+)}/', '([^\/]+)', $path);
+//        } else {
+//            $regex = $path;
+//        }
+//        $regex = '/^\/' . $regex . '$/';
+//        $new_route = new ArkRouterRestfulRule();
+//        $new_route->setMethod($method);
+//        $new_route->setPath($regex);
+//        $new_route->setCallback($callback);
+//        $new_route->setFilters($filters);
+//
+//        return $new_route;
     }
 
     /**

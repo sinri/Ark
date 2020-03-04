@@ -193,14 +193,15 @@ abstract class ArkRouterRule
         return [$className, $methodName];
     }
 
-    /**
-     * @param string $method
-     * @param string $path
-     * @param callable|string[] $callback a function with parameters in path, such as `function($post,$comment)` for above
-     * @param string[] $filters ArkRequestFilter class name list
-     * @return ArkRouterRule
-     */
-    abstract public static function buildRouteRule($method, $path, $callback, $filters = []);
+//    /**
+//     * @param string $method
+//     * @param string $path
+//     * @param callable|string[] $callback a function with parameters in path, such as `function($post,$comment)` for above
+//     * @param string[] $filters ArkRequestFilter class name list
+//     * @return ArkRouterRule
+//     * @deprecated @since 3.1 why not use constructor?
+//     */
+//    abstract public static function buildRouteRule($method, $path, $callback, $filters = []);
 
     /**
      * @param $path_string
