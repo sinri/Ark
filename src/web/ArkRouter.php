@@ -10,6 +10,7 @@ namespace sinri\ark\web;
 
 
 use Exception;
+use Psr\Log\LogLevel;
 use ReflectionClass;
 use sinri\ark\core\ArkLogger;
 use sinri\ark\io\ArkWebInput;
@@ -327,7 +328,18 @@ class ArkRouter
     public function seekRoute($incomingPath, $method)
     {
         foreach ($this->rules as $rule) {
-            if ($rule->checkIfMatchRequest($method, $incomingPath)) {
+            $matched = $rule->checkIfMatchRequest($method, $incomingPath);
+            if ($this->debug) {
+                $context = ['route_rule' => '' . $rule, 'incoming_path' => $incomingPath];
+                $this->logger->smartLog(
+                    $matched,
+                    'Route Rule Matched!', $context,
+                    'Route Rule Did not match!', $context,
+                    LogLevel::DEBUG,
+                    LogLevel::DEBUG
+                );
+            }
+            if ($matched) {
                 return $rule;
             }
         }
