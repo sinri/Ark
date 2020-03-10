@@ -6,6 +6,7 @@ namespace sinri\ark\web\implement;
 
 use ReflectionClass;
 use ReflectionException;
+use sinri\ark\core\ArkLogger;
 use sinri\ark\web\ArkRouterRule;
 
 /**
@@ -44,22 +45,41 @@ class ArkRouterAutoRestfulRule extends ArkRouterRule
     /**
      * @param string $method
      * @param string $incomingPath
+     * @param null|ArkLogger $logger
      * @return bool
      */
-    public function checkIfMatchRequest($method, $incomingPath)
+    public function checkIfMatchRequest($method, $incomingPath, $logger = null)
     {
 //        echo __METHOD__.'@'.__LINE__.' debug beginning!'.PHP_EOL;
 //        var_dump($method); // GET
 //        var_dump($incomingPath); // '/xxxx' or '/', wonder ''
 //        var_dump($this->path);
 
+        if ($logger) {
+            $logger->debug(
+                __METHOD__ . '@' . __LINE__,
+                [
+                    'req_method' => $method,
+                    'req_incoming_path' => $incomingPath,
+                ]
+            );
+        }
+
         if (substr($incomingPath, 0, 1) === '/') {
             $incomingPath = substr($incomingPath, 1);
         }
 
-        if (!$this->checkIfMatchMethod($method)) return false;
+        if (!$this->checkIfMatchMethod($method)) {
+            if ($logger) {
+                $logger->debug(__METHOD__ . '@' . __LINE__ . ' Method Not Match');
+            }
+            return false;
+        }
 
         if (0 !== stripos($incomingPath, $this->path)) {
+            if ($logger) {
+                $logger->debug(__METHOD__ . '@' . __LINE__ . ' Incoming Path Not Has Path Prefix');
+            }
             return false;
         }
         $incomingPath = substr($incomingPath, strlen($this->path));
@@ -71,6 +91,9 @@ class ArkRouterAutoRestfulRule extends ArkRouterRule
 
         if (empty($components) || count($components) < 2) {
             // it might be the root, plz use a manual restful rule
+            if ($logger) {
+                $logger->debug(__METHOD__ . '@' . __LINE__ . ' it might be the root, plz use a manual restful rule');
+            }
             return false;
         }
 
@@ -90,6 +113,9 @@ class ArkRouterAutoRestfulRule extends ArkRouterRule
             }
         }
         if (empty($this->callback)) {
+            if ($logger) {
+                $logger->debug(__METHOD__ . '@' . __LINE__ . ' no callback available');
+            }
             return false;
         }
 
@@ -102,17 +128,26 @@ class ArkRouterAutoRestfulRule extends ArkRouterRule
             // parameters
             $parameters = array_slice($components, $i);
             if ($foundMethod->getNumberOfRequiredParameters() > count($parameters)) {
+                if ($logger) {
+                    $logger->debug(__METHOD__ . '@' . __LINE__ . ' no enough parameters');
+                }
                 return false;
             }
             $this->callback[1] = $foundMethod->getName();
             $this->setParsed($parameters);
         } catch (ReflectionException $e) {
+            if ($logger) {
+                $logger->debug(__METHOD__ . '@' . __LINE__ . ' reflection error: ' . $e->getMessage());
+            }
             return false;
         }
 
         // if match, would execute
         // call_user_func_array($this->callback,[$components]);
 
+        if ($logger) {
+            $logger->debug(__METHOD__ . '@' . __LINE__ . ' MATCHED!');
+        }
         return true;
     }
 

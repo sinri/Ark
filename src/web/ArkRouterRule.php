@@ -10,6 +10,7 @@ namespace sinri\ark\web;
 
 use Exception;
 use sinri\ark\core\ArkHelper;
+use sinri\ark\core\ArkLogger;
 use sinri\ark\io\ArkWebInput;
 
 /**
@@ -306,11 +307,20 @@ abstract class ArkRouterRule
     /**
      * @param $method
      * @param $incomingPath
+     * @param null|ArkLogger $logger
      * @return boolean
      */
-    public function checkIfMatchRequest($method, $incomingPath)
+    public function checkIfMatchRequest($method, $incomingPath, $logger = null)
     {
-        if (!$this->checkIfMatchMethod($method)) return false;
+        if ($logger) {
+            $logger->debug(__METHOD__ . '@' . __LINE__ . " Rule Method Matched Fails");
+        }
+        if (!$this->checkIfMatchMethod($method)) {
+            if ($logger) {
+                $logger->debug(__METHOD__ . '@' . __LINE__ . " Rule Method Matched Fails");
+            }
+            return false;
+        }
         $path = $this->preprocessIncomingPath($incomingPath);
         $route_regex = $this->getPath();
 
@@ -324,9 +334,9 @@ abstract class ArkRouterRule
                 $v = urldecode($v);
             });
             $this->setParsed($matches);
-//            if ($this->debug) {
-//                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " MATCHED with " . json_encode($matches));
-//            }
+            if ($logger) {
+                $logger->debug(__METHOD__ . '@' . __LINE__ . " MATCHED with " . json_encode($matches));
+            }
             return true;
         }
 

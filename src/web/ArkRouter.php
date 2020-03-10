@@ -328,9 +328,10 @@ class ArkRouter
     public function seekRoute($incomingPath, $method)
     {
         foreach ($this->rules as $rule) {
-            $matched = $rule->checkIfMatchRequest($method, $incomingPath);
+            $matched = $rule->checkIfMatchRequest($method, $incomingPath, (($this->debug && $this->logger) ? $this->logger : null));
             if ($this->debug) {
-                $context = ['route_rule' => '' . $rule, 'incoming_path' => $incomingPath];
+                $context = json_decode(json_encode($rule), true);
+                $context['incoming_path'] = $incomingPath;
                 $this->logger->smartLog(
                     $matched,
                     'Route Rule Matched!', $context,
@@ -346,44 +347,44 @@ class ArkRouter
         throw new Exception("No route matched: path={$incomingPath} method={$method}", 404);
     }
 
-    /**
-     * @param ArkRouterRestfulRule $shared
-     * @param ArkRouterRestfulRule[] $list
-     * @return ArkRouter
-     * @deprecated since 2.10 It should not be used anymore
-     */
-    public function group($shared, $list)
-    {
-        $filters = null;
-        $sharedPath = '';
-        $sharedNamespace = '';
-
-        if ($shared->getFilters() !== null) {
-            $filters = $shared->getFilters();
-        }
-        if ($shared->getPath() !== null) {
-            $sharedPath = $shared->getPath();
-        }
-        if ($shared->getNamespace() !== null) {
-            $sharedNamespace = $shared->getNamespace();
-        }
-
-        foreach ($list as $item) {
-            $callback = $item->getCallback();
-            if (is_array($callback) && isset($callback[0]) && is_string($callback[0])) {
-                $callback[0] = $sharedNamespace . $callback[0];
-            }
-            $route_rule = new ArkRouterRestfulRule(
-                $item->getMethod(),//$item[self::ROUTE_PARAM_METHOD],
-                $sharedPath . $item->getPath(),//$item[self::ROUTE_PARAM_PATH],
-                $callback,
-                $filters
-            );
-            $this->registerRouteRule($route_rule);
-//            $this->registerRestfulRouteRule($route_rule);
-        }
-        return $this;
-    }
+//    /**
+//     * @param ArkRouterRestfulRule $shared
+//     * @param ArkRouterRestfulRule[] $list
+//     * @return ArkRouter
+//     * @deprecated since 2.10 It should not be used anymore
+//     */
+//    public function group($shared, $list)
+//    {
+//        $filters = null;
+//        $sharedPath = '';
+//        $sharedNamespace = '';
+//
+//        if ($shared->getFilters() !== null) {
+//            $filters = $shared->getFilters();
+//        }
+//        if ($shared->getPath() !== null) {
+//            $sharedPath = $shared->getPath();
+//        }
+//        if ($shared->getNamespace() !== null) {
+//            $sharedNamespace = $shared->getNamespace();
+//        }
+//
+//        foreach ($list as $item) {
+//            $callback = $item->getCallback();
+//            if (is_array($callback) && isset($callback[0]) && is_string($callback[0])) {
+//                $callback[0] = $sharedNamespace . $callback[0];
+//            }
+//            $route_rule = new ArkRouterRestfulRule(
+//                $item->getMethod(),//$item[self::ROUTE_PARAM_METHOD],
+//                $sharedPath . $item->getPath(),//$item[self::ROUTE_PARAM_PATH],
+//                $callback,
+//                $filters
+//            );
+//            $this->registerRouteRule($route_rule);
+////            $this->registerRestfulRouteRule($route_rule);
+//        }
+//        return $this;
+//    }
 
     /**
      * @param string $urlBase 'xx/'
