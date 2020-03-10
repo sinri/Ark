@@ -19,8 +19,8 @@ class ArkRouterAutoRestfulRule extends ArkRouterRule
     /**
      * ArkRouterAutoRestfulRule constructor.
      * @param string $method
-     * @param string $path
-     * @param string $namespace
+     * @param string $path no leading /
+     * @param string $namespace no ending \
      * @param string[] $filter array of class name
      */
     public function __construct($method, $path, $namespace, $filter = [])
