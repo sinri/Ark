@@ -71,14 +71,14 @@ class ArkRouterAutoRestfulRule extends ArkRouterRule
 
         if (!$this->checkIfMatchMethod($method)) {
             if ($logger) {
-                $logger->debug(__METHOD__ . '@' . __LINE__ . ' Method Not Match');
+                $logger->debug(__METHOD__ . '@' . __LINE__ . ' Method Not Match, incoming method is ' . $method);
             }
             return false;
         }
 
         if (0 !== stripos($incomingPath, $this->path)) {
             if ($logger) {
-                $logger->debug(__METHOD__ . '@' . __LINE__ . ' Incoming Path Not Has Path Prefix');
+                $logger->debug(__METHOD__ . '@' . __LINE__ . ' Incoming Path Not Has Path Prefix i.e. ' . $this->path);
             }
             return false;
         }
@@ -146,7 +146,10 @@ class ArkRouterAutoRestfulRule extends ArkRouterRule
         // call_user_func_array($this->callback,[$components]);
 
         if ($logger) {
-            $logger->debug(__METHOD__ . '@' . __LINE__ . ' MATCHED!');
+            $logger->debug(__METHOD__ . '@' . __LINE__ . ' MATCHED!', [
+                'callback' => $this->callback,
+                'parsed' => $this->parsed,
+            ]);
         }
         return true;
     }
