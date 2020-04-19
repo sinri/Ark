@@ -1,5 +1,13 @@
 # Change Log of Ark 3
 
+## Version 3.1.5
+
+Ark CLI initialize logger
+
+## Version 3.1.4
+
+With Auto RestFul Rule Router
+
 ## Version 3.0.2
 
 IPv4 Mask Matching.

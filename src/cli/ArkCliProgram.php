@@ -26,6 +26,18 @@ class ArkCliProgram
     }
 
     /**
+     * @param string $action
+     * @param null|array $parameters
+     * @since 3.1.5
+     */
+    public function initializeLogger($action, $parameters = null)
+    {
+        // it might be overrode to initialize logger for each
+        // here is a writer to STDOUT
+        $this->logger = new ArkLogger();
+    }
+
+    /**
      * @param string $methodName
      * @param array $parameters
      * @throws Exception
@@ -67,7 +79,6 @@ class ArkCliProgram
             $baseNamespace .= '\\';
         }
         $program_instance_full_name = $baseNamespace . $program_instance_name;
-        $program = new $program_instance_full_name();
 
         $action = ArkHelper::readTarget($argv, 2, 'Default');
 
@@ -76,6 +87,9 @@ class ArkCliProgram
             $params[] = $argv[$i];
         }
 
+        $program = new $program_instance_full_name();
+
+        call_user_func_array([$program, 'initializeLogger'], [$action, $params]);
         call_user_func_array([$program, 'action' . $action], $params);
     }
 }
