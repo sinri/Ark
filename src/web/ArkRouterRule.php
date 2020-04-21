@@ -10,6 +10,7 @@ namespace sinri\ark\web;
 
 use Exception;
 use sinri\ark\core\ArkHelper;
+use sinri\ark\core\ArkLogger;
 use sinri\ark\io\ArkWebInput;
 
 /**
@@ -193,14 +194,15 @@ abstract class ArkRouterRule
         return [$className, $methodName];
     }
 
-    /**
-     * @param string $method
-     * @param string $path
-     * @param callable|string[] $callback a function with parameters in path, such as `function($post,$comment)` for above
-     * @param string[] $filters ArkRequestFilter class name list
-     * @return ArkRouterRule
-     */
-    abstract public static function buildRouteRule($method, $path, $callback, $filters = []);
+//    /**
+//     * @param string $method
+//     * @param string $path
+//     * @param callable|string[] $callback a function with parameters in path, such as `function($post,$comment)` for above
+//     * @param string[] $filters ArkRequestFilter class name list
+//     * @return ArkRouterRule
+//     * @deprecated @since 3.1 why not use constructor?
+//     */
+//    abstract public static function buildRouteRule($method, $path, $callback, $filters = []);
 
     /**
      * @param $path_string
@@ -305,11 +307,20 @@ abstract class ArkRouterRule
     /**
      * @param $method
      * @param $incomingPath
+     * @param null|ArkLogger $logger
      * @return boolean
      */
-    public function checkIfMatchRequest($method, $incomingPath)
+    public function checkIfMatchRequest($method, $incomingPath, $logger = null)
     {
-        if (!$this->checkIfMatchMethod($method)) return false;
+        if ($logger) {
+            $logger->debug(__METHOD__ . '@' . __LINE__ . " Rule Method Matched Fails");
+        }
+        if (!$this->checkIfMatchMethod($method)) {
+            if ($logger) {
+                $logger->debug(__METHOD__ . '@' . __LINE__ . " Rule Method Matched Fails");
+            }
+            return false;
+        }
         $path = $this->preprocessIncomingPath($incomingPath);
         $route_regex = $this->getPath();
 
@@ -323,9 +334,9 @@ abstract class ArkRouterRule
                 $v = urldecode($v);
             });
             $this->setParsed($matches);
-//            if ($this->debug) {
-//                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " MATCHED with " . json_encode($matches));
-//            }
+            if ($logger) {
+                $logger->debug(__METHOD__ . '@' . __LINE__ . " MATCHED with " . json_encode($matches));
+            }
             return true;
         }
 

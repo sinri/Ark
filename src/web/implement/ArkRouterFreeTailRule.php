@@ -25,29 +25,59 @@ class ArkRouterFreeTailRule extends ArkRouterRule
      * @param string $path the leading components
      * @param callable|string[] $callback a function with parameters in path, such as `function($p1,$p2,$tailComponents)` for above
      * @param string[] $filters ArkRequestFilter class name list
-     * @return ArkRouterFreeTailRule
      */
-    public static function buildRouteRule($method, $path, $callback, $filters = [])
+    public function __construct($method, $path, $callback, $filters = [])
     {
-        $new_route = new ArkRouterFreeTailRule();
+        parent::__construct();
 
         $path = preg_replace('/\//', '\/', $path);
         $matched = preg_match_all('/{([^\/]+)}/', $path, $matches);
         if ($matched) {
             $regex = preg_replace('/{([^\/]+)}/', '([^\/]+)', $path);
-            $new_route->headComponentsCount = count($matches[0]);
+            $this->headComponentsCount = count($matches[0]);
         } else {
             $regex = $path;
-            $new_route->headComponentsCount = 0;
+            $this->headComponentsCount = 0;
         }
         $regex = '/^\/' . $regex . '\/?(.*)$/';
 
-        $new_route->setMethod($method);
-        $new_route->setPath($regex);
-        $new_route->setCallback($callback);
-        $new_route->setFilters($filters);
+        $this->setMethod($method);
+        $this->setPath($regex);
+        $this->setCallback($callback);
+        $this->setFilters($filters);
+    }
 
-        return $new_route;
+    /**
+     * @param string $method
+     * @param string $path the leading components
+     * @param callable|string[] $callback a function with parameters in path, such as `function($p1,$p2,$tailComponents)` for above
+     * @param string[] $filters ArkRequestFilter class name list
+     * @return ArkRouterFreeTailRule
+     * @deprecated since 3.1.0
+     */
+    public static function buildRouteRule($method, $path, $callback, $filters = [])
+    {
+        return new ArkRouterFreeTailRule($method, $path, $callback, $filters);
+
+//        $new_route = new ArkRouterFreeTailRule();
+//
+//        $path = preg_replace('/\//', '\/', $path);
+//        $matched = preg_match_all('/{([^\/]+)}/', $path, $matches);
+//        if ($matched) {
+//            $regex = preg_replace('/{([^\/]+)}/', '([^\/]+)', $path);
+//            $new_route->headComponentsCount = count($matches[0]);
+//        } else {
+//            $regex = $path;
+//            $new_route->headComponentsCount = 0;
+//        }
+//        $regex = '/^\/' . $regex . '\/?(.*)$/';
+//
+//        $new_route->setMethod($method);
+//        $new_route->setPath($regex);
+//        $new_route->setCallback($callback);
+//        $new_route->setFilters($filters);
+//
+//        return $new_route;
     }
 
     /**
