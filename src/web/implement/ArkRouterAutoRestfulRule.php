@@ -76,7 +76,8 @@ class ArkRouterAutoRestfulRule extends ArkRouterRule
             return false;
         }
 
-        if (0 !== stripos($incomingPath, $this->path)) {
+        // Fix the bug when `$this->path` is an empty string
+        if (strlen($this->path) > 0 && 0 !== stripos($incomingPath, $this->path)) {
             if ($logger) {
                 $logger->debug(__METHOD__ . '@' . __LINE__ . ' Incoming Path Not Has Path Prefix i.e. ' . $this->path);
             }

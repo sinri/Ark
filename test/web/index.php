@@ -81,6 +81,9 @@ $router->registerFrontendFolder("static/frontend", __DIR__ . '/frontend', []);
 
 $router->loadAutoRestfulControllerRoot('auto_router/', 'sinri\ark\test\web\controller', []);
 
+// Fix Bug: http://localhost/phpstorm/Ark/test/web/PureAutoRestFulController/api
+$router->loadAutoRestfulControllerRoot('', 'sinri\ark\test\web\controller\PureAutoRestFul', []);
+
 $freeTailRouteRule1 = new ArkRouterFreeTailRule(
     ArkWebInput::METHOD_ANY,
     "free/tail/{a}/{b}",
