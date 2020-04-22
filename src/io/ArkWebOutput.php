@@ -100,7 +100,7 @@ class ArkWebOutput
     public function redirect($url)
     {
         $this->sendHTTPCode(302);
-        header("Location: " . urlencode($url));
+        header("Location: " . $url);
     }
 
     /**
