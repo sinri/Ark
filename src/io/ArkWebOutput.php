@@ -96,6 +96,7 @@ class ArkWebOutput
     /**
      * @param string $url
      * @since 2.8.1
+     * @since 3.1.7 remove urlencode on url
      */
     public function redirect($url)
     {
