@@ -10,6 +10,7 @@ namespace sinri\ark\web\implement;
 
 
 use Exception;
+use sinri\ark\core\ArkHelper;
 use sinri\ark\io\ArkWebInput;
 use sinri\ark\io\ArkWebOutput;
 
@@ -26,6 +27,18 @@ class ArkWebController
     public function __construct()
     {
         $this->filterGeneratedData = Ark()->webService()->getFilterGeneratedData();
+    }
+
+    /**
+     * @param string|array $name
+     * @param mixed $default
+     * @param null|string $regex
+     * @return mixed
+     * @since 3.1.7
+     */
+    protected function _readFilterGeneratedData($name, $default = null, $regex = null)
+    {
+        return ArkHelper::readTarget($this->filterGeneratedData, $name, $default, $regex);
     }
 
     /**
@@ -48,7 +61,7 @@ class ArkWebController
 
     /**
      * @param string|array $name
-     * @param null|mixed $default
+     * @param mixed $default
      * @param null|string $regex
      * @param null|Exception $error
      * @return mixed
@@ -59,9 +72,39 @@ class ArkWebController
         return Ark()->webInput()->readRequest($name, $default, $regex, $error);
     }
 
+    /**
+     * @param string|array $name
+     * @param mixed $default
+     * @param null|string $regex
+     * @return mixed
+     */
     protected function _readCookie($name, $default = null, $regex = null)
     {
         return Ark()->webInput()->readCookie($name, $default, $regex);
+    }
+
+    /**
+     * @param string|array $name
+     * @param mixed $default
+     * @param null|string $regex
+     * @return mixed
+     * @since 3.1.7
+     */
+    protected function _readSession($name, $default = null, $regex = null)
+    {
+        return Ark()->webInput()->readSession($name, $default, $regex);
+    }
+
+    /**
+     * @param string|array $name
+     * @param mixed $default
+     * @param null|string $regex
+     * @return mixed
+     * @since 3.1.7
+     */
+    protected function _readServer($name, $default = null, $regex = null)
+    {
+        return Ark()->webInput()->readServer($name, $default, $regex);
     }
 
     /**
@@ -83,6 +126,31 @@ class ArkWebController
     protected function _getRequestSerial()
     {
         return Ark()->webService()->getRequestSerial();
+    }
+
+    /**
+     * @param string[] $expectedMethods
+     * @throws Exception
+     * @since 3.1.7
+     */
+    protected function _assertMetExpectedMethods($expectedMethods)
+    {
+        if (!in_array($this->_getInputHandler()->getRequestMethod(), $expectedMethods)) {
+            throw new Exception("Access with unexpected method", 405);
+        }
+    }
+
+    /**
+     * @param mixed $json anything in json to be packaged to be responded
+     * @param int $httpCode
+     * @since 3.1.7
+     */
+    protected function _sayJson($json, $httpCode = 200)
+    {
+        Ark()->webOutput()
+            ->sendHTTPCode($httpCode)
+            ->setContentTypeHeader(ArkWebOutput::CONTENT_TYPE_JSON)
+            ->json($json);
     }
 
     /**

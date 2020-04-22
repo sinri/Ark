@@ -1,5 +1,9 @@
 # Change Log of Ark 3
 
+## Version 3.1.7
+
+Refine Helpers
+
 ## Version 3.1.6
 
 Fix Bug in Auto RestFul Router when header path is empty
