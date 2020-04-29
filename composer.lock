@@ -1,25 +1,25 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
-    ],
-    "content-hash": "a1c26962ecdbc953e635cd050a1368b7",
-    "packages": [
-        {
-            "name": "jaybizzle/crawler-detect",
-            "version": "v1.2.90",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/JayBizzle/Crawler-Detect.git",
-                "reference": "35f963386e6a189697fe4b14dc91fb42b17fda4b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/35f963386e6a189697fe4b14dc91fb42b17fda4b",
-                "reference": "35f963386e6a189697fe4b14dc91fb42b17fda4b",
-                "shasum": ""
-            },
+  "_readme": [
+    "This file locks the dependencies of your project to a known state",
+    "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+    "This file is @generated automatically"
+  ],
+  "content-hash": "7dd8d6d3ee883600ece9844c47d00110",
+  "packages": [
+    {
+      "name": "jaybizzle/crawler-detect",
+      "version": "v1.2.95",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/JayBizzle/Crawler-Detect.git",
+        "reference": "a7936c4b60c78f8ae9024eeecf7e8d4cf470b730"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/a7936c4b60c78f8ae9024eeecf7e8d4cf470b730",
+        "reference": "a7936c4b60c78f8ae9024eeecf7e8d4cf470b730",
+        "shasum": ""
+      },
             "require": {
                 "php": ">=5.3.0"
             },
@@ -53,7 +53,7 @@
                 "crawlerdetect",
                 "php crawler detect"
             ],
-            "time": "2019-12-08T20:03:27+00:00"
+      "time": "2020-04-14T20:42:56+00:00"
         },
         {
             "name": "jenssegers/agent",
@@ -176,20 +176,20 @@
             ],
             "time": "2019-09-18T18:44:20+00:00"
         },
-        {
-            "name": "psr/log",
-            "version": "1.1.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/log.git",
-                "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/446d54b4cb6bf489fc9d75f55843658e6f25d801",
-                "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801",
-                "shasum": ""
-            },
+    {
+      "name": "psr/log",
+      "version": "1.1.3",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/php-fig/log.git",
+        "reference": "0f73288fd15629204f9d42b7055f72dacbe811fc"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/php-fig/log/zipball/0f73288fd15629204f9d42b7055f72dacbe811fc",
+        "reference": "0f73288fd15629204f9d42b7055f72dacbe811fc",
+        "shasum": ""
+      },
             "require": {
                 "php": ">=5.3.0"
             },
@@ -221,7 +221,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2019-11-01T11:05:21+00:00"
+      "time": "2020-03-23T09:12:05+00:00"
         },
         {
             "name": "psr/simple-cache",
@@ -351,20 +351,20 @@
             "description": "PHP package for converting file extensions to MIME types and vice versa.",
             "time": "2017-01-27T20:57:22+00:00"
         },
-        {
-            "name": "sinri/ark-cache",
-            "version": "2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sinri/Ark-Cache.git",
-                "reference": "224d0b4aa9ae54c3f05348cd11b918c2836b1d3d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sinri/Ark-Cache/zipball/224d0b4aa9ae54c3f05348cd11b918c2836b1d3d",
-                "reference": "224d0b4aa9ae54c3f05348cd11b918c2836b1d3d",
-                "shasum": ""
-            },
+    {
+      "name": "sinri/ark-cache",
+      "version": "2.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/sinri/Ark-Cache.git",
+        "reference": "394bf009fcd91927b7eb6e0e851737eb44c93aa7"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/sinri/Ark-Cache/zipball/394bf009fcd91927b7eb6e0e851737eb44c93aa7",
+        "reference": "394bf009fcd91927b7eb6e0e851737eb44c93aa7",
+        "shasum": ""
+      },
             "require": {
                 "psr/simple-cache": "~1.0"
             },
@@ -385,22 +385,22 @@
                 }
             ],
             "description": "The cache component for Ark 2",
-            "time": "2019-03-26T09:08:43+00:00"
+      "time": "2020-02-15T06:08:16+00:00"
         },
-        {
-            "name": "sinri/ark-core",
-            "version": "2.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sinri/Ark-Core.git",
-                "reference": "4ac20b049e55fc6915d6a9d1c29d3b2bb8cdcd88"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sinri/Ark-Core/zipball/4ac20b049e55fc6915d6a9d1c29d3b2bb8cdcd88",
-                "reference": "4ac20b049e55fc6915d6a9d1c29d3b2bb8cdcd88",
-                "shasum": ""
-            },
+    {
+      "name": "sinri/ark-core",
+      "version": "2.7.0",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/sinri/Ark-Core.git",
+        "reference": "2c6191e9a6ba60792f190b26ab1a791131336f94"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/sinri/Ark-Core/zipball/2c6191e9a6ba60792f190b26ab1a791131336f94",
+        "reference": "2c6191e9a6ba60792f190b26ab1a791131336f94",
+        "shasum": ""
+      },
             "require": {
                 "ext-json": "*",
                 "psr/log": "~1.0"
@@ -422,28 +422,28 @@
                 }
             ],
             "description": "The core components of Ark 2",
-            "time": "2019-12-06T03:35:51+00:00"
+      "time": "2020-04-29T03:11:54+00:00"
         }
     ],
     "packages-dev": [
-        {
-            "name": "sinri/ark-curl",
-            "version": "2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sinri/Ark-Curl.git",
-                "reference": "f4f7ae162326fdb9fa3268e6500cd6a1834f8eee"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sinri/Ark-Curl/zipball/f4f7ae162326fdb9fa3268e6500cd6a1834f8eee",
-                "reference": "f4f7ae162326fdb9fa3268e6500cd6a1834f8eee",
-                "shasum": ""
-            },
+      {
+        "name": "sinri/ark-curl",
+        "version": "2.0.3",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/sinri/Ark-Curl.git",
+          "reference": "16117f7fe24de354b4d27dccaa6c7fe2ed58cc8b"
+        },
+        "dist": {
+          "type": "zip",
+          "url": "https://api.github.com/repos/sinri/Ark-Curl/zipball/16117f7fe24de354b4d27dccaa6c7fe2ed58cc8b",
+          "reference": "16117f7fe24de354b4d27dccaa6c7fe2ed58cc8b",
+          "shasum": ""
+        },
             "require": {
                 "ext-curl": "*",
                 "ext-json": "*",
-                "sinri/ark-core": "~2.0"
+              "sinri/ark-core": "^2.2"
             },
             "type": "library",
             "autoload": {
@@ -462,22 +462,22 @@
                 }
             ],
             "description": "The cURL component for Ark 2.",
-            "time": "2019-01-09T03:53:08+00:00"
+        "time": "2020-03-29T08:54:16+00:00"
         },
-        {
-            "name": "sinri/ark-pdo",
-            "version": "1.7.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sinri/Ark-PDO.git",
-                "reference": "1d19a3f4f2f3fc3c98b0f70cf16f73d5a6bdae1a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sinri/Ark-PDO/zipball/1d19a3f4f2f3fc3c98b0f70cf16f73d5a6bdae1a",
-                "reference": "1d19a3f4f2f3fc3c98b0f70cf16f73d5a6bdae1a",
-                "shasum": ""
-            },
+      {
+        "name": "sinri/ark-pdo",
+        "version": "1.7.6",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/sinri/Ark-PDO.git",
+          "reference": "9f8b01076cdb0ec050ed23311ed55e9bd20f81f7"
+        },
+        "dist": {
+          "type": "zip",
+          "url": "https://api.github.com/repos/sinri/Ark-PDO/zipball/9f8b01076cdb0ec050ed23311ed55e9bd20f81f7",
+          "reference": "9f8b01076cdb0ec050ed23311ed55e9bd20f81f7",
+          "shasum": ""
+        },
             "require": {
                 "ext-json": "*",
                 "ext-pdo": "*",
@@ -500,22 +500,22 @@
                 }
             ],
             "description": "The PDO Component for Ark 2",
-            "time": "2019-08-20T13:51:03+00:00"
+        "time": "2020-02-11T06:46:07+00:00"
         },
-        {
-            "name": "sinri/ark-queue",
-            "version": "2.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sinri/Ark-Queue.git",
-                "reference": "bf14fc0f82b484ba461b5347b8599274d58981c0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sinri/Ark-Queue/zipball/bf14fc0f82b484ba461b5347b8599274d58981c0",
-                "reference": "bf14fc0f82b484ba461b5347b8599274d58981c0",
-                "shasum": ""
-            },
+      {
+        "name": "sinri/ark-queue",
+        "version": "2.5",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/sinri/Ark-Queue.git",
+          "reference": "8f99c7ffe3d77add7f641add1393b98cd254ba4e"
+        },
+        "dist": {
+          "type": "zip",
+          "url": "https://api.github.com/repos/sinri/Ark-Queue/zipball/8f99c7ffe3d77add7f641add1393b98cd254ba4e",
+          "reference": "8f99c7ffe3d77add7f641add1393b98cd254ba4e",
+          "shasum": ""
+        },
             "suggest": {
                 "ext-pcntl": "*",
                 "sinri/ark-lock": "^0.3"
@@ -537,7 +537,7 @@
                 }
             ],
             "description": "The queue component for Ark 2",
-            "time": "2019-05-16T05:51:54+00:00"
+        "time": "2019-12-30T05:34:37+00:00"
         }
     ],
     "aliases": [],

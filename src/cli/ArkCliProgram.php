@@ -26,15 +26,18 @@ class ArkCliProgram
     }
 
     /**
+     * Called before action in `run`.
+     * It might be overrode to initialize logger for each action or the whole.
+     * The default is set the logger to write into STDOUT if no writable ArkLogger
      * @param string $action
      * @param null|array $parameters
      * @since 3.1.5
      */
     public function initializeLogger($action, $parameters = null)
     {
-        // it might be overrode to initialize logger for each
-        // here is a writer to STDOUT
-        $this->logger = new ArkLogger();
+        if ($this->logger === null || $this->logger->isSilent()) {
+            $this->logger = new ArkLogger();
+        }
     }
 
     /**

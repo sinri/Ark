@@ -1,5 +1,9 @@
 # Change Log of Ark 3
 
+## Version 3.1.8
+
+CLI Logger refine
+
 ## Version 3.1.7
 
 Refine Helpers
