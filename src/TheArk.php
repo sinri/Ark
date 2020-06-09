@@ -65,6 +65,20 @@ class TheArk
         $this->webServiceHandler = null;
     }
 
+    /**
+     * @param string $configFile It must be a PHP file with a $config inside
+     * @return $this
+     * @since 3.1.9
+     */
+    public function loadConfigFileWithPHPFormat($configFile)
+    {
+        $config = [];
+        /** @noinspection PhpIncludeInspection */
+        require $configFile;// where $config was defined inside
+        $this->config = $config;
+        return $this;
+    }
+
     public function setConfig($config)
     {
         $this->config = $config;
