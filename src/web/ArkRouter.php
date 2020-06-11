@@ -330,7 +330,7 @@ class ArkRouter
         foreach ($this->rules as $rule) {
             $matched = $rule->checkIfMatchRequest($method, $incomingPath, (($this->debug && $this->logger) ? $this->logger : null));
             if ($this->debug) {
-                $context = json_decode(json_encode($rule), true);
+                $context = @json_decode($rule->__toString(), true);
                 $context['incoming_path'] = $incomingPath;
                 $this->logger->smartLog(
                     $matched,

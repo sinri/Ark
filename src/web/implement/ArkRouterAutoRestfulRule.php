@@ -57,7 +57,7 @@ class ArkRouterAutoRestfulRule extends ArkRouterRule
 
         if ($logger) {
             $logger->debug(
-                __METHOD__ . '@' . __LINE__,
+                __METHOD__ . '@' . __LINE__ . ' this rule: ' . $this->__toString(),
                 [
                     'req_method' => $method,
                     'req_incoming_path' => $incomingPath,

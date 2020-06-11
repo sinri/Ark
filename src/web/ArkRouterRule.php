@@ -171,6 +171,7 @@ abstract class ArkRouterRule
     public function __toString()
     {
         return json_encode([
+            "type" => $this->getType(),
             "method" => $this->method,
             "path" => $this->path,
             "callback" => $this->callback,
@@ -313,7 +314,13 @@ abstract class ArkRouterRule
     public function checkIfMatchRequest($method, $incomingPath, $logger = null)
     {
         if ($logger) {
-            $logger->debug(__METHOD__ . '@' . __LINE__ . " Rule Method Matched Fails");
+            $logger->debug(
+                __METHOD__ . '@' . __LINE__ . ' this rule: ' . $this->__toString(),
+                [
+                    'req_method' => $method,
+                    'req_incoming_path' => $incomingPath,
+                ]
+            );
         }
         if (!$this->checkIfMatchMethod($method)) {
             if ($logger) {
