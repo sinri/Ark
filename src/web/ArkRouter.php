@@ -347,6 +347,19 @@ class ArkRouter
         throw new Exception("No route matched: path={$incomingPath} method={$method}", 404);
     }
 
+    /**
+     * @return string[]
+     * @since 3.1.10
+     */
+    public function getListOfRouteRules()
+    {
+        $rulePatternList = [];
+        foreach ($this->rules as $index => $rule) {
+            $rulePatternList[] = $rule->getRulePattern();
+        }
+        return $rulePatternList;
+    }
+
 //    /**
 //     * @param ArkRouterRestfulRule $shared
 //     * @param ArkRouterRestfulRule[] $list

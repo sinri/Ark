@@ -182,6 +182,34 @@ abstract class ArkRouterRule
     }
 
     /**
+     * A simple but clear string to describe this rule
+     * @return string
+     * @since 3.1.10
+     */
+    public function getRulePattern(): string
+    {
+        $filterTitles = [];
+        if (is_array($this->filters)) {
+            foreach ($this->filters as $filterClassName) {
+                $filterInstance = ArkRequestFilter::makeInstance($filterClassName);
+                $filterTitles[] = $filterInstance->filterTitle();
+            }
+        }
+        $filterTitles = implode(' → ', $filterTitles);
+        if (0 == strlen($filterTitles)) {
+            $filterTitles = 'NO FILTER';
+        }
+        $callbackString = 'unknown';
+        if (is_array(($this->callback))) {
+            $callbackString = implode('::', $this->callback);
+        } elseif (is_callable($this->callback)) {
+            $callbackString = 'anonymous function';
+        }
+        return $this->getType() . " [{$this->method}] {$this->path} : {$filterTitles} : " . $callbackString;
+    }
+
+
+    /**
      * @param string $className class name with full namespace; use X::CLASS is recommended.
      * @param string $methodName
      */

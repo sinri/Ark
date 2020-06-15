@@ -105,6 +105,11 @@ $web_service->setupFileSystemViewer("fs", __DIR__ . '/../', [], function ($file,
     echo "Path Components: " . json_encode($components) . PHP_EOL;
 });
 
+//$listOfRouteRules=$router->getListOfRouteRules();
+//foreach ($listOfRouteRules as $index => $listOfRouteRule){
+//    $logger->info("[RULE ".($index+1)."]".$listOfRouteRule);
+//}
+
 $web_service->handleRequest();
 
 // call http://localhost/phpstorm/Ark/test/web/
