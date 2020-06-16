@@ -137,7 +137,7 @@ class ArkRouter
     public function registerFrontendFolder($path, $dir, $filters = [])
     {
         $staticRule = new ArkRouterStaticRule(
-            ArkWebInput::METHOD_ANY,
+            [ArkWebInput::METHOD_ANY],
             $path,
             function ($subPath = null) use ($dir) {
                 if ($subPath === null || $subPath === '') {
@@ -163,9 +163,9 @@ class ArkRouter
     public function get($path, $callback, $filters = [], $hasFreeTail = false)
     {
         if ($hasFreeTail) {
-            $route_rule = new ArkRouterFreeTailRule(ArkWebInput::METHOD_GET, $path, $callback, $filters);
+            $route_rule = new ArkRouterFreeTailRule([ArkWebInput::METHOD_GET], $path, $callback, $filters);
         } else {
-            $route_rule = new ArkRouterRestfulRule(ArkWebInput::METHOD_GET, $path, $callback, $filters);
+            $route_rule = new ArkRouterRestfulRule([ArkWebInput::METHOD_GET], $path, $callback, $filters);
         }
         $this->registerRouteRule($route_rule);
         return $this;
@@ -181,9 +181,9 @@ class ArkRouter
     public function post($path, $callback, $filters = [], $hasFreeTail = false)
     {
         if ($hasFreeTail) {
-            $route_rule = new ArkRouterFreeTailRule(ArkWebInput::METHOD_POST, $path, $callback, $filters);
+            $route_rule = new ArkRouterFreeTailRule([ArkWebInput::METHOD_POST], $path, $callback, $filters);
         } else {
-            $route_rule = new ArkRouterRestfulRule(ArkWebInput::METHOD_POST, $path, $callback, $filters);
+            $route_rule = new ArkRouterRestfulRule([ArkWebInput::METHOD_POST], $path, $callback, $filters);
         }
         $this->registerRouteRule($route_rule);
         return $this;
@@ -199,9 +199,9 @@ class ArkRouter
     public function put($path, $callback, $filters = [], $hasFreeTail = false)
     {
         if ($hasFreeTail) {
-            $route_rule = new ArkRouterFreeTailRule(ArkWebInput::METHOD_PUT, $path, $callback, $filters);
+            $route_rule = new ArkRouterFreeTailRule([ArkWebInput::METHOD_PUT], $path, $callback, $filters);
         } else {
-            $route_rule = new ArkRouterRestfulRule(ArkWebInput::METHOD_PUT, $path, $callback, $filters);
+            $route_rule = new ArkRouterRestfulRule([ArkWebInput::METHOD_PUT], $path, $callback, $filters);
         }
         $this->registerRouteRule($route_rule);
         return $this;
@@ -217,9 +217,9 @@ class ArkRouter
     public function patch($path, $callback, $filters = [], $hasFreeTail = false)
     {
         if ($hasFreeTail) {
-            $route_rule = new ArkRouterFreeTailRule(ArkWebInput::METHOD_PATCH, $path, $callback, $filters);
+            $route_rule = new ArkRouterFreeTailRule([ArkWebInput::METHOD_PATCH], $path, $callback, $filters);
         } else {
-            $route_rule = new ArkRouterRestfulRule(ArkWebInput::METHOD_PATCH, $path, $callback, $filters);
+            $route_rule = new ArkRouterRestfulRule([ArkWebInput::METHOD_PATCH], $path, $callback, $filters);
         }
         $this->registerRouteRule($route_rule);
         return $this;
@@ -235,9 +235,9 @@ class ArkRouter
     public function delete($path, $callback, $filters = [], $hasFreeTail = false)
     {
         if ($hasFreeTail) {
-            $route_rule = new ArkRouterFreeTailRule(ArkWebInput::METHOD_DELETE, $path, $callback, $filters);
+            $route_rule = new ArkRouterFreeTailRule([ArkWebInput::METHOD_DELETE], $path, $callback, $filters);
         } else {
-            $route_rule = new ArkRouterRestfulRule(ArkWebInput::METHOD_DELETE, $path, $callback, $filters);
+            $route_rule = new ArkRouterRestfulRule([ArkWebInput::METHOD_DELETE], $path, $callback, $filters);
         }
         $this->registerRouteRule($route_rule);
         return $this;
@@ -253,9 +253,9 @@ class ArkRouter
     public function options($path, $callback, $filters = [], $hasFreeTail = false)
     {
         if ($hasFreeTail) {
-            $route_rule = new ArkRouterFreeTailRule(ArkWebInput::METHOD_OPTIONS, $path, $callback, $filters);
+            $route_rule = new ArkRouterFreeTailRule([ArkWebInput::METHOD_OPTIONS], $path, $callback, $filters);
         } else {
-            $route_rule = new ArkRouterRestfulRule(ArkWebInput::METHOD_OPTIONS, $path, $callback, $filters);
+            $route_rule = new ArkRouterRestfulRule([ArkWebInput::METHOD_OPTIONS], $path, $callback, $filters);
         }
         $this->registerRouteRule($route_rule);
         return $this;
@@ -271,9 +271,9 @@ class ArkRouter
     public function head($path, $callback, $filters = [], $hasFreeTail = false)
     {
         if ($hasFreeTail) {
-            $route_rule = new ArkRouterFreeTailRule(ArkWebInput::METHOD_HEAD, $path, $callback, $filters);
+            $route_rule = new ArkRouterFreeTailRule([ArkWebInput::METHOD_HEAD], $path, $callback, $filters);
         } else {
-            $route_rule = new ArkRouterRestfulRule(ArkWebInput::METHOD_HEAD, $path, $callback, $filters);
+            $route_rule = new ArkRouterRestfulRule([ArkWebInput::METHOD_HEAD], $path, $callback, $filters);
         }
         $this->registerRouteRule($route_rule);
         return $this;
@@ -289,9 +289,9 @@ class ArkRouter
     public function any($path, $callback, $filters = [], $hasFreeTail = false)
     {
         if ($hasFreeTail) {
-            $route_rule = new ArkRouterFreeTailRule(ArkWebInput::METHOD_ANY, $path, $callback, $filters);
+            $route_rule = new ArkRouterFreeTailRule([ArkWebInput::METHOD_ANY], $path, $callback, $filters);
         } else {
-            $route_rule = new ArkRouterRestfulRule(ArkWebInput::METHOD_ANY, $path, $callback, $filters);
+            $route_rule = new ArkRouterRestfulRule([ArkWebInput::METHOD_ANY], $path, $callback, $filters);
         }
         $this->registerRouteRule($route_rule);
         return $this;
@@ -305,17 +305,18 @@ class ArkRouter
      * @param bool $hasFreeTail
      * @return ArkRouter
      * @since 2.9.2
+     * @since 3.2.0 It seems, not so useful now...
      */
     public function multiMethods($methods, $path, $callback, $filters = [], $hasFreeTail = false)
     {
-        foreach ($methods as $method) {
+        //foreach ($methods as $method) {
             if ($hasFreeTail) {
-                $route_rule = new ArkRouterFreeTailRule($method, $path, $callback, $filters);
+                $route_rule = new ArkRouterFreeTailRule($methods, $path, $callback, $filters);
             } else {
-                $route_rule = new ArkRouterRestfulRule($method, $path, $callback, $filters);
+                $route_rule = new ArkRouterRestfulRule($methods, $path, $callback, $filters);
             }
             $this->registerRouteRule($route_rule);
-        }
+        //}
         return $this;
     }
 
@@ -410,7 +411,7 @@ class ArkRouter
     {
         $this->registerRouteRule(
             new ArkRouterAutoRestfulRule(
-                ArkWebInput::METHOD_ANY,
+                [ArkWebInput::METHOD_ANY],
                 $urlBase,
                 $namespace,
                 $filters
@@ -518,7 +519,7 @@ class ArkRouter
                     }
                     $path .= $after_string;
                 }
-                $route_rule = new ArkRouterRestfulRule(ArkWebInput::METHOD_ANY, $path, [$controllerClass, $method], $filters);
+                $route_rule = new ArkRouterRestfulRule([ArkWebInput::METHOD_ANY], $path, [$controllerClass, $method], $filters);
 //                $this->registerRouteRule($route_rule);
                 $this->registerRouteRule($route_rule);
                 if ($method == $this->defaultMethodName) {
@@ -526,7 +527,7 @@ class ArkRouter
                     if (strlen($basePathX) > 0) {
                         $basePathX = substr($basePathX, 0, strlen($basePathX) - 1);
                     }
-                    $route_rule = new ArkRouterRestfulRule(ArkWebInput::METHOD_ANY, $basePathX, [$controllerClass, $method], $filters);
+                    $route_rule = new ArkRouterRestfulRule([ArkWebInput::METHOD_ANY], $basePathX, [$controllerClass, $method], $filters);
 //                    $this->registerRouteRule($route_rule);
                     $this->registerRouteRule($route_rule);
                 }

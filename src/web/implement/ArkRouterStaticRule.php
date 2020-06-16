@@ -20,18 +20,18 @@ class ArkRouterStaticRule extends ArkRouterRule
 {
     /**
      * Designed after Lumen Routing: https://lumen.laravel-china.org/docs/5.3/routing
-     * @param string $method use method constants of ArkWebInput
+     * @param string[] $methods array, of which item should use method constants of ArkWebInput
      * @param string $path `pre/fix` no leading `/` and tail `/`
      * @param callable|string[] $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param String[] $filters ArkRequestFilter class name list
      */
-    public function __construct($method, $path, $callback, $filters = [])
+    public function __construct($methods, $path, $callback, $filters = [])
     {
         parent::__construct();
 
         $path = preg_replace('/\//', '\/', $path);
         $regex = '/^\/' . $path . '\/(.*)$/';
-        $this->setMethod($method);
+        $this->setMethods($methods);
         $this->setPath($regex);
         $this->setCallback($callback);
         $this->setFilters($filters);
@@ -39,16 +39,16 @@ class ArkRouterStaticRule extends ArkRouterRule
 
     /**
      * Designed after Lumen Routing: https://lumen.laravel-china.org/docs/5.3/routing
-     * @param string $method use method constants of ArkWebInput
+     * @param string[] $methods array, of which item use method constants of ArkWebInput
      * @param string $path `pre/fix` no leading `/` and tail `/`
      * @param callable|string[] $callback a function with parameters in path, such as `function($post,$comment)` for above
      * @param String[] $filters ArkRequestFilter class name list
      * @return ArkRouterStaticRule
      * @deprecated since 3.1.0
      */
-    public static function buildRouteRule($method, $path, $callback, $filters = [])
+    public static function buildRouteRule($methods, $path, $callback, $filters = [])
     {
-        return new ArkRouterStaticRule($method, $path, $callback, $filters);
+        return new ArkRouterStaticRule($methods, $path, $callback, $filters);
 
 //        $path = preg_replace('/\//', '\/', $path);
 //        $regex = '/^\/' . $path . '\/(.*)$/';

@@ -26,9 +26,18 @@ abstract class ArkRouterRule
      */
     protected $filters;
     /**
-     * @var string
+     * @var bool
      */
-    protected $method;
+    protected $forAnyMethod;
+    /**
+     * @var string
+     * @deprecated since 3.2.0, ArkRouterRule recommends multi-methods
+     */
+//    protected $method;
+    /**
+     * @var string[]
+     */
+    protected $methods;
     /**
      * @var string
      */
@@ -48,7 +57,8 @@ abstract class ArkRouterRule
 
     public function __construct()
     {
-        $this->method = ArkWebInput::METHOD_ANY;
+//        $this->method = ArkWebInput::METHOD_ANY;
+        $this->methods = [];
         $this->path = '';
         $this->callback = function () {
         };
@@ -75,21 +85,45 @@ abstract class ArkRouterRule
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getMethod(): string
-    {
-        return $this->method;
-    }
+//    /**
+//     * @return string
+//     * @deprecated since 3.2.0, ArkRouterRule recommends multi-methods
+//     */
+//    public function getMethod(): string
+//    {
+//        return $this->method;
+//    }
 
     /**
      * @param string $method
      * @return ArkRouterRule
+     * @deprecated since 3.2.0, ArkRouterRule recommends multi-methods
      */
     public function setMethod(string $method): ArkRouterRule
     {
-        $this->method = $method;
+        //$this->method = $method;
+        $this->setMethods([$method]);
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getMethods()
+    {
+        return $this->methods;
+    }
+
+    /**
+     * @param string[] $methods
+     * @return ArkRouterRule
+     */
+    public function setMethods($methods): ArkRouterRule
+    {
+        if (in_array(ArkWebInput::METHOD_ANY, $methods)) {
+            $this->forAnyMethod = true;
+        }
+        $this->methods = $methods;
         return $this;
     }
 
@@ -172,7 +206,8 @@ abstract class ArkRouterRule
     {
         return json_encode([
             "type" => $this->getType(),
-            "method" => $this->method,
+            //"method" => $this->method,
+            "methods" => $this->methods,
             "path" => $this->path,
             "callback" => $this->callback,
             "filters" => $this->filters,
@@ -188,6 +223,7 @@ abstract class ArkRouterRule
      */
     public function getRulePattern(): string
     {
+        $methodsExpression = implode("|", $this->methods);
         $filterTitles = [];
         if (is_array($this->filters)) {
             foreach ($this->filters as $filterClassName) {
@@ -205,7 +241,7 @@ abstract class ArkRouterRule
         } elseif (is_callable($this->callback)) {
             $callbackString = 'anonymous function';
         }
-        return $this->getType() . " [{$this->method}] {$this->path} : {$filterTitles} : " . $callbackString;
+        return $this->getType() . " [{$methodsExpression}] {$this->path} : {$filterTitles} : " . $callbackString;
     }
 
 
@@ -318,19 +354,7 @@ abstract class ArkRouterRule
 
     protected function checkIfMatchMethod($method)
     {
-        $route_method = $this->getMethod();
-
-        if (
-            $route_method !== ArkWebInput::METHOD_ANY
-            && stripos($route_method, $method) === false
-        ) {
-//            if ($this->debug) {
-//                $this->logger->debug(__METHOD__ . '@' . __LINE__ . " ROUTE METHOD NOT MATCH [$method]");
-//            }
-            return false;
-        }
-
-        return true;
+        return $this->forAnyMethod || in_array($method, $this->methods);
     }
 
     /**
@@ -376,5 +400,23 @@ abstract class ArkRouterRule
         }
 
         return false;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isForAnyMethod(): bool
+    {
+        return $this->forAnyMethod;
+    }
+
+    /**
+     * @param bool $forAnyMethod
+     * @return ArkRouterRule
+     */
+    public function setForAnyMethod(bool $forAnyMethod)
+    {
+        $this->forAnyMethod = $forAnyMethod;
+        return $this;
     }
 }

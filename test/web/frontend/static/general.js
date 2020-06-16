@@ -1,3 +1,3 @@
 window.setTimeout(() => {
-    alert('hhhh');
+    console.log('Let us go');
 }, 5);

@@ -34,6 +34,9 @@ class Foo extends ArkWebController
         ]);
     }
 
+    /**
+     * @throws Exception
+     */
     public function error()
     {
         throw new Exception("miao", 666);

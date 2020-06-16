@@ -21,12 +21,12 @@ class ArkRouterFreeTailRule extends ArkRouterRule
     protected $headComponentsCount;
 
     /**
-     * @param string $method
+     * @param string[] $methods
      * @param string $path the leading components
      * @param callable|string[] $callback a function with parameters in path, such as `function($p1,$p2,$tailComponents)` for above
      * @param string[] $filters ArkRequestFilter class name list
      */
-    public function __construct($method, $path, $callback, $filters = [])
+    public function __construct($methods, $path, $callback, $filters = [])
     {
         parent::__construct();
 
@@ -41,23 +41,23 @@ class ArkRouterFreeTailRule extends ArkRouterRule
         }
         $regex = '/^\/' . $regex . '\/?(.*)$/';
 
-        $this->setMethod($method);
+        $this->setMethods($methods);
         $this->setPath($regex);
         $this->setCallback($callback);
         $this->setFilters($filters);
     }
 
     /**
-     * @param string $method
+     * @param string[] $methods
      * @param string $path the leading components
      * @param callable|string[] $callback a function with parameters in path, such as `function($p1,$p2,$tailComponents)` for above
      * @param string[] $filters ArkRequestFilter class name list
      * @return ArkRouterFreeTailRule
      * @deprecated since 3.1.0
      */
-    public static function buildRouteRule($method, $path, $callback, $filters = [])
+    public static function buildRouteRule($methods, $path, $callback, $filters = [])
     {
-        return new ArkRouterFreeTailRule($method, $path, $callback, $filters);
+        return new ArkRouterFreeTailRule($methods, $path, $callback, $filters);
 
 //        $new_route = new ArkRouterFreeTailRule();
 //

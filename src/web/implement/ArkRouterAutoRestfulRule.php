@@ -18,19 +18,19 @@ class ArkRouterAutoRestfulRule extends ArkRouterRule
 {
     /**
      * ArkRouterAutoRestfulRule constructor.
-     * @param string $method
+     * @param string[] $methods
      * @param string $path no leading /
      * @param string $namespace no ending \
      * @param string[] $filter array of class name
      */
-    public function __construct($method, $path, $namespace, $filter = [])
+    public function __construct($methods, $path, $namespace, $filter = [])
     {
         parent::__construct();
 
-        $this->method = $method;
-        $this->path = $path;
-        $this->namespace = $namespace;
-        $this->filters = $filter;
+        $this->setMethods($methods);
+        $this->setPath($path);
+        $this->setNamespace($namespace);
+        $this->setFilters($filter);
 
     }
 
