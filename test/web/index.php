@@ -11,6 +11,7 @@ use sinri\ark\core\ArkLogger;
 use sinri\ark\io\ArkWebInput;
 use sinri\ark\test\web\controller\Foo;
 use sinri\ark\test\web\controller\FreeTailController;
+use sinri\ark\test\web\controller\PureAutoRestFul\JustSingleController;
 use sinri\ark\test\web\filter\AnotherFilter;
 use sinri\ark\test\web\filter\TestFilter;
 use sinri\ark\web\implement\ArkRouteErrorHandlerAsCallback;
@@ -88,6 +89,11 @@ $router->loadAutoRestfulControllerRoot('auto_router/', 'sinri\ark\test\web\contr
 
 // Fix Bug: http://localhost/phpstorm/Ark/test/web/PureAutoRestFulController/api
 $router->loadAutoRestfulControllerRoot('', 'sinri\ark\test\web\controller\PureAutoRestFul', []);
+
+$router->loadAutoRestfulControllerRoot(
+    'single/',
+    JustSingleController::class
+);
 
 $freeTailRouteRule1 = new ArkRouterFreeTailRule(
     [ArkWebInput::METHOD_ANY],

@@ -402,7 +402,7 @@ class ArkRouter
 
     /**
      * @param string $urlBase 'xx/'
-     * @param string $namespace '\a\b\c' without tail
+     * @param string $namespace '\a\b\c' without tail; X::class is also supported @since 3.2.1
      * @param string[] $filters array of class name
      * @return $this
      * @since 3.1.0

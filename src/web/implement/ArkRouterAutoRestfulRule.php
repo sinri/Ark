@@ -20,7 +20,7 @@ class ArkRouterAutoRestfulRule extends ArkRouterRule
      * ArkRouterAutoRestfulRule constructor.
      * @param string[] $methods
      * @param string $path no leading /
-     * @param string $namespace no ending \
+     * @param string $namespace no ending \ and X::class is also supported @since 3.2.1
      * @param string[] $filter array of class name
      */
     public function __construct($methods, $path, $namespace, $filter = [])
@@ -90,29 +90,46 @@ class ArkRouterAutoRestfulRule extends ArkRouterRule
         $components = array_values($components);
 //        var_dump($components);
 
-        if (empty($components) || count($components) < 2) {
-            // it might be the root, plz use a manual restful rule
-            if ($logger) {
-                $logger->debug(__METHOD__ . '@' . __LINE__ . ' it might be the root, plz use a manual restful rule');
-            }
-            return false;
-        }
-
         // confirm class
         $className = $this->namespace;
         $i = 0;
         $this->callback = [];
-        while ($i < count($components)) {
+
+        // @since 3.2.1 namespace could be class as well
+        if (class_exists($className, true)) {
+            // namespace as class
+            if (empty($components)) {
+                // it might be the root, plz use a manual restful rule
+                if ($logger) {
+                    $logger->debug(__METHOD__ . '@' . __LINE__ . ' it might be the root, plz use a manual restful rule');
+                }
+                return false;
+            }
+
+            $this->callback = [$className];
+        } else {
+            // namespace as namespace
+            if (empty($components) || count($components) < 2) {
+                // it might be the root, plz use a manual restful rule
+                if ($logger) {
+                    $logger->debug(__METHOD__ . '@' . __LINE__ . ' it might be the root, plz use a manual restful rule');
+                }
+                return false;
+            }
+
+            while ($i < count($components)) {
 //            var_dump($components);
 //            var_dump($i);
-            $className .= '\\' . $components[$i];
-            $i++;
-            if (class_exists($className, true)) {
-                // great!
-                $this->callback[0] = $className;
-                break;
+                $className .= '\\' . $components[$i];
+                $i++;
+                if (class_exists($className, true)) {
+                    // great!
+                    $this->callback[0] = $className;
+                    break;
+                }
             }
         }
+        // check computed callback
         if (empty($this->callback)) {
             if ($logger) {
                 $logger->debug(__METHOD__ . '@' . __LINE__ . ' no callback available');
