@@ -4,32 +4,38 @@
     "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
     "This file is @generated automatically"
   ],
-  "content-hash": "7dd8d6d3ee883600ece9844c47d00110",
+  "content-hash": "2760acdb516921f4386593fd50321aed",
   "packages": [
     {
       "name": "jaybizzle/crawler-detect",
-      "version": "v1.2.95",
+      "version": "v1.2.96",
       "source": {
         "type": "git",
         "url": "https://github.com/JayBizzle/Crawler-Detect.git",
-        "reference": "a7936c4b60c78f8ae9024eeecf7e8d4cf470b730"
+        "reference": "5a53c78644c54a628c3f5ead915c35b489c92239"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/a7936c4b60c78f8ae9024eeecf7e8d4cf470b730",
-        "reference": "a7936c4b60c78f8ae9024eeecf7e8d4cf470b730",
-        "shasum": ""
+        "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/5a53c78644c54a628c3f5ead915c35b489c92239",
+        "reference": "5a53c78644c54a628c3f5ead915c35b489c92239",
+        "shasum": "",
+        "mirrors": [
+          {
+            "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+            "preferred": true
+          }
+        ]
       },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8|^5.5|^6.5",
-                "satooshi/php-coveralls": "1.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
+      "require": {
+        "php": ">=5.3.0"
+      },
+      "require-dev": {
+        "phpunit/phpunit": "^4.8|^5.5|^6.5",
+        "satooshi/php-coveralls": "1.*"
+      },
+      "type": "library",
+      "autoload": {
+        "psr-4": {
                     "Jaybizzle\\CrawlerDetect\\": "src/"
                 }
             },
@@ -53,22 +59,28 @@
                 "crawlerdetect",
                 "php crawler detect"
             ],
-      "time": "2020-04-14T20:42:56+00:00"
+      "time": "2020-06-14T20:37:24+00:00"
         },
-        {
-            "name": "jenssegers/agent",
-            "version": "v2.6.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jenssegers/agent.git",
-                "reference": "bcb895395e460478e101f41cdab139c48dc721ce"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jenssegers/agent/zipball/bcb895395e460478e101f41cdab139c48dc721ce",
-                "reference": "bcb895395e460478e101f41cdab139c48dc721ce",
-                "shasum": ""
-            },
+    {
+      "name": "jenssegers/agent",
+      "version": "v2.6.4",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/jenssegers/agent.git",
+        "reference": "daa11c43729510b3700bc34d414664966b03bffe"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/jenssegers/agent/zipball/daa11c43729510b3700bc34d414664966b03bffe",
+        "reference": "daa11c43729510b3700bc34d414664966b03bffe",
+        "shasum": "",
+        "mirrors": [
+          {
+            "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+            "preferred": true
+          }
+        ]
+      },
             "require": {
                 "jaybizzle/crawler-detect": "^1.2",
                 "mobiledetect/mobiledetectlib": "^2.7.6",
@@ -79,7 +91,7 @@
                 "phpunit/phpunit": "^5.0|^6.0|^7.0"
             },
             "suggest": {
-                "illuminate/support": "^4.0|^5.0"
+              "illuminate/support": "Required for laravel service providers"
             },
             "type": "library",
             "extra": {
@@ -112,18 +124,28 @@
             ],
             "description": "Desktop/mobile user agent parser with support for Laravel, based on Mobiledetect",
             "homepage": "https://github.com/jenssegers/agent",
-            "keywords": [
-                "Agent",
-                "browser",
-                "desktop",
-                "laravel",
-                "mobile",
-                "platform",
-                "user agent",
-                "useragent"
-            ],
-            "time": "2019-01-19T21:32:55+00:00"
+      "keywords": [
+        "Agent",
+        "browser",
+        "desktop",
+        "laravel",
+        "mobile",
+        "platform",
+        "user agent",
+        "useragent"
+      ],
+      "funding": [
+        {
+          "url": "https://github.com/jenssegers",
+          "type": "github"
         },
+        {
+          "url": "https://tidelift.com/funding/github/packagist/jenssegers/agent",
+          "type": "tidelift"
+        }
+      ],
+      "time": "2020-06-13T08:05:20+00:00"
+    },
         {
             "name": "mobiledetect/mobiledetectlib",
             "version": "2.8.34",
@@ -133,10 +155,16 @@
                 "reference": "6f8113f57a508494ca36acbcfa2dc2d923c7ed5b"
             },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/6f8113f57a508494ca36acbcfa2dc2d923c7ed5b",
-                "reference": "6f8113f57a508494ca36acbcfa2dc2d923c7ed5b",
-                "shasum": ""
+              "type": "zip",
+              "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/6f8113f57a508494ca36acbcfa2dc2d923c7ed5b",
+              "reference": "6f8113f57a508494ca36acbcfa2dc2d923c7ed5b",
+              "shasum": "",
+              "mirrors": [
+                {
+                  "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                  "preferred": true
+                }
+              ]
             },
             "require": {
                 "php": ">=5.0.0"
@@ -166,15 +194,15 @@
                 }
             ],
             "description": "Mobile_Detect is a lightweight PHP class for detecting mobile devices. It uses the User-Agent string combined with specific HTTP headers to detect the mobile environment.",
-            "homepage": "https://github.com/serbanghita/Mobile-Detect",
-            "keywords": [
-                "detect mobile devices",
-                "mobile",
-                "mobile detect",
-                "mobile detector",
-                "php mobile detect"
-            ],
-            "time": "2019-09-18T18:44:20+00:00"
+          "homepage": "https://github.com/serbanghita/Mobile-Detect",
+          "keywords": [
+            "detect mobile devices",
+            "mobile",
+            "mobile detect",
+            "mobile detector",
+            "php mobile detect"
+          ],
+          "time": "2019-09-18T18:44:20+00:00"
         },
     {
       "name": "psr/log",
@@ -188,18 +216,24 @@
         "type": "zip",
         "url": "https://api.github.com/repos/php-fig/log/zipball/0f73288fd15629204f9d42b7055f72dacbe811fc",
         "reference": "0f73288fd15629204f9d42b7055f72dacbe811fc",
-        "shasum": ""
+        "shasum": "",
+        "mirrors": [
+          {
+            "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+            "preferred": true
+          }
+        ]
       },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.1.x-dev"
-                }
-            },
-            "autoload": {
+      "require": {
+        "php": ">=5.3.0"
+      },
+      "type": "library",
+      "extra": {
+        "branch-alias": {
+          "dev-master": "1.1.x-dev"
+        }
+      },
+      "autoload": {
                 "psr-4": {
                     "Psr\\Log\\": "Psr/Log/"
                 }
@@ -232,10 +266,16 @@
                 "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b"
             },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
-                "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
-                "shasum": ""
+              "type": "zip",
+              "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
+              "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
+              "shasum": "",
+              "mirrors": [
+                {
+                  "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                  "preferred": true
+                }
+              ]
             },
             "require": {
                 "php": ">=5.3.0"
@@ -280,10 +320,16 @@
                 "reference": "5601c8a83fbba7ef674a7369456d12f1e0d0eafa"
             },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ralouphie/getallheaders/zipball/5601c8a83fbba7ef674a7369456d12f1e0d0eafa",
-                "reference": "5601c8a83fbba7ef674a7369456d12f1e0d0eafa",
-                "shasum": ""
+              "type": "zip",
+              "url": "https://api.github.com/repos/ralouphie/getallheaders/zipball/5601c8a83fbba7ef674a7369456d12f1e0d0eafa",
+              "reference": "5601c8a83fbba7ef674a7369456d12f1e0d0eafa",
+              "shasum": "",
+              "mirrors": [
+                {
+                  "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                  "preferred": true
+                }
+              ]
             },
             "require": {
                 "php": ">=5.3"
@@ -320,10 +366,16 @@
                 "reference": "d69688d4856daa13a9124c819d148ccc2235dea2"
             },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ralouphie/mimey/zipball/d69688d4856daa13a9124c819d148ccc2235dea2",
-                "reference": "d69688d4856daa13a9124c819d148ccc2235dea2",
-                "shasum": ""
+              "type": "zip",
+              "url": "https://api.github.com/repos/ralouphie/mimey/zipball/d69688d4856daa13a9124c819d148ccc2235dea2",
+              "reference": "d69688d4856daa13a9124c819d148ccc2235dea2",
+              "shasum": "",
+              "mirrors": [
+                {
+                  "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                  "preferred": true
+                }
+              ]
             },
             "require": {
                 "php": "^5.3|^7.0"
@@ -342,79 +394,94 @@
             "license": [
                 "MIT"
             ],
-            "authors": [
-                {
-                    "name": "Ralph Khattar",
-                    "email": "ralph.khattar@gmail.com"
-                }
-            ],
-            "description": "PHP package for converting file extensions to MIME types and vice versa.",
-            "time": "2017-01-27T20:57:22+00:00"
+          "authors": [
+            {
+              "name": "Ralph Khattar",
+              "email": "ralph.khattar@gmail.com"
+            }
+          ],
+          "description": "PHP package for converting file extensions to MIME types and vice versa.",
+          "time": "2017-01-27T20:57:22+00:00"
         },
     {
       "name": "sinri/ark-cache",
-      "version": "2.1",
+      "version": "2.2",
       "source": {
         "type": "git",
         "url": "https://github.com/sinri/Ark-Cache.git",
-        "reference": "394bf009fcd91927b7eb6e0e851737eb44c93aa7"
+        "reference": "275c939590fead769f4d30e03e55fb477f3b8066"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/sinri/Ark-Cache/zipball/394bf009fcd91927b7eb6e0e851737eb44c93aa7",
-        "reference": "394bf009fcd91927b7eb6e0e851737eb44c93aa7",
-        "shasum": ""
+        "url": "https://api.github.com/repos/sinri/Ark-Cache/zipball/275c939590fead769f4d30e03e55fb477f3b8066",
+        "reference": "275c939590fead769f4d30e03e55fb477f3b8066",
+        "shasum": "",
+        "mirrors": [
+          {
+            "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+            "preferred": true
+          }
+        ]
       },
-            "require": {
-                "psr/simple-cache": "~1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "sinri\\ark\\cache\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
+      "require": {
+        "psr/simple-cache": "~1.0"
+      },
+      "type": "library",
+      "autoload": {
+        "psr-4": {
+          "sinri\\ark\\cache\\": "src/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "authors": [
-                {
-                    "name": "Sinri Edogawa",
-                    "email": "e.joshua.s.e@gmail.com"
-                }
-            ],
-            "description": "The cache component for Ark 2",
-      "time": "2020-02-15T06:08:16+00:00"
-        },
+      "authors": [
+        {
+          "name": "Sinri Edogawa",
+          "email": "e.joshua.s.e@gmail.com"
+        }
+      ],
+      "description": "The cache component for Ark 2",
+      "time": "2020-06-22T08:19:00+00:00"
+    },
     {
       "name": "sinri/ark-core",
-      "version": "2.7.0",
+      "version": "2.7.2",
       "source": {
         "type": "git",
         "url": "https://github.com/sinri/Ark-Core.git",
-        "reference": "2c6191e9a6ba60792f190b26ab1a791131336f94"
+        "reference": "10f42c1bc3314d559ca75ce330784f5f8b728be0"
       },
       "dist": {
         "type": "zip",
-        "url": "https://api.github.com/repos/sinri/Ark-Core/zipball/2c6191e9a6ba60792f190b26ab1a791131336f94",
-        "reference": "2c6191e9a6ba60792f190b26ab1a791131336f94",
-        "shasum": ""
+        "url": "https://api.github.com/repos/sinri/Ark-Core/zipball/10f42c1bc3314d559ca75ce330784f5f8b728be0",
+        "reference": "10f42c1bc3314d559ca75ce330784f5f8b728be0",
+        "shasum": "",
+        "mirrors": [
+          {
+            "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+            "preferred": true
+          }
+        ]
       },
-            "require": {
-                "ext-json": "*",
-                "psr/log": "~1.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "sinri\\ark\\core\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
+      "require": {
+        "ext-json": "*",
+        "psr/log": "~1.0"
+      },
+      "require-dev": {
+        "phpunit/phpunit": "^9"
+      },
+      "type": "library",
+      "autoload": {
+        "psr-4": {
+          "sinri\\ark\\core\\": "src/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
             "authors": [
                 {
                     "name": "Sinri Edogawa",
@@ -422,7 +489,7 @@
                 }
             ],
             "description": "The core components of Ark 2",
-      "time": "2020-04-29T03:11:54+00:00"
+      "time": "2020-06-19T03:40:51+00:00"
         }
     ],
     "packages-dev": [
@@ -440,30 +507,30 @@
           "reference": "16117f7fe24de354b4d27dccaa6c7fe2ed58cc8b",
           "shasum": ""
         },
-            "require": {
-                "ext-curl": "*",
-                "ext-json": "*",
-              "sinri/ark-core": "^2.2"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "sinri\\ark\\io\\curl\\": "src/"
-                }
+        "require": {
+          "ext-curl": "*",
+          "ext-json": "*",
+          "sinri/ark-core": "^2.2"
+        },
+        "type": "library",
+        "autoload": {
+          "psr-4": {
+            "sinri\\ark\\io\\curl\\": "src/"
+          }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "authors": [
-                {
-                    "name": "Sinri Edogawa",
-                    "email": "e.joshua.s.e@gmail.com"
-                }
-            ],
-            "description": "The cURL component for Ark 2.",
+        "authors": [
+          {
+            "name": "Sinri Edogawa",
+            "email": "e.joshua.s.e@gmail.com"
+          }
+        ],
+        "description": "The cURL component for Ark 2.",
         "time": "2020-03-29T08:54:16+00:00"
-        },
+      },
       {
         "name": "sinri/ark-pdo",
         "version": "1.7.6",
@@ -478,30 +545,30 @@
           "reference": "9f8b01076cdb0ec050ed23311ed55e9bd20f81f7",
           "shasum": ""
         },
-            "require": {
-                "ext-json": "*",
-                "ext-pdo": "*",
-                "sinri/ark-core": "~2.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "sinri\\ark\\database\\": "src/"
-                }
+        "require": {
+          "ext-json": "*",
+          "ext-pdo": "*",
+          "sinri/ark-core": "~2.0"
+        },
+        "type": "library",
+        "autoload": {
+          "psr-4": {
+            "sinri\\ark\\database\\": "src/"
+          }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
-            "authors": [
-                {
-                    "name": "Sinri Edogawa",
-                    "email": "e.joshua.s.e@gmail.com"
-                }
-            ],
-            "description": "The PDO Component for Ark 2",
+        "authors": [
+          {
+            "name": "Sinri Edogawa",
+            "email": "e.joshua.s.e@gmail.com"
+          }
+        ],
+        "description": "The PDO Component for Ark 2",
         "time": "2020-02-11T06:46:07+00:00"
-        },
+      },
       {
         "name": "sinri/ark-queue",
         "version": "2.5",
@@ -516,16 +583,16 @@
           "reference": "8f99c7ffe3d77add7f641add1393b98cd254ba4e",
           "shasum": ""
         },
-            "suggest": {
-                "ext-pcntl": "*",
-                "sinri/ark-lock": "^0.3"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "sinri\\ark\\queue\\": "src/"
-                }
-            },
+        "suggest": {
+          "ext-pcntl": "*",
+          "sinri/ark-lock": "^0.3"
+        },
+        "type": "library",
+        "autoload": {
+          "psr-4": {
+            "sinri\\ark\\queue\\": "src/"
+          }
+        },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
@@ -541,15 +608,16 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": [],
-    "prefer-stable": false,
-    "prefer-lowest": false,
-    "platform": {
-        "php": "~7.0",
-        "ext-json": "*"
-    },
-    "platform-dev": {
-        "ext-curl": "*"
-    }
+  "minimum-stability": "stable",
+  "stability-flags": [],
+  "prefer-stable": false,
+  "prefer-lowest": false,
+  "platform": {
+    "php": "~7.0",
+    "ext-json": "*"
+  },
+  "platform-dev": {
+    "ext-curl": "*"
+  },
+  "plugin-api-version": "1.1.0"
 }
