@@ -63,19 +63,31 @@ class ArkWebOutput
      * @param mixed $anything
      * @param int $options
      * @param int $depth
+     * @throws Exception @since 3.2.2
      */
     public function json($anything, $options = 0, $depth = 512)
     {
-        echo json_encode($anything, $options, $depth);
+        $response = json_encode($anything, $options, $depth);
+        if ($response === false) {
+            throw new Exception("JSON ENCODING FAILED: " . json_last_error_msg());
+        }
+        echo $response;
     }
 
     /**
      * @param string $code OK or FAIL
      * @param mixed $data
+     * @param int $options @since 3.2.2
+     * @param int $depth @since 3.2.2
+     * @throws Exception @since 3.2.2
      */
-    public function jsonForAjax($code = self::AJAX_JSON_CODE_OK, $data = '')
+    public function jsonForAjax($code = self::AJAX_JSON_CODE_OK, $data = '', $options = 0, $depth = 512)
     {
-        echo json_encode(["code" => $code, "data" => $data]);
+        $response = json_encode(["code" => $code, "data" => $data], $options, $depth);
+        if ($response === false) {
+            throw new Exception("JSON ENCODING FAILED: " . json_last_error_msg());
+        }
+        echo $response;
     }
 
     /**
