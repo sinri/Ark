@@ -143,6 +143,7 @@ class ArkWebController
     /**
      * @param mixed $json anything in json to be packaged to be responded
      * @param int $httpCode
+     * @throws Exception
      * @since 3.1.7
      */
     protected function _sayJson($json, $httpCode = 200)
@@ -154,8 +155,9 @@ class ArkWebController
     }
 
     /**
-     * @param string $data
+     * @param mixed $data
      * @param int $httpCode
+     * @throws Exception
      */
     protected function _sayOK($data = "", $httpCode = 200)
     {
@@ -166,8 +168,9 @@ class ArkWebController
     }
 
     /**
-     * @param string $error
+     * @param mixed $error
      * @param int $httpCode
+     * @throws Exception
      */
     protected function _sayFail($error = "", $httpCode = 200)
     {
