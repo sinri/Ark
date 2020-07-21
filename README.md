@@ -36,6 +36,7 @@ Basic Functions
 * `sinri/ark-core` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-core.svg)](https://packagist.org/packages/sinri/ark-core)
 * `sinri/ark-curl` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-curl.svg)](https://packagist.org/packages/sinri/ark-curl)
 * `sinri/ark-cache` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-cache.svg)](https://packagist.org/packages/sinri/ark-cache)
+* `sinri/ark-xml` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-xml.svg)](https://packagist.org/packages/sinri/ark-xml)
 
 Database Related
 
