@@ -16,7 +16,10 @@ use sinri\ark\io\ArkWebOutput;
 
 class ArkWebController
 {
-
+    /**
+     * @var array|null
+     * It might be renamed in the future, but now it would not be changed for stability
+     */
     protected $filterGeneratedData;
 
     /**
@@ -26,7 +29,7 @@ class ArkWebController
      */
     public function __construct()
     {
-        $this->filterGeneratedData = Ark()->webService()->getFilterGeneratedData();
+        $this->filterGeneratedData = Ark()->webService()->getSharedData();
     }
 
     /**

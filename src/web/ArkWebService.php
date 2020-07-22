@@ -33,19 +33,66 @@ class ArkWebService
      */
     protected $requestSerial;
     /**
+     * @var int
+     * @since 3.2.3
+     */
+    protected $startTime;
+    /**
+     * @var int
+     * @since 3.2.3
+     */
+    protected $endTime;
+    /**
+     * @var callable
+     */
+    protected $finalHandler;
+    /**
      * @var string
      */
     protected $gateway;
-    protected $filterGeneratedData;
+    /**
+     * @var null|array|mixed
+     * Till 3.2.2 it was named as `filterGeneratedData`
+     * @since 3.2.3
+     */
+    protected $sharedData;
 
     public function __construct()
     {
+        $this->startTime = time();
+        $this->endTime = -1;
         $this->requestSerial = uniqid();
         $this->gateway = "index.php";
         $this->logger = ArkLogger::makeSilentLogger();
         $this->debug = false;
         $this->router = new ArkRouter();
-        $this->filterGeneratedData = null;
+        $this->sharedData = null;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStartTime(): int
+    {
+        return $this->startTime;
+    }
+
+    /**
+     * @return int
+     */
+    public function getEndTime(): int
+    {
+        return $this->endTime;
+    }
+
+    /**
+     * @param callable $finalHandler
+     * @return ArkWebService
+     */
+    public function setFinalHandler(callable $finalHandler): ArkWebService
+    {
+        $this->finalHandler = $finalHandler;
+        return $this;
     }
 
     /**
@@ -66,20 +113,20 @@ class ArkWebService
 
     /**
      * @return null
+     * @since 3.2.3 renamed from `getFilterGeneratedData`
      */
-    public function getFilterGeneratedData()
+    public function getSharedData()
     {
-        return $this->filterGeneratedData;
+        return $this->sharedData;
     }
 
     /**
-     * @param string $sessionDir
-     * @return ArkWebService
+     * @return null
+     * @deprecated since 3.2.3
      */
-    public function startPHPSession($sessionDir)
+    public function getFilterGeneratedData()
     {
-        ArkWebSession::sessionStart($sessionDir);
-        return $this;
+        return $this->sharedData;
     }
 
     /**
@@ -144,9 +191,14 @@ class ArkWebService
             }
             $route = $this->router->seekRoute($path, Ark()->webInput()->getRequestMethod());
             $code = 0;
-            $route->execute($path, $this->filterGeneratedData, $code);
+            $route->execute($path, $this->sharedData, $code);
         } catch (Exception $exception) {
             $this->logger->error("Exception in " . __METHOD__ . " : " . $exception->getMessage());
+        } finally {
+            $this->endTime = time();
+            if (is_callable($this->finalHandler)) {
+                call_user_func_array($this->finalHandler, []);
+            }
         }
     }
 
@@ -159,7 +211,7 @@ class ArkWebService
             $this->dividePath($path_string);
             $route = $this->router->seekRoute($path_string, Ark()->webInput()->getRequestMethod());
             $code = 200;
-            $route->execute($path_string, $this->filterGeneratedData, $code);
+            $route->execute($path_string, $this->sharedData, $code);
         } catch (Exception $exception) {
             $this->router->handleRouteError(
                 [
@@ -170,6 +222,11 @@ class ArkWebService
             );
             if ($this->debug) {
                 echo "<pre>" . PHP_EOL . print_r($exception, true) . "</pre>" . PHP_EOL;
+            }
+        } finally {
+            $this->endTime = time();
+            if (is_callable($this->finalHandler)) {
+                call_user_func_array($this->finalHandler, []);
             }
         }
     }
@@ -236,6 +293,16 @@ class ArkWebService
     public function startSession($sessionDir)
     {
         return $this->startPHPSession($sessionDir);
+    }
+
+    /**
+     * @param string $sessionDir
+     * @return ArkWebService
+     */
+    public function startPHPSession($sessionDir)
+    {
+        ArkWebSession::sessionStart($sessionDir);
+        return $this;
     }
 
     /**

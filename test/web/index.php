@@ -121,6 +121,10 @@ foreach ($listOfRouteRules as $index => $listOfRouteRule) {
     $logger->info("[RULE " . ($index + 1) . "]" . $listOfRouteRule);
 }
 
+$router->get('test-another-filter', function () {
+    echo __FILE__ . '@' . __LINE__ . PHP_EOL . json_encode(Ark()->webService()->getSharedData()) . PHP_EOL;
+}, [AnotherFilter::class]);
+
 $web_service->handleRequest();
 
 // call http://localhost/phpstorm/Ark/test/web/
