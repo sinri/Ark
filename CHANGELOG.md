@@ -1,5 +1,29 @@
 # Change Log of Ark 3
 
+## Version 3.2.3
+
+Add the final handler to WebService, with start time and end time.
+
+## Version 3.2.2
+
+In ArkWebOutput for JSON format, throw exception if json_encode failed.
+
+## Version 3.2.1
+
+Auto RestFul support single class.
+
+## Version 3.2.0
+
+Natural Mutli-Methods Support
+
+## Version 3.1.10
+
+Now you can print out the route rules
+
+## Version 3.1.9
+
+Add `loadConfigFileWithPHPFormat`.
+
 ## Version 3.1.8
 
 CLI Logger refine
