@@ -1,20 +1,20 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
-    ],
-    "content-hash": "6f31cd3c3b19c3816cd809c204be733d",
-    "packages": [
-        {
-            "name": "jaybizzle/crawler-detect",
-            "version": "v1.2.96",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/JayBizzle/Crawler-Detect.git",
-                "reference": "5a53c78644c54a628c3f5ead915c35b489c92239"
-            },
-            "dist": {
+  "_readme": [
+    "This file locks the dependencies of your project to a known state",
+    "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+    "This file is @generated automatically"
+  ],
+  "content-hash": "10fd98c969fe50536fc328e261376399",
+  "packages": [
+    {
+      "name": "jaybizzle/crawler-detect",
+      "version": "v1.2.96",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/JayBizzle/Crawler-Detect.git",
+        "reference": "5a53c78644c54a628c3f5ead915c35b489c92239"
+      },
+      "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/JayBizzle/Crawler-Detect/zipball/5a53c78644c54a628c3f5ead915c35b489c92239",
                 "reference": "5a53c78644c54a628c3f5ead915c35b489c92239",
@@ -203,58 +203,6 @@
                 "php mobile detect"
             ],
             "time": "2019-09-18T18:44:20+00:00"
-        },
-        {
-            "name": "psr/event-dispatcher",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/event-dispatcher.git",
-                "reference": "dbefd12671e8a14ec7f180cab83036ed26714bb0"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/event-dispatcher/zipball/dbefd12671e8a14ec7f180cab83036ed26714bb0",
-                "reference": "dbefd12671e8a14ec7f180cab83036ed26714bb0",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
-            },
-            "require": {
-                "php": ">=7.2.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Psr\\EventDispatcher\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
-                }
-            ],
-            "description": "Standard interfaces for event handling.",
-            "keywords": [
-                "events",
-                "psr",
-                "psr-14"
-            ],
-            "time": "2019-01-08T18:20:26+00:00"
         },
         {
             "name": "psr/log",
@@ -497,29 +445,28 @@
             "description": "The cache component for Ark 2",
             "time": "2020-06-29T02:46:34+00:00"
         },
-        {
-            "name": "sinri/ark-core",
-            "version": "2.7.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/sinri/Ark-Core.git",
-                "reference": "0daa596dde5caf53aaf736fb36a42c934c417381"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/sinri/Ark-Core/zipball/0daa596dde5caf53aaf736fb36a42c934c417381",
-                "reference": "0daa596dde5caf53aaf736fb36a42c934c417381",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
-            },
+    {
+      "name": "sinri/ark-core",
+      "version": "2.7.5",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/sinri/Ark-Core.git",
+        "reference": "7ef73bdfc92a5301b7857f15e3b9cc05165a6e66"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/sinri/Ark-Core/zipball/7ef73bdfc92a5301b7857f15e3b9cc05165a6e66",
+        "reference": "7ef73bdfc92a5301b7857f15e3b9cc05165a6e66",
+        "shasum": "",
+        "mirrors": [
+          {
+            "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+            "preferred": true
+          }
+        ]
+      },
             "require": {
                 "ext-json": "*",
-                "psr/event-dispatcher": "~1.0",
                 "psr/log": "~1.0"
             },
             "require-dev": {
@@ -542,7 +489,7 @@
                 }
             ],
             "description": "The core components of Ark 2",
-            "time": "2020-07-30T04:02:44+00:00"
+      "time": "2020-08-03T02:30:57+00:00"
         },
         {
             "name": "sinri/ark-web",
