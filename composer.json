@@ -14,7 +14,7 @@
     "php": "~7.0",
     "sinri/ark-core": "~2.7.5",
     "sinri/ark-cache": "~2.4",
-    "sinri/ark-web": "~1.0.0",
+    "sinri/ark-web": "~3.4.0",
     "ralouphie/getallheaders": "^2.0",
     "jenssegers/agent": "^2.6",
     "ralouphie/mimey": "^1.0",
