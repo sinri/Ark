@@ -25,6 +25,7 @@ Ark requests PHP 7.
 If you need Redis, you might need to declare the reference of `predis/predis`.
 Since version 2.1, Ark-Core and Ark-Curl use version 2.
 Since version 2.4, Ark-Cache use version 2 to support PSR-16.
+Since version 3.3, Ark-Web became independent as 1.0.0.
 Now Ark has been in 3.x.
 
 ## Toolkit Map
@@ -34,6 +35,7 @@ Now Ark has been in 3.x.
 Basic Functions
 
 * `sinri/ark-core` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-core.svg)](https://packagist.org/packages/sinri/ark-core)
+* `sinri/ark-web` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-web.svg)](https://packagist.org/packages/sinri/ark-web)
 * `sinri/ark-curl` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-curl.svg)](https://packagist.org/packages/sinri/ark-curl)
 * `sinri/ark-cache` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-cache.svg)](https://packagist.org/packages/sinri/ark-cache)
 * `sinri/ark-xml` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-xml.svg)](https://packagist.org/packages/sinri/ark-xml)
@@ -55,6 +57,8 @@ Queue Related
 
 * `sinri/ark-queue` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-queue.svg)](https://packagist.org/packages/sinri/ark-queue)
 * `sinri/ark-lock` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-lock.svg)](https://packagist.org/packages/sinri/ark-lock)
+* `sinri/ark-event` [![Packagist](https://img.shields.io/packagist/v/sinri/ark-event.svg)](https://packagist.org/packages/sinri/ark-event)
+
 
 Lightweight Directory Access Protocol
 

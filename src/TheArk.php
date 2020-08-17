@@ -29,18 +29,6 @@ class TheArk
      */
     private static $instance;
     /**
-     * @var ArkWebInput
-     */
-    protected $webInputHelper;
-    /**
-     * @var ArkWebOutput
-     */
-    protected $webOutputHelper;
-    /**
-     * @var ArkWebService
-     */
-    protected $webServiceHandler;
-    /**
      * @var ArkLogger[]
      */
     protected $loggerDict = [];
@@ -60,9 +48,6 @@ class TheArk
 
     private function __construct()
     {
-        $this->webInputHelper = null;
-        $this->webOutputHelper = null;
-        $this->webServiceHandler = null;
     }
 
     /**
@@ -110,10 +95,11 @@ class TheArk
      */
     public function webInput(): ArkWebInput
     {
-        if (!$this->webInputHelper) {
-            $this->webInputHelper = new ArkWebInput();
-        }
-        return $this->webInputHelper;
+//        if (!$this->webInputHelper) {
+//            $this->webInputHelper = new ArkWebInput();
+//        }
+//        return $this->webInputHelper;
+        return ArkWebInput::getSharedInstance();
     }
 
     /**
@@ -121,10 +107,11 @@ class TheArk
      */
     public function webOutput(): ArkWebOutput
     {
-        if (!$this->webOutputHelper) {
-            $this->webOutputHelper = new ArkWebOutput();
-        }
-        return $this->webOutputHelper;
+//        if (!$this->webOutputHelper) {
+//            $this->webOutputHelper = new ArkWebOutput();
+//        }
+//        return $this->webOutputHelper;
+        return ArkWebOutput::getSharedInstance();
     }
 
     /**
@@ -132,10 +119,11 @@ class TheArk
      */
     public function webService(): ArkWebService
     {
-        if (!$this->webServiceHandler) {
-            $this->webServiceHandler = new ArkWebService();
-        }
-        return $this->webServiceHandler;
+//        if (!$this->webServiceHandler) {
+//            $this->webServiceHandler = new ArkWebService();
+//        }
+//        return $this->webServiceHandler;
+        return ArkWebService::getSharedInstance();
     }
 
     /**
@@ -178,19 +166,6 @@ class TheArk
     public function registerDb($name, $pdo)
     {
         ArkHelper::writeIntoArray($this->pdoDict, $name, $pdo);
-    }
-
-    /**
-     * Register an instance of ArkPDO based on the config item [pdo][NAME]
-     *
-     * @param string $name
-     * @return ArkPDO
-     * @throws Exception
-     * @deprecated Please use method `pdo` and this would be removed in 3.x
-     */
-    public function db($name = 'default'): ArkPDO
-    {
-        return $this->pdo($name);
     }
 
     /**
