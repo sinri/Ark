@@ -135,6 +135,38 @@ server {
 }
 ```
 
+### Ark Quick Configuration
+
+```php
+<?php
+$config=[
+    'log'=>[
+        'path'=>'/path/to/log',
+        'level'=>LogLevel::INFO,
+    ],
+    'pdo'=>[
+        'default'=>[
+            "title"=>'Default PDO',
+            "host"=>'',
+            "port"=>3306,
+            "username"=>'',
+            "password"=>'',
+            "database"=>'',
+            // "charset"=>'utf8',
+            // "engine"=>'mysql',
+            // "options"=>[],
+        ]
+    ],
+    'cache'=>[
+        'default'=>[
+            'type'=>'FILE',
+            'dir'=>'/path/to/cache',
+            'mode'=>0777,
+        ]
+    ]
+];
+```
+
 ## Who use this?
 
 Not so many in fact. Amongst them, Leqee is one.
