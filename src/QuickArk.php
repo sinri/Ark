@@ -9,7 +9,7 @@
 use sinri\ark\TheArk;
 
 if (!function_exists('Ark')) {
-    function Ark()
+    function Ark(): TheArk
     {
         return TheArk::getInstance();
     }

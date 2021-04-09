@@ -9,9 +9,9 @@
 namespace sinri\ark\cli;
 
 
-use Exception;
 use sinri\ark\core\ArkHelper;
 use sinri\ark\core\ArkLogger;
+use sinri\ark\exception\MethodNotInClassError;
 
 class ArkCliProgram
 {
@@ -33,23 +33,24 @@ class ArkCliProgram
      * @param null|array $parameters
      * @since 3.1.5
      */
-    public function initializeLogger($action, $parameters = null)
+    public function initializeLogger(string $action, $parameters = null)
     {
         if ($this->logger === null || $this->logger->isSilent()) {
-            $this->logger = new ArkLogger();
+            $this->logger = new ArkLogger(null, $action);
         }
+        $this->logger->debug(__METHOD__, ['action' => $action, 'parameters' => $parameters]);
     }
 
     /**
      * @param string $methodName
      * @param array $parameters
-     * @throws Exception
+     * @throws MethodNotInClassError
      */
-    public function call($methodName, $parameters = [])
+    public function call(string $methodName, $parameters = [])
     {
         $method = 'action' . $methodName;
         if (!method_exists($this, $method)) {
-            throw new Exception("No such method: " . $method);
+            throw new MethodNotInClassError($method, __CLASS__);
         }
         call_user_func_array([$this, $method], $parameters);
     }
@@ -60,10 +61,10 @@ class ArkCliProgram
     }
 
     /**
-     * It is used to build the runner script. @param string $baseNamespace the shared namespace prefix. Till 2.8.2, ensure the '\\' in tail.
-     * @see test/cli/runner.php
+     * It is used to build the runner script.
+     * @param string $baseNamespace the shared namespace prefix. Till 2.8.2, ensure the '\\' in tail. @see test/cli/runner.php
      */
-    public static function run($baseNamespace)
+    public static function run(string $baseNamespace)
     {
         global $argc;
         global $argv;

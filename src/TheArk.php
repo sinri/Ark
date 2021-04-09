@@ -9,7 +9,6 @@
 namespace sinri\ark;
 
 
-use Exception;
 use Psr\Log\LogLevel;
 use sinri\ark\cache\ArkCache;
 use sinri\ark\cache\implement\ArkDummyCache;
@@ -55,7 +54,7 @@ class TheArk
      * @return $this
      * @since 3.1.9
      */
-    public function loadConfigFileWithPHPFormat($configFile)
+    public function loadConfigFileWithPHPFormat(string $configFile): TheArk
     {
         $config = [];
         /** @noinspection PhpIncludeInspection */
@@ -64,17 +63,18 @@ class TheArk
         return $this;
     }
 
-    public function setConfig($config)
+    public function setConfig(array $config): TheArk
     {
         $this->config = $config;
+        return $this;
     }
 
     /**
      * @param array $keyChain
-     * @param null|mixed $default
-     * @return mixed|null
+     * @param mixed $default
+     * @return mixed
      */
-    public function readConfig($keyChain, $default = null)
+    public function readConfig(array $keyChain, $default = null)
     {
         return ArkHelper::readTarget($this->config, $keyChain, $default);
     }
@@ -82,7 +82,7 @@ class TheArk
     /**
      * @return TheArk
      */
-    public static function getInstance()
+    public static function getInstance(): TheArk
     {
         if (!self::$instance) {
             self::$instance = new TheArk();
@@ -95,10 +95,6 @@ class TheArk
      */
     public function webInput(): ArkWebInput
     {
-//        if (!$this->webInputHelper) {
-//            $this->webInputHelper = new ArkWebInput();
-//        }
-//        return $this->webInputHelper;
         return ArkWebInput::getSharedInstance();
     }
 
@@ -107,10 +103,6 @@ class TheArk
      */
     public function webOutput(): ArkWebOutput
     {
-//        if (!$this->webOutputHelper) {
-//            $this->webOutputHelper = new ArkWebOutput();
-//        }
-//        return $this->webOutputHelper;
         return ArkWebOutput::getSharedInstance();
     }
 
@@ -119,10 +111,6 @@ class TheArk
      */
     public function webService(): ArkWebService
     {
-//        if (!$this->webServiceHandler) {
-//            $this->webServiceHandler = new ArkWebService();
-//        }
-//        return $this->webServiceHandler;
         return ArkWebService::getSharedInstance();
     }
 
@@ -130,7 +118,7 @@ class TheArk
      * @param string $name
      * @param ArkLogger $logger
      */
-    public function registerLogger($name, ArkLogger $logger)
+    public function registerLogger(string $name, ArkLogger $logger)
     {
         ArkHelper::writeIntoArray($this->loggerDict, $name, $logger);
     }
@@ -163,7 +151,7 @@ class TheArk
      * @param string $name
      * @param ArkPDO $pdo
      */
-    public function registerDb($name, $pdo)
+    public function registerDb(string $name, ArkPDO $pdo)
     {
         ArkHelper::writeIntoArray($this->pdoDict, $name, $pdo);
     }
@@ -175,7 +163,7 @@ class TheArk
      * @param bool $shouldConnectFirst @since 2.8.2
      * @return ArkPDO
      *
-     * @throws Exception
+     * @throws database\Exception\ArkPDOConfigError
      * @since 2.8.1
      */
     public function pdo($name = 'default', $shouldConnectFirst = true): ArkPDO
@@ -199,7 +187,7 @@ class TheArk
      * @param string $name
      * @param ArkCache $cache
      */
-    public function registerCache($name, $cache)
+    public function registerCache(string $name, ArkCache $cache)
     {
         ArkHelper::writeIntoArray($this->cacheDict, $name, $cache);
     }
@@ -238,7 +226,7 @@ class TheArk
      * @return bool|mixed
      * @since 2.8.0
      */
-    public function runProgramInCLI($programClass, $actionName, $params = [])
+    public function runProgramInCLI(string $programClass, string $actionName, $params = []): bool
     {
         $actionName = "action" . $actionName;
         $callable = [$programClass, $actionName];

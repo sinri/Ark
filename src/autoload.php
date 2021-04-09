@@ -18,12 +18,11 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 ArkHelper::registerAutoload(
     "sinri\ark",
-    __DIR__,
-    ".php"
+    __DIR__
 );
 
 if (!function_exists('Ark')) {
-    function Ark()
+    function Ark(): TheArk
     {
         return TheArk::getInstance();
     }

@@ -12,9 +12,9 @@
   "minimum-stability": "stable",
   "require": {
     "php": "~7.0",
-    "sinri/ark-core": "~2.7.5",
+    "sinri/ark-core": "~2.7",
     "sinri/ark-cache": "~2.4",
-    "sinri/ark-web": "~3.4.0",
+    "sinri/ark-web": "~3.4",
     "ralouphie/getallheaders": "^2.0",
     "jenssegers/agent": "^2.6",
     "ralouphie/mimey": "^1.0",
@@ -22,14 +22,14 @@
   },
   "require-dev": {
     "sinri/ark-curl": "~2.1",
-    "sinri/ark-pdo": "~1.7",
-    "sinri/ark-queue": "~2.5",
+    "sinri/ark-pdo": "~2.0|~1.7",
+    "sinri/ark-queue": "~2.7",
     "ext-curl": "*"
   },
   "suggest": {
     "ext-pcntl": "*",
     "sinri/ark-curl": "~2.1",
-    "sinri/ark-pdo": "~1.7",
+    "sinri/ark-pdo": "~2.0",
     "sinri/ark-redis": "~1.1",
     "sinri/ark-sqlite3": "~1.1",
     "sinri/ark-mysqli": "~1.2",

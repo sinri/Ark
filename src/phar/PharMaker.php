@@ -32,29 +32,33 @@ class PharMaker
 
     /**
      * @param string $pharName
+     * @return PharMaker
      */
-    public function setPharName($pharName)
+    public function setPharName(string $pharName): PharMaker
     {
         $this->pharName = $pharName;
+        return $this;
     }
 
     /**
      * @param string $directory
      */
-    public function setDirectory($directory)
+    public function setDirectory(string $directory)
     {
         $this->directory = $directory;
     }
 
     /**
      * @param string $outputDirectory
+     * @return PharMaker
      */
-    public function setOutputDirectory($outputDirectory)
+    public function setOutputDirectory(string $outputDirectory): PharMaker
     {
         $this->outputDirectory = $outputDirectory;
+        return $this;
     }
 
-    public function setBootstrapStubAsCLIEntrance($entranceFile = "index.php")
+    public function setBootstrapStubAsCLIEntrance($entranceFile = "index.php"): PharMaker
     {
         $this->bootstrapStub = "#!/usr/bin/php" . PHP_EOL
             . "<?php" . PHP_EOL
@@ -62,27 +66,35 @@ class PharMaker
             . "require 'phar://" . $this->getPharFileName() . "/" . $entranceFile . "';" . PHP_EOL
             . "__HALT_COMPILER();" . PHP_EOL
             . "?>";
+        return $this;
     }
 
-    protected function getPharFileName()
+    /**
+     * @return string
+     */
+    protected function getPharFileName(): string
     {
         return $this->pharName . ".phar";
     }
 
     /**
      * @param string $extension , such as html, css, etc.
+     * @return PharMaker
      */
-    public function addExtension($extension)
+    public function addExtension(string $extension): PharMaker
     {
         $this->extensions[] = $extension;
+        return $this;
     }
 
     /**
      * @param string $entrance such "builder.php"
+     * @return PharMaker
      */
-    public function addExcludeEntrance($entrance)
+    public function addExcludeEntrance(string $entrance): PharMaker
     {
         $this->excludeEntries[] = $entrance;
+        return $this;
     }
 
     /**
@@ -93,7 +105,7 @@ class PharMaker
      *
      * @return bool
      */
-    public function archive()
+    public function archive(): bool
     {
         if (!is_string($this->pharName) || strlen($this->pharName) <= 0) {
             return false;
