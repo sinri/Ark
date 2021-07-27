@@ -13,7 +13,7 @@
   "require": {
     "php": "~7.0",
     "sinri/ark-core": "~2.7",
-    "sinri/ark-cache": "~2.4",
+    "sinri/ark-cache": "~2.5",
     "sinri/ark-web": "~3.4",
     "ralouphie/getallheaders": "^2.0",
     "jenssegers/agent": "^2.6",
