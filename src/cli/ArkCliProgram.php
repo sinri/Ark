@@ -104,7 +104,10 @@ class ArkCliProgram
 
         $program = new $program_instance_full_name();
 
-        call_user_func_array([$program, 'initializeProgram'], [$action, $params]);
+        // try to use refer since 3.4.3
+        $program->initializeProgram($action, $params);
+//        call_user_func_array([$program, 'initializeProgram'], [$action, $params]);
+
         call_user_func_array([$program, 'action' . $action], $params);
     }
 }
