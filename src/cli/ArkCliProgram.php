@@ -27,13 +27,24 @@ class ArkCliProgram
 
     /**
      * Called before action in `run`.
-     * It might be overrode to initialize logger for each action or the whole.
+     * It might be overridden to initialize logger for each action or the whole.
      * The default is set the logger to write into STDOUT if no writable ArkLogger
      * @param string $action
      * @param null|array $parameters
      * @since 3.1.5
+     * @deprecated since 3.4.2 use initializeProgram
      */
     public function initializeLogger(string $action, $parameters = null)
+    {
+        $this->initializeProgram($action, $parameters);
+    }
+
+    /**
+     * @param string $action
+     * @param null|array $parameters
+     * @since 3.4.2
+     */
+    public function initializeProgram(string $action, &$parameters = null)
     {
         if ($this->logger === null || $this->logger->isSilent()) {
             $this->logger = new ArkLogger(null, $action);
@@ -93,7 +104,7 @@ class ArkCliProgram
 
         $program = new $program_instance_full_name();
 
-        call_user_func_array([$program, 'initializeLogger'], [$action, $params]);
+        call_user_func_array([$program, 'initializeProgram'], [$action, $params]);
         call_user_func_array([$program, 'action' . $action], $params);
     }
 }
