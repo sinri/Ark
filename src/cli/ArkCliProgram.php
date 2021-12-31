@@ -30,21 +30,21 @@ class ArkCliProgram
      * It might be overridden to initialize logger for each action or the whole.
      * The default is set the logger to write into STDOUT if no writable ArkLogger
      * @param string $action
-     * @param null|array $parameters
+     * @param array|null $parameters
      * @since 3.1.5
      * @deprecated since 3.4.2 use initializeProgram
      */
-    public function initializeLogger(string $action, $parameters = null)
+    public function initializeLogger(string $action, array $parameters = null)
     {
         $this->initializeProgram($action, $parameters);
     }
 
     /**
      * @param string $action
-     * @param null|array $parameters
+     * @param array|null $parameters
      * @since 3.4.2
      */
-    public function initializeProgram(string $action, &$parameters = null)
+    public function initializeProgram(string $action, array &$parameters = null)
     {
         if ($this->logger === null || $this->logger->isSilent()) {
             $this->logger = new ArkLogger(null, $action);
@@ -57,7 +57,7 @@ class ArkCliProgram
      * @param array $parameters
      * @throws MethodNotInClassError
      */
-    public function call(string $methodName, $parameters = [])
+    public function call(string $methodName, array $parameters = [])
     {
         $method = 'action' . $methodName;
         if (!method_exists($this, $method)) {
