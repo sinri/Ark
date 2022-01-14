@@ -13,7 +13,7 @@
   "require": {
     "php": "~7.0",
     "sinri/ark-core": "~2.7",
-    "sinri/ark-cache": "~2.5",
+    "sinri/ark-cache": "~2.6",
     "sinri/ark-web": "~3.4",
     "ralouphie/getallheaders": "^2.0",
     "jenssegers/agent": "^2.6",
@@ -22,7 +22,7 @@
   },
   "require-dev": {
     "sinri/ark-curl": "~2.1",
-    "sinri/ark-pdo": "~2.0|~1.7",
+    "sinri/ark-pdo": "~2.0.34|~1.7",
     "sinri/ark-queue": "~2.7",
     "ext-curl": "*"
   },

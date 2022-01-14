@@ -78,7 +78,7 @@ class PharMaker
     }
 
     /**
-     * @param string $extension , such as html, css, etc.
+     * @param string $extension such as html, css, etc.
      * @return PharMaker
      */
     public function addExtension(string $extension): PharMaker

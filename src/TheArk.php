@@ -57,7 +57,6 @@ class TheArk
     public function loadConfigFileWithPHPFormat(string $configFile): TheArk
     {
         $config = [];
-        /** @noinspection PhpIncludeInspection */
         require $configFile;// where $config was defined inside
         $this->config = $config;
         return $this;
@@ -129,7 +128,7 @@ class TheArk
      * @param string $name
      * @return ArkLogger
      */
-    public function logger($name = 'Ark'): ArkLogger
+    public function logger(string $name = 'Ark'): ArkLogger
     {
         $logger = ArkHelper::readTarget($this->loggerDict, $name);
         if (!$logger) {
@@ -166,7 +165,7 @@ class TheArk
      * @throws database\Exception\ArkPDOConfigError
      * @since 2.8.1
      */
-    public function pdo($name = 'default', $shouldConnectFirst = true): ArkPDO
+    public function pdo(string $name = 'default', bool $shouldConnectFirst = true): ArkPDO
     {
         $pdo = ArkHelper::readTarget($this->pdoDict, $name);
         if (!$pdo) {
@@ -198,7 +197,7 @@ class TheArk
      * @param string $name
      * @return ArkCache
      */
-    public function cache($name = 'default'): ArkCache
+    public function cache(string $name = 'default'): ArkCache
     {
         $cache = ArkHelper::readTarget($this->cacheDict, $name);
         if (!$cache) {
@@ -226,7 +225,7 @@ class TheArk
      * @return bool|mixed
      * @since 2.8.0
      */
-    public function runProgramInCLI(string $programClass, string $actionName, $params = []): bool
+    public function runProgramInCLI(string $programClass, string $actionName, array $params = []): bool
     {
         $actionName = "action" . $actionName;
         $callable = [$programClass, $actionName];

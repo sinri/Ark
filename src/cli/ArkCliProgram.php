@@ -43,6 +43,7 @@ class ArkCliProgram
      * @param string $action
      * @param array|null $parameters
      * @since 3.4.2
+     * @noinspection PhpParameterByRefIsNotUsedAsReferenceInspection : reference is needed here
      */
     public function initializeProgram(string $action, array &$parameters = null)
     {
