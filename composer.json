@@ -22,7 +22,7 @@
   },
   "require-dev": {
     "sinri/ark-curl": "~2.1",
-    "sinri/ark-pdo": "~2.0.34|~1.7",
+    "sinri/ark-pdo": "~2.0.36|~1.7",
     "sinri/ark-queue": "~2.7",
     "ext-curl": "*"
   },
@@ -50,10 +50,12 @@
       "sinri\\ark\\test\\": "test/"
     }
   },
-  "repositories": {
-    "packagist": {
+  "repositories": [
+    {
+      "description": "ALIYUN MIRROR",
       "type": "composer",
-      "url": "https://mirrors.aliyun.com/composer/"
+      "url": "https://mirrors.aliyun.com/composer/",
+      "canonical": false
     }
-  }
+  ]
 }
